@@ -1,0 +1,79 @@
+name: ecore
+description: "idocNet Ecore App"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.6
+  bloc: ^8.1.3
+  flutter_bloc: ^8.1.4
+  dartz: ^0.10.1
+  http: 0.13.5
+  equatable: ^2.0.5
+  file_picker: ^8.0.0+1
+  font_awesome_flutter: ^10.7.0
+  image_picker: ^1.0.7
+  lottie: ^3.0.0
+  open_file: ^3.3.2
+  path_provider: ^2.1.2
+  provider: ^6.1.2
+  shared_preferences: ^2.2.2
+  smooth_page_indicator: ^1.1.0
+  swipe_to: ^1.0.6
+  url_launcher: ^6.2.5
+  get_it: ^7.6.7
+  uuid: ^4.3.3
+  iconly: ^1.0.1
+  flutter_svg: ^2.0.0
+  multi_select_flutter: ^4.0.0
+
+  flutter_slidable: ^3.1.0
+  qr_code_scanner: ^1.0.1
+  flutter_image_compress: ^2.3.0
+  intl: ^0.19.0
+  path: ^1.9.0
+  flutter_webrtc: ^0.10.4
+  sip_ua: ^0.6.0
+
+  flutter_local_notifications: ^17.2.2
+  audioplayers: ^6.1.0
+  wakelock_plus: ^1.2.8
+  flutter_background: ^1.2.0
+  signalr_netcore: ^1.3.4
+  flutter_background_service: ^5.0.10
+  permission_handler: ^11.3.1
+  dropdown_button2: ^2.3.9
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  bloc_test: ^9.1.6
+  mocktail: ^1.0.3
+  very_good_analysis: ^5.1.0
+
+
+flutter:
+  uses-material-design: true
+
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/inter.ttf
+
+  assets:
+    - assets/audio/
+    - assets/fonts/
+    - assets/images/
+    - assets/icons/
+    - assets/icons/solutions/
+    - assets/icons/features/
+    - assets/icons/skycs_icons/
+    - assets/icons/apps/
+    - assets/lottie/
+    - assets/icons/call/

@@ -1,0 +1,198 @@
+import 'dart:async';
+import 'dart:ui';
+
+import 'package:ecore/core/utils/core_utils.dart';
+import 'package:flutter_background/flutter_background.dart';
+
+import '../../../core/services/app_background_service.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:provider/provider.dart';
+import 'package:sip_ua/sip_ua.dart';
+
+
+import 'core/providers/call_provider.dart';
+import 'core/providers/session_provider.dart';
+import 'package:ecore/src/dashboard/presentation/providers/dashboard_controller.dart';
+import 'core/configs/app_config.dart';
+import 'core/res/colors.dart';
+import 'core/res/fonts.dart';
+import 'core/services/injection_container.dart';
+import 'core/services/local_notification_service.dart';
+import 'core/services/router.dart';
+import 'core/services/signalr_service.dart';
+
+
+
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await init(AppEnviroments.development);
+  //await init(AppEnviroments.production);
+
+
+
+
+  runApp(const MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _AppState();
+}
+
+class _AppState extends State<MyApp>  with WidgetsBindingObserver { // (1) Use this mixin
+
+  late AppLifecycleState _lastLifecycleState;
+
+
+  Timer? _timer;
+  int _timerTotalSeconds = 0;
+
+  SIPUAHelper _callHelper = SIPUAHelper();
+
+  SignalRService _signalRService= SignalRService();
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+
+
+    setState(() {
+      _lastLifecycleState = state;
+    });
+
+    if(state== AppLifecycleState.detached)
+    //  if(state== AppLifecycleState.paused)
+    {
+      FlutterBackground.disableBackgroundExecution();
+     // stopBackgroundService();
+    }
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    initBackgroundService();
+    _signalRService.openHubConnection();
+    //startBackgroundService();
+  }
+
+
+
+
+
+  @override
+  void dispose() {
+
+
+
+    WidgetsBinding.instance.removeObserver(this);
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => SessionProvider()),
+        ChangeNotifierProvider(create: (_) => DashboardController()),
+        ChangeNotifierProvider(create: (_) => CallProvider(_callHelper))
+      ],
+      child: MaterialApp(
+        title: 'Ecore',
+        theme: ThemeData(
+            useMaterial3: true,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+            fontFamily: AppFonts.interFont,
+            appBarTheme: const AppBarTheme(
+              color: AppColors.primaryColor,
+            ),
+            colorScheme:
+            ColorScheme.fromSwatch(accentColor: AppColors.primaryColor)),
+        onGenerateRoute: generateRoute,
+      ),
+    );
+  }
+
+// ...
+ void initBackgroundService() async{
+   await LocalNotificationService().initialize();
+
+   // Request permissions for the flutter_background config
+   const config = FlutterBackgroundAndroidConfig(
+     notificationTitle: 'flutter_background example app',
+     notificationText:
+     'Background notification for keeping the example app running in the background',
+     notificationIcon: AndroidResource(name: 'background_icon'),
+     notificationImportance: AndroidNotificationImportance.Default,
+     enableWifiLock: true,
+     showBadge: true,
+   );
+
+   var hasPermissions = await FlutterBackground.hasPermissions;
+
+   // if (!hasPermissions) {
+   //   await showDialog(
+   //       context: context,
+   //       builder: (context) {
+   //         return AlertDialog(
+   //             title: const Text('Permissions needed'),
+   //             content: const Text(
+   //                 'Shortly the OS will ask you for permission to execute this app in the background. This is required in order to receive chat messages when the app is not in the foreground.'),
+   //             actions: [
+   //               TextButton(
+   //                 onPressed: () => Navigator.pop(context, 'OK'),
+   //                 child: const Text('OK'),
+   //               ),
+   //             ]);
+   //       });
+   // }
+
+   hasPermissions = await FlutterBackground.initialize(androidConfig: config);
+
+   if (hasPermissions) {
+     final backgroundExecution =
+     await FlutterBackground.enableBackgroundExecution();
+     if(backgroundExecution)
+       {
+
+         LocalNotificationService().newNotification(
+             message: 'Ecore background', detail: 'App run on background!');
+
+
+         _timer?.cancel();
+         _timer = Timer.periodic(const Duration(seconds: 60), (_) {
+
+           _timerTotalSeconds += 60;
+
+           final hours = _timerTotalSeconds ~/ 3600;
+           final minutes = (_timerTotalSeconds ~/ 60) % 60;
+           final seconds = _timerTotalSeconds % 60;
+
+
+
+
+           final message =
+               'Background service alive for ${hours}h ${minutes}m ${seconds}s, ${_callHelper.registerState.state?.name}';
+           LocalNotificationService().newNotification(
+               message: 'Ecore background', detail: message);
+
+
+         });
+
+       }
+     else
+       LocalNotificationService().newNotification(
+           message: 'Ecore background', detail: 'App failed to run on background!');
+
+   }
+ }
+}
