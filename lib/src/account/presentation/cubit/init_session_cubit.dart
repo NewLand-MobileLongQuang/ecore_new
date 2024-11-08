@@ -18,7 +18,7 @@ import 'package:sip_ua/sip_ua.dart';
 import '../../../../core/modules/auth/domain/entities/session_info.dart';
 import '../../../../core/modules/auth/domain/usecases/save_session_info.dart';
 import '../../../../core/modules/localization/domain/usecases/get_locale_local_data.dart';
-import '../../../../core/services/injection_container.dart';
+import '../../../../core/services/injection/injection_container.dart';
 part 'init_session_state.dart';
 
 class InitSessionCubit extends Cubit<InitSessionState> {

@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/modules/auth/domain/entities/org.dart';
 import '../../../../core/modules/auth/domain/entities/session_info.dart';
@@ -40,18 +40,35 @@ class AuthCubit extends Cubit<AuthState> {
   final GetByNetworks _getByNetworks;
   final GetForCurrentUser _getForCurrentUser;
 
-  Future<void> login({required String email, required String password}) async {
+  Future<void> init() async {
+    final prefs = await SharedPreferences.getInstance();
+    final email = prefs.getString('cached_email') ?? '';
+    final password = prefs.getString('cached_password') ?? '';
+    final rememberMe = prefs.getBool('remember_me') ?? false;
+    if(rememberMe == true) {
+      emit(AuthStateLoaded(email: email, password: password, rememberMe: rememberMe));
+    }
+    else {
+      emit(AuthStateLoaded(email: '', password: '', rememberMe: rememberMe));
+    }
+  }
+
+  Future<void> login({required String email, required String password, required bool rememberMe}) async {
+    final currentState = state;
     emit(const AuthStateLoading());
     final result = await _login(LoginParams(email: email, password: password));
 
-    result.fold((failure) => emit(AuthError(message: failure.Message??"")),
+    result.fold((failure) {
+      emit(AuthError(message: failure.Message??""));
+      emit(currentState);
+    },
         (r) async {
       SessionInfo.reset();
       final empty=SessionInfo.current();
       final session1 = SessionInfo(user: empty.user, auth: r);
       await _saveSessionInfo(session1);
 
-
+      await _saveEmailToCache(email, password, rememberMe);
 
       final cresult = await _getCurrentUser(r.AccessToken);
 
@@ -103,5 +120,12 @@ class AuthCubit extends Cubit<AuthState> {
 
 
     emit(AuthNetworkSelected(network: network));
+  }
+
+  Future<void> _saveEmailToCache(String email, String password, bool rememberMe) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('cached_email', email);
+    await prefs.setString('cached_password', password);
+    await prefs.setBool('remember_me', rememberMe);
   }
 }

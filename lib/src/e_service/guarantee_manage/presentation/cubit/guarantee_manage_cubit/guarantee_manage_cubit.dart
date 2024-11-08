@@ -42,7 +42,7 @@ class GuaranteeManageCubit extends Cubit<GuaranteeManageState> {
           Remark: '',
           OrgID: '',
           Ft_PageIndex: '0',
-          Ft_PageSize: '200',
+          Ft_PageSize: '1000',
         ),
       );
       listDetail = list.fold((l) => null, (r) => r);

@@ -1,8 +1,7 @@
 
+import 'package:ecore/core/res/colors.dart';
+import 'package:ecore/core/res/text_styles.dart';
 import 'package:flutter/material.dart';
-
-import '../../../res/colors.dart';
-import '../../../res/text_styles.dart';
 
 class ITextField extends StatelessWidget {
   const ITextField(
@@ -74,28 +73,28 @@ class ITextField extends StatelessWidget {
       obscureText: obscureText,
       readOnly: readOnly,
       decoration: InputDecoration(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-            borderSide: BorderSide(color: colorBorder ?? Colors.grey),
-          ),
-          focusedBorder: readOnly == false
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5),
+          borderSide: BorderSide(color: colorBorder ?? Colors.grey),
+        ),
+        focusedBorder: readOnly == false
             ? OutlineInputBorder(
-              borderRadius: BorderRadius.circular(5),
-              borderSide: const BorderSide(color: AppColors.primaryColor),
-            ): OutlineInputBorder(
-              borderRadius: BorderRadius.circular(5),
-              borderSide: const BorderSide(color: Colors.grey),
-            ),
-          filled: filled,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          fillColor: fillColor,
-          suffixIcon: suffixIcon,
-          hintText: hintText,
-          labelText: label,
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          hintStyle: hintStyle?? AppTextStyles.textStyleInterW400S16Grey,
-          labelStyle: hintStyle?? AppTextStyles.textStyleInterW400S16Black,
+          borderRadius: BorderRadius.circular(5),
+          borderSide: const BorderSide(color: AppColors.primaryColor),
+        ): OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5),
+          borderSide: const BorderSide(color: Colors.grey),
+        ),
+        filled: filled,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        fillColor: fillColor,
+        suffixIcon: suffixIcon,
+        hintText: hintText,
+        labelText: label,
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        hintStyle: hintStyle?? AppTextStyles.textStyleInterW400S16Grey,
+        labelStyle: hintStyle?? AppTextStyles.textStyleInterW400S16Black,
       ),
     );
   }

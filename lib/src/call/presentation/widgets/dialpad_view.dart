@@ -2,7 +2,6 @@ import 'package:ecore/src/call/presentation/views/incall_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../fake_data/fake_data_eTicket.dart';
 import '../cubit/dialpad_cubit.dart';
 import 'dialpad_calling.dart';
 import 'dialpad_input_loaded.dart';

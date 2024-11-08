@@ -21,22 +21,16 @@ class _InitSessionScreenState extends State<InitSessionScreen> {
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<InitSessionCubit>();
-
     cubit.init();
-
     return Scaffold(
       backgroundColor: Colors.white,
-      body: BlocConsumer<InitSessionCubit, InitSessionState>(
-          listener: (context, state) {
+      body: BlocConsumer<InitSessionCubit, InitSessionState>(listener: (context, state) {
         if (state is InitSessionLogin) {
           CoreUtils.showSnackBar(context, 'login');
           Navigator.pushReplacementNamed(context, LoginScreen.routeName);
         } else if (state is InitSessionSelectNetwork) {
           CoreUtils.showSnackBar(context, 'select network');
-          Navigator.pushReplacementNamed(
-              context, SelectNetworkScreen.routeName);
-
-
+          Navigator.pushReplacementNamed(context, SelectNetworkScreen.routeName);
         } else if (state is InitSessionInitCall) {
           //Navigator.pushReplacementNamed(context, CallRegisterScreen.routeName);
         } else if (state is InitSessionSaveSession) {
@@ -45,10 +39,8 @@ class _InitSessionScreenState extends State<InitSessionScreen> {
             Navigator.pushReplacementNamed(
                 context, CallRegisterScreen.routeName,
                 arguments: state.sessionInfo);
-
             //Navigator.pushReplacementNamed(context, Dashboard.routeName);
           }
-
           else {
             CoreUtils.showSnackBar(context, 'No calling information');
             Navigator.pushReplacementNamed(context, LoginScreen.routeName);
@@ -61,6 +53,5 @@ class _InitSessionScreenState extends State<InitSessionScreen> {
         return const LoadingView();
       }),
     );
-    return const LoadingView();
   }
 }

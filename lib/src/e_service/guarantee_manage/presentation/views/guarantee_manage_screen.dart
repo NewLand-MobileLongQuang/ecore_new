@@ -1,19 +1,22 @@
+import 'package:ecore/core/common/widgets/loading_view.dart';
+import 'package:ecore/core/res/text_styles.dart';
+import 'package:ecore/core/utils/localization_helper.dart';
+import 'package:ecore/src/e_service/common/solution_context_extensions.dart';
+import 'package:ecore/src/e_service/common/utils.dart';
+import 'package:ecore/src/e_service/guarantee_manage/presentation/views/guarantee_activate_screen.dart';
+import 'package:ecore/src/e_service/guarantee_manage/presentation/views/guarantee_detail_screen.dart';
+import 'package:ecore/src/e_service/guarantee_manage/presentation/views/guarantee_edit_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-
 import 'package:ecore/core/common/widgets/inputs/i_dialog.dart';
 import 'package:ecore/core/common/widgets/inputs/i_search.dart';
 import 'package:ecore/core/res/colors.dart';
 import 'package:ecore/core/res/strings.dart';
-
-import 'package:ecore/core/utils/string_generate.dart';
 import 'package:ecore/src/e_service/guarantee_manage/data/models/es_warranty_delete_model.dart';
 import 'package:ecore/src/e_service/guarantee_manage/domain/entities/es_warranty_detail.dart';
 import 'package:ecore/src/e_service/guarantee_manage/presentation/cubit/guarantee_manage_cubit/guarantee_manage_cubit.dart';
-
-import '../../../../../core/common/widgets/loading_view.dart';
-import '../../../../../core/res/text_styles.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class GuaranteeManageScreen extends StatefulWidget {
   const GuaranteeManageScreen({super.key});
@@ -36,17 +39,20 @@ class _GuaranteeManageScreenState extends State<GuaranteeManageScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.localizer(GuaranteeManageScreen.routeName);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.primaryColor,
         leading: IconButton(
           icon: const Icon(
-            Icons.arrow_back_ios_new_rounded,
+            FontAwesomeIcons.chevronLeft,
             color: AppColors.textWhiteColor,
+            size: 20,
           ),
           onPressed: () => Navigator.of(context).maybePop(),
         ),
-        title: _textTitle(),
+        title: _textTitle(l),
       ),
       body: RefreshIndicator(
         onRefresh: () async {
@@ -90,9 +96,9 @@ class _GuaranteeManageScreenState extends State<GuaranteeManageScreen> {
     );
   }
 
-  Widget _textTitle() {
+  Widget _textTitle(LocalizationHelper l) {
     return Text(
-      AppStrings.guaranteeManageTitle,
+      l(AppStrings.guaranteeManageTitle),
       style: AppTextStyles.textStyleInterW500S18White,
       maxLines: 2,
     );
@@ -114,7 +120,7 @@ class _GuaranteeManageScreenState extends State<GuaranteeManageScreen> {
     return Expanded(
       child: ListView.separated(
         itemCount: listGuarantee.length,
-        separatorBuilder: (context, index) => Container(height: 1, color: AppColors.divideColor,),
+        separatorBuilder: (context, index) => Container(height: 8),
         itemBuilder: (context, index) {
           return _itemGuarantee(context, listGuarantee[index]);
         },
@@ -125,44 +131,56 @@ class _GuaranteeManageScreenState extends State<GuaranteeManageScreen> {
   Widget _itemGuarantee(BuildContext context, ES_WarrantyDetail eS_WarrantyDetail) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, '/guarantee-detail', arguments: eS_WarrantyDetail.WarrantyNo)
-            .then((value) {
+        context.pushNamed(
+          EServiceUtils.getFullRouteName(GuaranteeDetailScreen.routeName),
+          arguments: eS_WarrantyDetail.WarrantyNo,
+        ).then((value) {
           if (value != null && value == true) {
             context.read<GuaranteeManageCubit>().init();
           }
         });
       },
-      child: Slidable(
-        endActionPane: ActionPane(
-          motion: const ScrollMotion(),
-          extentRatio: 0.6,
-          children: [
-            SlidableAction(
-              onPressed: (context) {
-                Navigator.pushNamed(context, '/guarantee-detail', arguments: eS_WarrantyDetail.WarrantyNo)
-                    .then((value) {
-                  if (value != null && value == true) {
-                    context.read<GuaranteeManageCubit>().init();
-                  }
-                });
-              },
-              backgroundColor: AppColors.textWhiteColor,
-              icon: null,
-              label: '',
-            ),
-            Container(
-              color: AppColors.textWhiteColor,
-              child: Column(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Row(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 4),
+        decoration: BoxDecoration(
+          color: AppColors.textYellowColor.withOpacity(0.1),
+          border: const Border.fromBorderSide(BorderSide(color: AppColors.textYellowColor)),
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+        ),
+        child: Slidable(
+          endActionPane: ActionPane(
+            motion: const ScrollMotion(),
+            extentRatio: 0.6,
+            children: [
+              SlidableAction(
+                onPressed: (context) {
+                  context.pushNamed(
+                    GuaranteeDetailScreen.routeName,
+                    arguments: eS_WarrantyDetail.WarrantyNo,
+                  ).then((value) {
+                    if (value != null && value == true) {
+                      context.read<GuaranteeManageCubit>().init();
+                    }
+                  });
+                },
+                backgroundColor: AppColors.transparent,
+                icon: null,
+                label: '',
+              ),
+              Container(
+                color: AppColors.transparent,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 4),
+                    Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         InkWell(
                           onTap: () {
-                            Navigator.pushNamed(context, '/guarantee-detail', arguments: eS_WarrantyDetail.WarrantyNo)
-                                .then((value) {
+                            context.pushNamed(
+                              GuaranteeDetailScreen.routeName,
+                              arguments: eS_WarrantyDetail.WarrantyNo,
+                            ).then((value) {
                               if (value != null && value == true) {
                                 context.read<GuaranteeManageCubit>().init();
                               }
@@ -170,15 +188,15 @@ class _GuaranteeManageScreenState extends State<GuaranteeManageScreen> {
                           },
                           child: Container(
                             height: 36,
-                            width: 48,
+                            width: 36,
                             decoration: const BoxDecoration(
                               color: AppColors.primaryColor,
                               borderRadius: BorderRadius.all(Radius.circular(5)),
                             ),
                             child: const Center(
                               child: Icon(
-                                Icons.perm_device_information,
-                                size: 20,
+                                FontAwesomeIcons.info,
+                                size: 16,
                                 color: AppColors.textWhiteColor,
                               ),
                             ),
@@ -187,9 +205,10 @@ class _GuaranteeManageScreenState extends State<GuaranteeManageScreen> {
                         const SizedBox(width: 4),
                         InkWell(
                           onTap: () {
-                            Navigator.of(context)
-                                .pushNamed('/guarantee-edit', arguments: eS_WarrantyDetail.WarrantyNo)
-                                .then((value) {
+                            context.pushNamed(
+                              GuaranteeEditScreen.routeName,
+                              arguments: eS_WarrantyDetail.WarrantyNo,
+                            ).then((value) {
                               if (value != null && value == true) {
                                 context.read<GuaranteeManageCubit>().init();
                               }
@@ -197,14 +216,14 @@ class _GuaranteeManageScreenState extends State<GuaranteeManageScreen> {
                           },
                           child: Container(
                             height: 36,
-                            width: 48,
+                            width: 36,
                             decoration: const BoxDecoration(
                               color: AppColors.primaryColor,
                               borderRadius: BorderRadius.all(Radius.circular(5)),
                             ),
                             child: const Icon(
-                              Icons.edit,
-                              size: 20,
+                              FontAwesomeIcons.pencil,
+                              size: 16,
                               color: AppColors.textWhiteColor,
                             ),
                           ),
@@ -230,65 +249,58 @@ class _GuaranteeManageScreenState extends State<GuaranteeManageScreen> {
                           },
                           child: Container(
                             height: 36,
-                            width: 48,
+                            width: 36,
                             decoration: const BoxDecoration(
-                              color: AppColors.buttonRedColor,
+                              color: AppColors.textRedColor,
                               borderRadius: BorderRadius.all(Radius.circular(5),
                               ),
                             ),
                             child: const Icon(
-                              Icons.delete,
-                              size: 20,
+                              FontAwesomeIcons.trashCan,
+                              size: 16,
                               color: AppColors.textWhiteColor,
                             ),
                           ),
                         ),
                       ],
                     ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Container(
-                      color: AppColors.textWhiteColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          width: double.infinity,
-          decoration: const BoxDecoration(
-            //borderRadius: BorderRadius.circular(8),
-            color: AppColors.textWhiteColor,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    eS_WarrantyDetail.SerialNo,
-                    style: AppTextStyles.textStyleInterW400S16Black,
-                  ),
-                  const Expanded(child: SizedBox()),
-                  Text(
-                    eS_WarrantyDetail.InstallationDTimeUTC,
-                    style: AppTextStyles.textStyleInterW400S14Grey,
-                  ),
-                ],
-              ),
-              Text(
-                eS_WarrantyDetail.ProductCodeUser,
-                style: AppTextStyles.textStyleInterW400S14Grey,
-              ),
-              Text(
-                'KH: ${eS_WarrantyDetail.CustomerName}',
-                style: AppTextStyles.textStyleInterW400S14Grey,
+                  ],
+                ),
               ),
             ],
+          ),
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              color: AppColors.transparent,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      eS_WarrantyDetail.SerialNo,
+                      style: AppTextStyles.textStyleInterW600S16Primary,
+                    ),
+                    const Expanded(child: SizedBox()),
+                    Text(
+                      eS_WarrantyDetail.InstallationDTimeUTC,
+                      style: AppTextStyles.textStyleInterW400S14Grey,
+                    ),
+                  ],
+                ),
+                Text(
+                  eS_WarrantyDetail.ProductCodeUser,
+                  style: AppTextStyles.textStyleInterW400S14Grey,
+                ),
+                Text(
+                  'KH: ${eS_WarrantyDetail.CustomerName}',
+                  style: AppTextStyles.textStyleInterW400S14Grey,
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -299,25 +311,29 @@ class _GuaranteeManageScreenState extends State<GuaranteeManageScreen> {
     return Row(
       children: [
         Expanded(child: Container()),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/guarantee-activate')
-                .then((value) {
+        InkWell(
+          splashColor: AppColors.transparent,
+          highlightColor: AppColors.transparent,
+          onTap: () {
+            context.pushNamed(
+              GuaranteeActivateScreen.routeName,
+            ).then((value) {
               if (value != null && value == true) {
                 context.read<GuaranteeManageCubit>().init();
               }
             });
           },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.primaryColor,
-            minimumSize: const Size(64, 36),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5),
+          child: Container(
+            margin: const EdgeInsets.only(top: 8),
+            padding: const EdgeInsets.all(16),
+            decoration: const BoxDecoration(
+              color: AppColors.primaryColor,
+              borderRadius: BorderRadius.all(Radius.circular(100)),
             ),
-          ),
-          child: const Icon(
-            Icons.add,
-            color: AppColors.textWhiteColor,
+            child: const Icon(
+              FontAwesomeIcons.plus,
+              color: AppColors.textWhiteColor,
+            ),
           ),
         ),
       ],

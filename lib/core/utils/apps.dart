@@ -11,8 +11,6 @@ class Apps {
   static List<Apps> listApps = [
     Apps(image: AppMediaRes.iconEService, title: 'E-Service'),
     Apps(image: AppMediaRes.iconSkyCS, title: 'SkyCS'),
-    Apps(image: AppMediaRes.iconDMS, title: 'E-Search'),
-    Apps(image: AppMediaRes.iconDMS, title: 'E-Mapping'),
   ];
 }
 
@@ -25,6 +23,7 @@ class AppEService {
   static List<AppEService> listSolutionEService = [
     AppEService(image: AppMediaRes.iconManage, title: 'Quản lí bảo hành'),
     AppEService(image: AppMediaRes.iconManage, title: 'Quản lí sửa chữa'),
+    AppEService(image: AppMediaRes.iconManage, title: 'Tra cứu lịch sử sửa chữa'),
   ];
 }
 

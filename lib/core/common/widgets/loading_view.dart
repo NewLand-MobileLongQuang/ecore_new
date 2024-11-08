@@ -1,3 +1,6 @@
+import 'package:ecore/core/res/colors.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+
 import '../../extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 
@@ -7,16 +10,11 @@ class LoadingView extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-        type: MaterialType.transparency,
-        child: Center(
-          child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(
-              context.theme.colorScheme.secondary
-            ),
-          ),
-        ),
+    return Center(
+      child: LoadingAnimationWidget.fourRotatingDots(
+        color: AppColors.primaryColor,
+        size: 40,
+      ),
     );
   }
-
 }

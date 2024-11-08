@@ -1,11 +1,10 @@
 import 'package:ecore/src/call/presentation/cubit/call_forward_cubit.dart';
-import 'package:ecore/src/call/presentation/widgets/call_forward_number_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/common/widgets/main_app_bar.dart';
 import '../../../../core/res/colors.dart';
 import '../../../../core/res/text_styles.dart';
-import '../../../../core/services/injection_container.dart';
+import '../../../../core/services/injection/injection_container.dart';
 import '../widgets/call_forward_agent_view.dart';
 
 class CallForwardScreen extends StatefulWidget {
@@ -63,7 +62,7 @@ class _CallForwardScreenState extends State<CallForwardScreen> {
                         const Center(
                           child: CircularProgressIndicator(),
                         ),
-                        CallForwardNumberView(),
+                        //CallForwardNumberView(),
                       ],
                     );
                   },

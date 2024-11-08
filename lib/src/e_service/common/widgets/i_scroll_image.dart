@@ -49,16 +49,21 @@ class _IScrollImageState extends State<IScrollImage> {
           children: [
             Text(
               widget.title ?? AppStrings.installImage,
-              style: AppTextStyles.textStyleInterW500S14Black,
+              style: AppTextStyles.textStyleInterW600S16Black,
             ),
             Expanded(child: Container()),
             if(widget.flagGallery != null)...[
               InkWell(
                 onTap: () async {
-                  final imageFromGallery = await ICamera.pickImageFromGallery();
-                  setState(() {
-                    widget.listFile?.add(imageFromGallery);
-                  });
+                  if((widget.listWarrantyAttachFile?.length ?? 0)
+                      + (widget.listFile?.length ?? 0)
+                      + (widget.listROAttachFile?.length ?? 0) < 3
+                  ){
+                    final imageFromGallery = await ICamera.pickImageFromGallery();
+                    setState(() {
+                      widget.listFile?.add(imageFromGallery);
+                    });
+                  }
                 },
                 child: Container(
                   height: 36,
@@ -85,10 +90,15 @@ class _IScrollImageState extends State<IScrollImage> {
             if(widget.flagCamera != null)...[
               InkWell(
                 onTap: () async {
-                  final imageFromCamera = await ICamera.pickImageFromCamera();
-                  setState(() {
-                    widget.listFile?.add(imageFromCamera);
-                  });
+                  if((widget.listWarrantyAttachFile?.length ?? 0)
+                      + (widget.listFile?.length ?? 0)
+                      + (widget.listROAttachFile?.length ?? 0) < 3
+                  ){
+                    final imageFromCamera = await ICamera.pickImageFromCamera();
+                    setState(() {
+                      widget.listFile?.add(imageFromCamera);
+                    });
+                  }
                 },
                 child: Container(
                   height: 36,

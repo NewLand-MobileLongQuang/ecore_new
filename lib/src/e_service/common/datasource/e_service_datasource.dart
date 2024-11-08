@@ -1,9 +1,6 @@
-import 'package:ecore/core/configs/app_config.dart';
 import 'package:ecore/core/errors/exceptions.dart';
 import 'package:ecore/core/utils/string_generate.dart';
 import 'package:ecore/core/utils/typedef.dart';
-
-import 'package:ecore/src/e_service/advanced_search/data/models/adsearch_model.dart';
 import 'package:ecore/src/e_service/common/utils.dart';
 import 'package:ecore/src/e_service/customer_manage/data/models/es_customer_model.dart';
 import 'package:ecore/src/e_service/customer_manage/data/models/rt_es_customer_detail_model.dart';
@@ -29,7 +26,7 @@ class EServiceSvDataSource extends BaseRemoteDataSrc {
   Map<String, String>? getHeaders() {
     final ss = SessionInfo.current();
 
-    var solutionInfo= EserviceUtils.getSolution();
+    var solutionInfo= EServiceUtils.getSolution();
     return {
       'Authorization': 'Bearer ${ss.auth.AccessToken}',
       'NetworkId': ss.org?.Id.toString() ?? '',
@@ -48,10 +45,12 @@ class EServiceSvDataSource extends BaseRemoteDataSrc {
   @override
   String get baseUrl {
     final ss = SessionInfo.current();
-    var url = ss.getCache(EserviceUtils.getApiUrlKey());
-    if(url!=null && url.isNotEmpty )return url;
-
-    else throw const ApiException(Message: 'No Api Url');
+    var url = ss.getCache(EServiceUtils.getApiUrlKey());
+    if(url!=null && url.isNotEmpty ) {
+      return url;
+    } else {
+      throw const ApiException(Message: 'No Api Url');
+    }
   }
 
 
@@ -285,132 +284,132 @@ Future<ClientgateModel<RT_ES_WarrantyDetailModel>> postGetByWarrantyNo(
     }
   }
 
-  Future<ClientgateModel<MDMetaColGroupSpecSearchModel>> postGetaAdvancedSearch(
-      {required String path, DataMap? params}) async {
-    final ss = SessionInfo.current();
-    final response = {
-      "Data": {
-        "_strTId": "01760b76-7fab-43bf-b41c-849779d5e973",
-        "_strAppTId": "39dcc024-048c-4022-8a20-3adfe94d1ddc",
-        "_objTTime": "2024-06-26 16:35:36.970",
-        "_strType": "MDMetaColGroupSpecSearch",
-        "_strErrCode": "0",
-        "_objResult": {
-          "PageIndex": 0,
-          "PageSize": 1000,
-          "PageCount": 1,
-          "ItemCount": 4,
-          "DataList": [
-            {
-              "OrgID": "7206207001",
-              "ColGrpCodeSys": "COLGRPCODESYS.2023.01",
-              "ColCodeSys": "C003",
-              "NetworkID": "7206207001",
-              "ColOperatorType": "EQUAL",
-              "OrderIdx": 14,
-              "JsonRenderParams": null,
-              "JsonListOption": null,
-              "FlagIsNotNull": "0",
-              "FlagIsCheckDuplicate": "0",
-              "FlagIsQuery": "0",
-              "FlagActive": "1",
-              "LogLUDTimeUTC": "2024-06-03 03:51:40",
-              "LogLUBy": "0317844394@INOS.VN",
-              "ColCode": "C002",
-              "ColCaption": "Quy mô nhân sự",
-              "ColDataType": "SELECTONEDROPDOWN",
-              "FlagIsColDynamic": "1",
-              "SqlOperatorType": "=",
-              "mdmc_JsonListOption":
-                  "[{\"Value\":\"Dưới 10\",\"IsSelected\":false,\"id\":\"\",\"OrderIdx\":0},{\"Value\":\"Từ 10 - 100 \",\"IsSelected\":false,\"id\":\"\",\"OrderIdx\":1},{\"Value\":\"Từ 100 - 200\",\"IsSelected\":false,\"id\":\"\",\"OrderIdx\":2},{\"Value\":\"Từ 200 - 1000\",\"IsSelected\":false,\"id\":\"\",\"OrderIdx\":3},{\"Value\":\"Trên 1000\",\"IsSelected\":false,\"id\":\"\",\"OrderIdx\":4}]",
-              "Lst_MD_OptionValue": null
-            },
-            {
-              "OrgID": "7206207001",
-              "ColGrpCodeSys": "COLGRPCODESYS.2023.01",
-              "ColCodeSys": "C005",
-              "NetworkID": "7206207001",
-              "ColOperatorType": "LIKE",
-              "OrderIdx": 21,
-              "JsonRenderParams": null,
-              "JsonListOption": null,
-              "FlagIsNotNull": "0",
-              "FlagIsCheckDuplicate": "0",
-              "FlagIsQuery": "0",
-              "FlagActive": "1",
-              "LogLUDTimeUTC": "2024-06-03 03:51:40",
-              "LogLUBy": "0317844394@INOS.VN",
-              "ColCode": "C004",
-              "ColCaption": "Chức vụ",
-              "ColDataType": "TEXT",
-              "FlagIsColDynamic": "1",
-              "SqlOperatorType": "like",
-              "mdmc_JsonListOption": "[]",
-              "Lst_MD_OptionValue": null
-            },
-            {
-              "OrgID": "7206207001",
-              "ColGrpCodeSys": "COLGRPCODESYS.2023.01",
-              "ColCodeSys": "C007",
-              "NetworkID": "7206207001",
-              "ColOperatorType": "EQUAL",
-              "OrderIdx": 7,
-              "JsonRenderParams": null,
-              "JsonListOption": null,
-              "FlagIsNotNull": "0",
-              "FlagIsCheckDuplicate": "0",
-              "FlagIsQuery": "0",
-              "FlagActive": "1",
-              "LogLUDTimeUTC": "2024-06-03 03:51:40",
-              "LogLUBy": "0317844394@INOS.VN",
-              "ColCode": "C006",
-              "ColCaption": "Giới tính",
-              "ColDataType": "SELECTONERADIO",
-              "FlagIsColDynamic": "1",
-              "SqlOperatorType": "=",
-              "mdmc_JsonListOption":
-                  "[{\"Value\":\"Male\",\"IsSelected\":false,\"id\":\"\",\"OrderIdx\":0},{\"Value\":\"Female\",\"IsSelected\":false,\"id\":\"\",\"OrderIdx\":1},{\"Value\":\"Other\",\"IsSelected\":false,\"id\":\"\",\"OrderIdx\":2},{\"Value\":\" \",\"IsSelected\":true,\"id\":\"\",\"OrderIdx\":3}]",
-              "Lst_MD_OptionValue": null
-            },
-            {
-              "OrgID": "7206207001",
-              "ColGrpCodeSys": "COLGRPCODESYS.2023.01",
-              "ColCodeSys": "C009",
-              "NetworkID": "7206207001",
-              "ColOperatorType": "RANGE",
-              "OrderIdx": 9,
-              "JsonRenderParams": null,
-              "JsonListOption": null,
-              "FlagIsNotNull": "0",
-              "FlagIsCheckDuplicate": "0",
-              "FlagIsQuery": "0",
-              "FlagActive": "1",
-              "LogLUDTimeUTC": "2024-06-03 03:51:40",
-              "LogLUBy": "0317844394@INOS.VN",
-              "ColCode": "C008",
-              "ColCaption": "Ngày sinh",
-              "ColDataType": "DATE",
-              "FlagIsColDynamic": "1",
-              "SqlOperatorType": "=>;<=",
-              "mdmc_JsonListOption": "[]",
-              "Lst_MD_OptionValue": null
-            }
-          ]
-        },
-        "_dicExcs": {},
-        "_dicDebug": {}
-      }
-    };
-    if (response == null) {
-      throw const ApiException(Message: 'No data');
-    } else {
-      final res = ClientgateModel.fromJsonObjDataList(
-        response['Data']! as DataMap,
-        (data) => MDMetaColGroupSpecSearchModel.fromMap(data as DataMap),
-      );
-      return res;
-    }
-  }
+  // Future<ClientgateModel<MDMetaColGroupSpecSearchModel>> postGetaAdvancedSearch(
+  //     {required String path, DataMap? params}) async {
+  //   final ss = SessionInfo.current();
+  //   final response = {
+  //     "Data": {
+  //       "_strTId": "01760b76-7fab-43bf-b41c-849779d5e973",
+  //       "_strAppTId": "39dcc024-048c-4022-8a20-3adfe94d1ddc",
+  //       "_objTTime": "2024-06-26 16:35:36.970",
+  //       "_strType": "MDMetaColGroupSpecSearch",
+  //       "_strErrCode": "0",
+  //       "_objResult": {
+  //         "PageIndex": 0,
+  //         "PageSize": 1000,
+  //         "PageCount": 1,
+  //         "ItemCount": 4,
+  //         "DataList": [
+  //           {
+  //             "OrgID": "7206207001",
+  //             "ColGrpCodeSys": "COLGRPCODESYS.2023.01",
+  //             "ColCodeSys": "C003",
+  //             "NetworkID": "7206207001",
+  //             "ColOperatorType": "EQUAL",
+  //             "OrderIdx": 14,
+  //             "JsonRenderParams": null,
+  //             "JsonListOption": null,
+  //             "FlagIsNotNull": "0",
+  //             "FlagIsCheckDuplicate": "0",
+  //             "FlagIsQuery": "0",
+  //             "FlagActive": "1",
+  //             "LogLUDTimeUTC": "2024-06-03 03:51:40",
+  //             "LogLUBy": "0317844394@INOS.VN",
+  //             "ColCode": "C002",
+  //             "ColCaption": "Quy mô nhân sự",
+  //             "ColDataType": "SELECTONEDROPDOWN",
+  //             "FlagIsColDynamic": "1",
+  //             "SqlOperatorType": "=",
+  //             "mdmc_JsonListOption":
+  //                 "[{\"Value\":\"Dưới 10\",\"IsSelected\":false,\"id\":\"\",\"OrderIdx\":0},{\"Value\":\"Từ 10 - 100 \",\"IsSelected\":false,\"id\":\"\",\"OrderIdx\":1},{\"Value\":\"Từ 100 - 200\",\"IsSelected\":false,\"id\":\"\",\"OrderIdx\":2},{\"Value\":\"Từ 200 - 1000\",\"IsSelected\":false,\"id\":\"\",\"OrderIdx\":3},{\"Value\":\"Trên 1000\",\"IsSelected\":false,\"id\":\"\",\"OrderIdx\":4}]",
+  //             "Lst_MD_OptionValue": null
+  //           },
+  //           {
+  //             "OrgID": "7206207001",
+  //             "ColGrpCodeSys": "COLGRPCODESYS.2023.01",
+  //             "ColCodeSys": "C005",
+  //             "NetworkID": "7206207001",
+  //             "ColOperatorType": "LIKE",
+  //             "OrderIdx": 21,
+  //             "JsonRenderParams": null,
+  //             "JsonListOption": null,
+  //             "FlagIsNotNull": "0",
+  //             "FlagIsCheckDuplicate": "0",
+  //             "FlagIsQuery": "0",
+  //             "FlagActive": "1",
+  //             "LogLUDTimeUTC": "2024-06-03 03:51:40",
+  //             "LogLUBy": "0317844394@INOS.VN",
+  //             "ColCode": "C004",
+  //             "ColCaption": "Chức vụ",
+  //             "ColDataType": "TEXT",
+  //             "FlagIsColDynamic": "1",
+  //             "SqlOperatorType": "like",
+  //             "mdmc_JsonListOption": "[]",
+  //             "Lst_MD_OptionValue": null
+  //           },
+  //           {
+  //             "OrgID": "7206207001",
+  //             "ColGrpCodeSys": "COLGRPCODESYS.2023.01",
+  //             "ColCodeSys": "C007",
+  //             "NetworkID": "7206207001",
+  //             "ColOperatorType": "EQUAL",
+  //             "OrderIdx": 7,
+  //             "JsonRenderParams": null,
+  //             "JsonListOption": null,
+  //             "FlagIsNotNull": "0",
+  //             "FlagIsCheckDuplicate": "0",
+  //             "FlagIsQuery": "0",
+  //             "FlagActive": "1",
+  //             "LogLUDTimeUTC": "2024-06-03 03:51:40",
+  //             "LogLUBy": "0317844394@INOS.VN",
+  //             "ColCode": "C006",
+  //             "ColCaption": "Giới tính",
+  //             "ColDataType": "SELECTONERADIO",
+  //             "FlagIsColDynamic": "1",
+  //             "SqlOperatorType": "=",
+  //             "mdmc_JsonListOption":
+  //                 "[{\"Value\":\"Male\",\"IsSelected\":false,\"id\":\"\",\"OrderIdx\":0},{\"Value\":\"Female\",\"IsSelected\":false,\"id\":\"\",\"OrderIdx\":1},{\"Value\":\"Other\",\"IsSelected\":false,\"id\":\"\",\"OrderIdx\":2},{\"Value\":\" \",\"IsSelected\":true,\"id\":\"\",\"OrderIdx\":3}]",
+  //             "Lst_MD_OptionValue": null
+  //           },
+  //           {
+  //             "OrgID": "7206207001",
+  //             "ColGrpCodeSys": "COLGRPCODESYS.2023.01",
+  //             "ColCodeSys": "C009",
+  //             "NetworkID": "7206207001",
+  //             "ColOperatorType": "RANGE",
+  //             "OrderIdx": 9,
+  //             "JsonRenderParams": null,
+  //             "JsonListOption": null,
+  //             "FlagIsNotNull": "0",
+  //             "FlagIsCheckDuplicate": "0",
+  //             "FlagIsQuery": "0",
+  //             "FlagActive": "1",
+  //             "LogLUDTimeUTC": "2024-06-03 03:51:40",
+  //             "LogLUBy": "0317844394@INOS.VN",
+  //             "ColCode": "C008",
+  //             "ColCaption": "Ngày sinh",
+  //             "ColDataType": "DATE",
+  //             "FlagIsColDynamic": "1",
+  //             "SqlOperatorType": "=>;<=",
+  //             "mdmc_JsonListOption": "[]",
+  //             "Lst_MD_OptionValue": null
+  //           }
+  //         ]
+  //       },
+  //       "_dicExcs": {},
+  //       "_dicDebug": {}
+  //     }
+  //   };
+  //   if (response == null) {
+  //     throw const ApiException(Message: 'No data');
+  //   } else {
+  //     final res = ClientgateModel.fromJsonObjDataList(
+  //       response['Data']! as DataMap,
+  //       (data) => MDMetaColGroupSpecSearchModel.fromMap(data as DataMap),
+  //     );
+  //     return res;
+  //   }
+  // }
 
   Future<ClientgateModel<void>> postChange(
       {required String path, DataMap? params}) async {

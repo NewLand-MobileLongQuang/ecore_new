@@ -10,7 +10,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../../../core/res/colors.dart';
 import '../../../../../../core/res/media_res.dart';
 import '../../../../../../core/res/text_styles.dart';
-import '../../../../fake_data/person_contact.dart';
 import '../cubit/dialpad_cubit.dart';
 
 class DialpadInputLoadedView extends StatefulWidget {
@@ -37,7 +36,7 @@ class _DialpadInputLoadedViewState extends State<DialpadInputLoadedView> {
     '0',
     '#'
   ];
-  String dropdownValue = PersonContact.listPhone.first;
+  //String dropdownValue = PersonContact.listPhone.first;
 
   @override
   Widget build(BuildContext context) {
@@ -157,9 +156,7 @@ class _DialpadInputLoadedViewState extends State<DialpadInputLoadedView> {
   }
 
   Widget _phoneArea(DialpadInputLoaded state) {
-    final newList = PersonContact.listContact
-        .where((element) => element.phone.contains(state.phoneNumber))
-        .toList();
+    var newList;
     return Column(
       children: [
         Container(
@@ -185,9 +182,6 @@ class _DialpadInputLoadedViewState extends State<DialpadInputLoadedView> {
               color: Colors.transparent,
             ),
             onChanged: (String? value) {
-              setState(() {
-                dropdownValue = value!;
-              });
             },
             items: context.sessionInfo!.callingInfo != null
                 ? context.sessionInfo!.callingInfo!.CalloutNumbers!

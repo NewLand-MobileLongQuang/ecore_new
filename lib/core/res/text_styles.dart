@@ -10,6 +10,7 @@ class AppTextStyles {
   //font weight
   static TextStyle textStyleInterW400 = textStyleInter.copyWith(fontWeight: FontWeight.w400);
   static TextStyle textStyleInterW500 = textStyleInter.copyWith(fontWeight: FontWeight.w500);
+  static TextStyle textStyleInterW600 = textStyleInter.copyWith(fontWeight: FontWeight.w600);
 
   //font size
   static TextStyle textStyleInterW400S11 = textStyleInterW400.copyWith(fontSize: 11);
@@ -26,6 +27,8 @@ class AppTextStyles {
   static TextStyle textStyleInterW500S18 = textStyleInterW500.copyWith(fontSize: 18);
   static TextStyle textStyleInterW500S32 = textStyleInterW400.copyWith(fontSize: 32);
 
+  static TextStyle textStyleInterW600S16 = textStyleInterW600.copyWith(fontSize: 16);
+
   //color
   static TextStyle textStyleInterW400S11White= textStyleInterW400S11.copyWith(color: AppColors.textWhiteColor);
 
@@ -36,11 +39,13 @@ class AppTextStyles {
   static TextStyle textStyleInterW400S14Grey = textStyleInterW400S14.copyWith(color: AppColors.textGreyColor);
   static TextStyle textStyleInterW400S14Red = textStyleInterW400S14.copyWith(color: AppColors.buttonRedColor);
   static TextStyle textStyleInterW400S14Black = textStyleInterW400S14.copyWith(color: AppColors.textBlackColor);
+  static TextStyle textStyleInterW400S14Primary = textStyleInterW400S14.copyWith(color: AppColors.primaryColor);
 
   static TextStyle textStyleInterW400S16Black = textStyleInterW400S16.copyWith(color: AppColors.textBlackColor);
   static TextStyle textStyleInterW400S16Grey = textStyleInterW400S16.copyWith(color: AppColors.textGreyColor);
   static TextStyle textStyleInterW400S16Red = textStyleInterW400S16.copyWith(color: AppColors.buttonRedColor);
   static TextStyle textStyleInterW400S16Primary = textStyleInterW400S16.copyWith(color: AppColors.primaryColor);
+  static TextStyle textStyleInterW400S16Blue = textStyleInterW400S16.copyWith(color: AppColors.textBlueColor);
   static TextStyle textStyleInterW400S16White = textStyleInterW400S16.copyWith(color: AppColors.textWhiteColor);
 
   static TextStyle textStyleInterW400S24Black = textStyleInterW400S24.copyWith(color: AppColors.textBlackColor);
@@ -69,7 +74,7 @@ class AppTextStyles {
 
   static TextStyle textStyleInterW500S32Black = textStyleInterW500S32.copyWith(color: AppColors.textBlackColor);
   static TextStyle textStyleInterW500S32Red = textStyleInterW500S32.copyWith(color: AppColors.textRedColor);
-  static TextStyle textStyleInterW400S14Primary = textStyleInterW400S14.copyWith(color: AppColors.primaryColor);
 
-
+  static TextStyle textStyleInterW600S16Primary = textStyleInterW600S16.copyWith(color: AppColors.primaryColor);
+  static TextStyle textStyleInterW600S16Black = textStyleInterW600S16.copyWith(color: AppColors.textBlackColor);
 }

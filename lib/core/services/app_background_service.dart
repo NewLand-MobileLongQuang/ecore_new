@@ -11,7 +11,7 @@ import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:sip_ua/sip_ua.dart';
 
-import 'injection_container.dart';
+import 'injection/injection_container.dart';
 import 'local_notification_service.dart';
 //import 'package:wakelock_plus/wakelock_plus.dart';
 

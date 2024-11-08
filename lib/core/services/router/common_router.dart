@@ -1,6 +1,5 @@
 import 'package:ecore/src/account/presentation/cubit/init_session_cubit.dart';
 import 'package:ecore/src/account/presentation/views/init_session_screen.dart';
-import 'package:ecore/src/call/presentation/cubit/call_history_cubit.dart';
 import 'package:ecore/src/call/presentation/cubit/call_register_cubit.dart';
 import 'package:ecore/src/call/presentation/cubit/dialpad_cubit.dart';
 import 'package:ecore/src/call/presentation/views/call_history_screen.dart';
@@ -8,9 +7,6 @@ import 'package:ecore/src/call/presentation/views/call_register_screen.dart';
 import 'package:ecore/src/call/presentation/views/forward_screen.dart';
 import 'package:ecore/src/call/presentation/views/incall_screen.dart';
 import 'package:sip_ua/sip_ua.dart';
-
-
-
 import '../../../src/account/presentation/cubit/auth_cubit.dart';
 import '../../../src/account/presentation/views/login_screen.dart';
 import '../../../src/account/presentation/views/select_network_screen.dart';
@@ -20,8 +16,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../injection_container.dart';
-import '../router.dart';
+import '../injection/injection_container.dart';
+import 'router.dart';
 
 
 PageRouteBuilder? handleCaseCommon(RouteSettings settings) {

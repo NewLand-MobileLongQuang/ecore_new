@@ -42,7 +42,7 @@ import 'package:http/http.dart' as http;
 import '../../modules/localization/data/repos/localization_repo_impl.dart';
 import '../../modules/localization/domain/usecases/add_locale_remotedata.dart';
 import '../../modules/localization/domain/usecases/get_locale_remote_data.dart';
-import '../injection_container.dart';
+import 'injection_container.dart';
 
 Future<void> authInit() async {
   final prefs = await SharedPreferences.getInstance();

@@ -7,8 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../core/res/colors.dart';
 import '../../../../core/res/text_styles.dart';
-import '../../../../core/services/injection_container.dart';
-import '../../../../fake_data/person_contact.dart';
+import '../../../../core/services/injection/injection_container.dart';
 import '../../domain/entities/agent.dart';
 
 class CallForwardAgentView extends StatefulWidget {

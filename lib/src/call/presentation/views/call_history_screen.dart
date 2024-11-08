@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/common/widgets/main_app_bar.dart';
-import '../../../../core/services/injection_container.dart';
+import '../../../../core/services/injection/injection_container.dart';
 import '../cubit/call_history_cubit.dart';
 
 class CallHistoryScreen extends StatefulWidget {

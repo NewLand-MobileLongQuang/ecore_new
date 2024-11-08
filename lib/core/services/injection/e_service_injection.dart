@@ -1,8 +1,4 @@
-import 'package:ecore/core/services/injection_container.dart';
-import 'package:ecore/src/e_service/advanced_search/data/datasource/adsearch_datasource.dart';
-import 'package:ecore/src/e_service/advanced_search/presentation/cubit/advanced_search_cubit.dart';
-import 'package:ecore/src/e_service/advanced_search/search_conditions/presentation/cubit/search_conditions_cubit.dart';
-import 'package:ecore/src/e_service/advanced_search/setting_advanced_search/presentation/cubit/setting_advanced_search_cubit.dart';
+import 'package:ecore/core/services/injection/injection_container.dart';
 import 'package:ecore/src/e_service/customer_manage/data/datasource/es_customer_datasource.dart';
 import 'package:ecore/src/e_service/customer_manage/data/datasource/es_upload_file_datasource.dart';
 import 'package:ecore/src/e_service/customer_manage/data/repos/es_customer_repo_impl.dart';
@@ -140,11 +136,8 @@ Future<void> eServiceManageInit() async {
     ..registerFactory(() => RepairHistorySearchCubit(
         searchWarrantyUseCase: sl(),
         searchROUseCase: sl(),
-        getInputBySerialNoUseCase: sl()))
+        getInputBySerialNoUseCase: sl()));
 
   // Khac
-    ..registerLazySingleton(() => ADSearchDataSource(sl()))
-    ..registerFactory(() => AdvancedSearchCubit(dataSource: sl()))
-    ..registerFactory(() => SearchConditionsCubit())
-    ..registerFactory(() => SettingAdvancedSearchCubit());
+
 }

@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 
 import '../../../core/configs/app_config.dart';
 
-class EserviceUtils {
+class EServiceUtils {
 
   static const kSolutionCode='ESERVICE';
 
-  const EserviceUtils._();
+  const EServiceUtils._();
   static SolutionInfo getSolution()
   {
     return AppConfig.current().solutions[kSolutionCode]!;
@@ -17,12 +17,12 @@ class EserviceUtils {
   }
   static String getApiUrlKey()
   {
-      return 'ApiUrl_${kSolutionCode}';
+      return 'ApiUrl_$kSolutionCode';
   }
 
   static String getFullRouteName(String routeName)
   {
-    return '${EserviceUtils.kSolutionCode}/${routeName}';
+    return '${EServiceUtils.kSolutionCode}/$routeName';
   }
 
 }

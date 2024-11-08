@@ -7,7 +7,7 @@ import 'package:ecore/core/common/widgets/inputs/i_search.dart';
 import 'package:ecore/core/res/colors.dart';
 import 'package:ecore/core/res/strings.dart';
 
-import 'package:ecore/core/services/injection_container.dart';
+import 'package:ecore/core/services/injection/injection_container.dart';
 import 'package:ecore/core/utils/string_generate.dart';
 import 'package:ecore/src/e_service/repair_manage/domain/entities/es_ro_detail.dart';
 import 'package:ecore/src/e_service/repair_manage/presentation/cubit/repair_manage_cubit/repair_manage_cubit.dart';
@@ -18,7 +18,7 @@ import '../../../../../core/res/text_styles.dart';
 class RepairManageScreen extends StatelessWidget {
   const RepairManageScreen({super.key});
 
-  static const routeName = 'repair-manage';
+  static const routeName = 'eservice/repair-manage';
 
   @override
   Widget build(BuildContext context) {

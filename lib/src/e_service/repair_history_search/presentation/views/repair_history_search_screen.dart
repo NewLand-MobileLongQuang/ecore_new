@@ -15,7 +15,7 @@ import '../cubit/repair_history_search_cubit/repair_history_search_cubit.dart';
 class RepairHistorySearchScreen extends StatefulWidget {
   const RepairHistorySearchScreen({super.key});
 
-  static const routeName = '/repair-history-search';
+  static const routeName = 'eservice/repair-history-search';
 
   @override
   State<RepairHistorySearchScreen> createState() =>

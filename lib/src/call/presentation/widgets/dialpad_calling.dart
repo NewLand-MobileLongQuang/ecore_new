@@ -6,7 +6,6 @@ import '../../../../../../core/res/colors.dart';
 import '../../../../../../core/res/media_res.dart';
 import '../../../../../../core/res/text_styles.dart';
 
-import '../../../../fake_data/person_contact.dart';
 import '../cubit/dialpad_cubit.dart';
 
 
@@ -25,9 +24,7 @@ class _DialpadCallingViewState extends State<DialpadCallingView>
     return BlocBuilder<DialpadCubit, DialpadState>(
       builder: (context, state) {
         state as DialpadCalling;
-        final newList = PersonContact.listContact
-            .where((element) => element.phone == state.phoneNumber)
-            .toList();
+        var newList;
         return Column(
           children: [
             const SizedBox(height: 16),

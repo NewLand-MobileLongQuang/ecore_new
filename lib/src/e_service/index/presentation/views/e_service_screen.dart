@@ -1,18 +1,17 @@
-import 'package:ecore/core/utils/localization_helper.dart';
+import 'package:ecore/core/common/widgets/loading_view.dart';
+import 'package:ecore/core/common/widgets/main_app_bar.dart';
+import 'package:ecore/core/res/colors.dart';
+import 'package:ecore/core/res/text_styles.dart';
+import 'package:ecore/core/utils/apps.dart';
 import 'package:ecore/src/e_service/common/solution_context_extensions.dart';
 import 'package:ecore/src/e_service/common/utils.dart';
 import 'package:ecore/src/e_service/guarantee_manage/presentation/views/guarantee_manage_screen.dart';
+import 'package:ecore/src/e_service/index/presentation/cubit/e_service_cubit/e_service_cubit.dart';
 import 'package:ecore/src/e_service/repair_history_search/presentation/views/repair_history_search_screen.dart';
 import 'package:ecore/src/e_service/repair_manage/presentation/views/repair_manage_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-import '../../../../../core/common/widgets/main_app_bar.dart';
-import '../../../../../core/res/colors.dart';
-import '../../../../../core/res/text_styles.dart';
-import '../../../../../core/utils/apps.dart';
-import '../cubit/e_service_cubit/e_service_cubit.dart';
 
 class EServiceScreen extends StatefulWidget {
   const EServiceScreen({super.key});
@@ -32,20 +31,23 @@ class _EServiceScreenState extends State<EServiceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final _l = context.localizer(EServiceScreen.routeName);
+    final l = context.localizer(EServiceScreen.routeName);
 
     return BlocConsumer<EServiceCubit, EServiceState>(
       listener: (context, state) {},
       builder: (context, state) {
         if (state is EServiceLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
+          return Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: AppColors.textWhiteColor,
+            child: const LoadingView(),
           );
         }
         if (state is EServiceLoaded) {
           return Scaffold(
               appBar: MainAppBar(
-                title: _l('E-Service'),
+                title: l('E-Service'),
                 isHeader: true,
               ),
               body: Padding(
@@ -60,19 +62,14 @@ class _EServiceScreenState extends State<EServiceScreen> {
                   itemBuilder: (BuildContext context, int index) {
                     return InkWell(
                       onTap: () {
-                        if (AppEService.listSolutionEService[index].title ==
-                            'Quản lí bảo hành') {
-                          context.pushNamed(GuaranteeManageScreen.routeName);
+                        if (index == 0) {
+                          context.pushNamed(EServiceUtils.getFullRouteName(GuaranteeManageScreen.routeName));
                         }
-                        if (AppEService.listSolutionEService[index].title ==
-                            'Quản lí sửa chữa') {
-                          context.pushNamed(RepairManageScreen.routeName);
+                        if (index == 1) {
+
                         }
-                        if (AppEService.listSolutionEService[index].title ==
-                            'Tra cứu lịch sử sửa chữa') {
-                          context
-                              .pushNamed(RepairHistorySearchScreen.routeName);
-                          //Navigator.pushNamed(context, '/repair-history-search');
+                        if (index == 2) {
+
                         }
                       },
                       child: Card(
@@ -90,14 +87,11 @@ class _EServiceScreenState extends State<EServiceScreen> {
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                SvgPicture.asset(AppEService
-                                    .listSolutionEService[index].image),
+                                SvgPicture.asset(AppEService.listSolutionEService[index].image),
                                 const SizedBox(height: 16),
                                 Text(
-                                  _l(AppEService
-                                      .listSolutionEService[index].title),
-                                  style:
-                                      AppTextStyles.textStyleInterW400S16Black,
+                                  l(AppEService.listSolutionEService[index].title),
+                                  style: AppTextStyles.textStyleInterW400S16Black,
                                   textAlign: TextAlign.center,
                                   maxLines: 3,
                                 ),

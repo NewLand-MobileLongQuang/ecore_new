@@ -6,7 +6,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../core/res/colors.dart';
 import '../../../../core/res/media_res.dart';
 import '../../../../core/res/text_styles.dart';
-import '../../../../fake_data/person_contact.dart';
 import '../../domain/entities/agent.dart';
 
 class CallInternalAgentView extends StatefulWidget {

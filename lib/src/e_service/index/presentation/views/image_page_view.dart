@@ -1,14 +1,13 @@
 import 'dart:io';
 
+import 'package:ecore/core/common/widgets/inputs/i_dialog.dart';
+import 'package:ecore/core/res/colors.dart';
+import 'package:ecore/core/res/strings.dart';
+import 'package:ecore/src/e_service/guarantee_manage/domain/entities/es_warranty_attach_file.dart';
+import 'package:ecore/src/e_service/index/presentation/cubit/image_page_view/image_page_view_cubit.dart';
+import 'package:ecore/src/e_service/repair_manage/domain/entities/es_ro_attach_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../../core/common/widgets/inputs/i_dialog.dart';
-import '../../../../../core/res/colors.dart';
-import '../../../../../core/res/strings.dart';
-import '../../../guarantee_manage/domain/entities/es_warranty_attach_file.dart';
-import '../../../repair_manage/domain/entities/es_ro_attach_file.dart';
-import '../cubit/image_page_view/image_page_view_cubit.dart';
 
 class ImagePageView extends StatefulWidget {
   ImagePageView({

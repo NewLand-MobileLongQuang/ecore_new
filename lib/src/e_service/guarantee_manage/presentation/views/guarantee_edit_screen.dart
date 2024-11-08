@@ -1,24 +1,22 @@
 import 'dart:io';
 
+import 'package:ecore/core/utils/localization_helper.dart';
+import 'package:ecore/src/e_service/common/solution_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:ecore/core/common/widgets/inputs/i_expansion_tile.dart';
-
 import 'package:ecore/core/common/widgets/inputs/i_select_time.dart';
 import 'package:ecore/core/common/widgets/inputs/i_text_field.dart';
 import 'package:ecore/core/res/colors.dart';
 import 'package:ecore/core/res/media_res.dart';
 import 'package:ecore/core/res/strings.dart';
-
-import 'package:ecore/core/utils/string_generate.dart';
 import 'package:ecore/src/e_service/customer_manage/domain/entities/es_customer.dart';
 import 'package:ecore/src/e_service/guarantee_manage/domain/entities/es_warranty_attach_file.dart';
 import 'package:ecore/src/e_service/guarantee_manage/domain/entities/es_warranty_detail.dart';
 import 'package:ecore/src/e_service/guarantee_manage/domain/entities/es_warranty_edit.dart';
 import 'package:ecore/src/e_service/guarantee_manage/presentation/cubit/guarantee_edit_cubit/guarantee_edit_cubit.dart';
-
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../../core/common/widgets/loading_view.dart';
 import '../../../../../core/res/text_styles.dart';
 import '../../../common/widgets/i_scroll_image.dart';
@@ -26,7 +24,7 @@ import '../../../common/widgets/i_scroll_image.dart';
 class GuaranteeEditScreen extends StatefulWidget {
   const GuaranteeEditScreen({required this.id, super.key});
 
-  static const routeName = '/guarantee-edit';
+  static const routeName = 'guarantee-edit';
   final String id;
 
   @override
@@ -61,17 +59,20 @@ class _GuaranteeEditScreenState extends State<GuaranteeEditScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.localizer(GuaranteeEditScreen.routeName);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.primaryColor,
         leading: IconButton(
           icon: const Icon(
-            Icons.arrow_back_ios_new_rounded,
+            FontAwesomeIcons.chevronLeft,
             color: AppColors.textWhiteColor,
+            size: 20,
           ),
           onPressed: () => Navigator.of(context).maybePop(),
         ),
-        title: _textTitle(),
+        title: _textTitle(l),
         actions: [
           InkWell(
             splashColor: AppColors.transparent,
@@ -102,14 +103,11 @@ class _GuaranteeEditScreenState extends State<GuaranteeEditScreen> {
                 listFile,
               );
             },
-            child: Container(
+            child: const SizedBox(
               height: 36,
-              width: 48,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-              ),
-              child: const Icon(
-                Icons.save,
+              width: 36,
+              child: Icon(
+                FontAwesomeIcons.floppyDisk,
                 size: 20,
                 color: AppColors.textWhiteColor,
               ),
@@ -144,13 +142,13 @@ class _GuaranteeEditScreenState extends State<GuaranteeEditScreen> {
               if (state is GuaranteeEditLoaded) {
                 return ListView(
                   children: [
-                    _titleProductInformation(),
+                    _titleProductInformation(l),
                     const SizedBox(height: 16),
-                    _titleCustomerInformation(),
+                    _titleCustomerInformation(l),
                     const SizedBox(height: 16),
-                    _titleInstallInformation(),
+                    _titleInstallInformation(l),
                     const SizedBox(height: 16),
-                    _imageArea(),
+                    _imageArea(l),
                   ],
                 );
               }
@@ -162,55 +160,55 @@ class _GuaranteeEditScreenState extends State<GuaranteeEditScreen> {
     );
   }
 
-  Widget _textTitle() {
+  Widget _textTitle(LocalizationHelper l) {
     return Text(
-      AppStrings.guaranteeEditTitle,
+      l(AppStrings.guaranteeEditTitle),
       style: AppTextStyles.textStyleInterW500S18White,
       maxLines: 2,
     );
   }
 
-  Widget _titleProductInformation() {
+  Widget _titleProductInformation(LocalizationHelper l) {
     return IExpansionTile(
       title: AppStrings.productInformation,
       trailingExpansionTrue: SvgPicture.asset(AppMediaRes.iconExpandUp),
       trailingExpansionFalse: SvgPicture.asset(AppMediaRes.iconExpandDown),
       children: [
-        _itemText(title: AppStrings.serialTitle, value: eS_WarrantyDetail.SerialNo),
-        _itemText(title: AppStrings.typeProductTitle, value: eS_WarrantyDetail.ProductCodeUser),
-        _itemText(title: AppStrings.manufactureDateTitle, value: eS_WarrantyDetail.ProductionDTimeUTC),
-        _itemText(title: AppStrings.workshopTitle, value: eS_WarrantyDetail.FactoryCode),
-        _itemText(title: AppStrings.kcsTitle, value: eS_WarrantyDetail.KCS),
+        _itemText(title: l(AppStrings.serialTitle), value: eS_WarrantyDetail.SerialNo),
+        _itemText(title: l(AppStrings.typeProductTitle), value: eS_WarrantyDetail.ProductCodeUser),
+        _itemText(title: l(AppStrings.manufactureDateTitle), value: eS_WarrantyDetail.ProductionDTimeUTC),
+        _itemText(title: l(AppStrings.workshopTitle), value: eS_WarrantyDetail.FactoryCode),
+        _itemText(title: l(AppStrings.kcsTitle), value: eS_WarrantyDetail.KCS),
       ],
     );
   }
 
-  Widget _titleCustomerInformation() {
+  Widget _titleCustomerInformation(LocalizationHelper l) {
     return IExpansionTile(
       title: AppStrings.customerInformation,
       trailingExpansionTrue: _buttonCustomer(true),
       trailingExpansionFalse: _buttonCustomer(false),
       children: [
-        _itemText(title: AppStrings.customerIdTitle, value: eS_WarrantyDetail.CustomerCodeSys),
-        _itemText(title: AppStrings.customerNameTitle, value: eS_WarrantyDetail.CustomerName),
-        _itemText(title: AppStrings.customerPhoneTitle, value: eS_WarrantyDetail.CustomerPhoneNo),
-        _itemText(title: AppStrings.customerAddressTitle, value: eS_WarrantyDetail.CustomerAddress),
-        _itemText(title: AppStrings.customerEmailTitle, value: eS_WarrantyDetail.CustomerEmail),
+        _itemText(title: l(AppStrings.customerIdTitle), value: eS_WarrantyDetail.CustomerCodeSys),
+        _itemText(title: l(AppStrings.customerNameTitle), value: eS_WarrantyDetail.CustomerName),
+        _itemText(title: l(AppStrings.customerPhoneTitle), value: eS_WarrantyDetail.CustomerPhoneNo),
+        _itemText(title: l(AppStrings.customerAddressTitle), value: eS_WarrantyDetail.CustomerAddress),
+        _itemText(title: l(AppStrings.customerEmailTitle), value: eS_WarrantyDetail.CustomerEmail),
       ]
     );
   }
 
-  Widget _titleInstallInformation() {
+  Widget _titleInstallInformation(LocalizationHelper l) {
     return IExpansionTile(
       title: AppStrings.productInformation,
       trailingExpansionTrue: SvgPicture.asset(AppMediaRes.iconExpandUp),
       trailingExpansionFalse: SvgPicture.asset(AppMediaRes.iconExpandDown),
       children: [
-        _itemText(title: AppStrings.installNameTitle, value: eS_WarrantyDetail.AgentCode),
-        _itemText(title: AppStrings.installDateTitle, value: eS_WarrantyDetail.InstallationDTimeUTC),
-        _itemTime(controller: _installTimeController, title: AppStrings.installTimeTitle),
-        _itemTime(controller: _expiredDateController, title: AppStrings.expiredDateTitle),
-        _itemTextField(controller: _noteController, title: AppStrings.noteTitle),
+        _itemText(title: l(AppStrings.installNameTitle), value: eS_WarrantyDetail.AgentCode),
+        _itemText(title: l(AppStrings.installDateTitle), value: eS_WarrantyDetail.InstallationDTimeUTC),
+        _itemTime(controller: _installTimeController, title: l(AppStrings.installTimeTitle)),
+        _itemTime(controller: _expiredDateController, title: l(AppStrings.expiredDateTitle)),
+        _itemTextField(controller: _noteController, title: l(AppStrings.noteTitle)),
       ],
     );
   }
@@ -271,14 +269,14 @@ class _GuaranteeEditScreenState extends State<GuaranteeEditScreen> {
     );
   }
 
-  Widget _imageArea() {
+  Widget _imageArea(LocalizationHelper l) {
     return IScrollImage(
       listFile: listFile,
       listWarrantyAttachFile: Lst_ES_WarrantyAttachFile,
       flagGallery: true,
       flagCamera: true,
       flagDelete: true,
-      title: AppStrings.installImage,
+      title: l(AppStrings.installImage),
     );
   }
 

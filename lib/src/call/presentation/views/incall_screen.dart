@@ -3,11 +3,7 @@ import 'dart:async';
 import 'package:ecore/core/extensions/context_extension.dart';
 import 'package:ecore/core/services/audio_service.dart';
 import 'package:ecore/src/call/presentation/cubit/incall_cubit.dart';
-import 'package:ecore/src/call/presentation/cubit/incall_dialpad_cubit.dart';
-import 'package:ecore/src/call/presentation/widgets/call_rounded_button.dart';
-import 'package:ecore/src/call/presentation/widgets/dialpad_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
@@ -18,8 +14,6 @@ import '../../../../../core/res/colors.dart';
 import '../../../../../core/res/text_styles.dart';
 import '../../../../core/res/media_res.dart';
 
-import '../../../../fake_data/person_contact.dart';
-import '../cubit/dialpad_cubit.dart';
 import '../widgets/incall_dialpad.dart';
 import 'forward_screen.dart';
 

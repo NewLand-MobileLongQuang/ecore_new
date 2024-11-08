@@ -1,4 +1,4 @@
-import '../services/injection_container.dart';
+import '../services/injection/injection_container.dart';
 import 'app_config_base.dart';
 enum AppEnviroments{
   development, production

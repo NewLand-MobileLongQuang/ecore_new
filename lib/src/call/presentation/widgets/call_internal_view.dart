@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/services/injection_container.dart';
+import '../../../../core/services/injection/injection_container.dart';
 import '../cubit/call_internal_cubit.dart';
 import 'call_internal_agent_view.dart';
 

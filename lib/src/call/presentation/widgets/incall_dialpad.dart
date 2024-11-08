@@ -1,14 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
 import '../../../../../../core/res/colors.dart';
-import '../../../../../../core/res/media_res.dart';
 import '../../../../../../core/res/text_styles.dart';
-
-import '../../../../fake_data/person_contact.dart';
-import '../cubit/dialpad_cubit.dart';
-import '../cubit/incall_dialpad_cubit.dart';
 
 class IncallDialpadView extends StatefulWidget {
   const IncallDialpadView({super.key});

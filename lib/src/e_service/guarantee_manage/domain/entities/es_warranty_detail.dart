@@ -87,5 +87,6 @@ class ES_WarrantyDetail extends Equatable {
     LUDTimeUTC,
     LUBy,
     LogLUDTimeUTC,
-    LogLUBy,];
+    LogLUBy,
+  ];
 }

@@ -1,12 +1,12 @@
 import 'package:get_it/get_it.dart';
-import '../configs/app_config.dart';
-import '../configs/app_config_base.dart';
-import '../configs/app_config_dev.dart';
-import '../configs/app_config_production.dart';
+import '../../configs/app_config.dart';
+import '../../configs/app_config_base.dart';
+import '../../configs/app_config_dev.dart';
+import '../../configs/app_config_production.dart';
 
-import 'injection/e_service_injection.dart';
+import 'e_service_injection.dart';
 
-import 'injection/common_injection.dart';
+import 'common_injection.dart';
 
 final sl = GetIt.instance;
 

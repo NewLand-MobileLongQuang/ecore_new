@@ -2,7 +2,7 @@ import 'package:ecore/core/modules/auth/domain/usecases/save_session_info.dart';
 import 'package:ecore/src/call/domain/entities/calling_info.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../../services/injection_container.dart';
+import '../../../../services/injection/injection_container.dart';
 import '../../../../utils/typedef.dart';
 import '../usecases/load_session_info.dart';
 import 'auth_result.dart';

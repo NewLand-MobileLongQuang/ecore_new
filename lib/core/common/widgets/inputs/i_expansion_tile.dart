@@ -42,7 +42,7 @@ class _IExpansionTileState extends State<IExpansionTile> {
       },
       title: Text(
         widget.title,
-        style: AppTextStyles.textStyleInterW500S14Black,
+        style: AppTextStyles.textStyleInterW600S16Black,
       ),
       children: widget.children,
     );

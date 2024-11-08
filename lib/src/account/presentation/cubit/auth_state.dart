@@ -27,6 +27,15 @@ final class AuthStateLoading extends AuthState
 
 }
 
+final class AuthStateLoaded extends AuthState {
+  const AuthStateLoaded({required this.email, required this.password, required this.rememberMe});
+
+  final String email;
+  final String password;
+  final bool rememberMe;
+
+}
+
 final class AuthSignedIn extends AuthState
 {
   const AuthSignedIn({required this.session});

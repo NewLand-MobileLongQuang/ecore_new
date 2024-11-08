@@ -13,7 +13,7 @@ import '../../res/colors.dart';
 import '../../res/media_res.dart';
 import '../../res/text_styles.dart';
 import '../../extensions/context_extension.dart';
-import '../../services/injection_container.dart';
+import '../../services/injection/injection_container.dart';
 import '../../services/local_notification_service.dart';
 import '../../utils/string_generate.dart';
 

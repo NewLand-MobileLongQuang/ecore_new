@@ -10,13 +10,13 @@ extension SolutionContextExtensions on BuildContext {
 
   LocalizationHelper localizer(String cate)
   {
-    return LocalizationHelper('${EserviceUtils.kSolutionCode}_${cate}');
+    return LocalizationHelper('${EServiceUtils.kSolutionCode}_${cate}');
   }
 
   Future<T?> pushNamed<T extends Object?>(
       String routeName, {
         Object? arguments,
       }) {
-    return Navigator.of(this).pushNamed<T>(EserviceUtils.getFullRouteName(routeName), arguments: arguments);
+    return Navigator.of(this).pushNamed<T>(EServiceUtils.getFullRouteName(routeName), arguments: arguments);
   }
 }

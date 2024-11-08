@@ -5,7 +5,7 @@ import '../modules/localization/domain/usecases/add_locale_remotedata.dart';
 import '../modules/localization/domain/usecases/get_locale_local_data.dart';
 import '../modules/localization/domain/usecases/get_locale_remote_data.dart';
 import '../modules/localization/domain/usecases/save_locale_localdata.dart';
-import '../services/injection_container.dart';
+import '../services/injection/injection_container.dart';
 
 class LocalizationHelper {
   final String cate;

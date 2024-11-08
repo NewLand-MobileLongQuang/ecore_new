@@ -1,11 +1,10 @@
-
+import 'package:ecore/core/res/colors.dart';
+import 'package:ecore/core/res/text_styles.dart';
+import 'package:ecore/core/utils/core_utils.dart';
+import 'package:ecore/src/account/presentation/cubit/auth_cubit.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../core/common/widgets/gradient_background.dart';
-import '../../../../core/res/media_res.dart';
-import '../../../../core/utils/core_utils.dart';
-import '../cubit/auth_cubit.dart';
 
 class SelectNetworkScreen extends StatefulWidget {
   const SelectNetworkScreen({super.key});
@@ -35,84 +34,79 @@ class _SelectNetworkScreenState extends State<SelectNetworkScreen> {
             CoreUtils.showSnackBar(context, 'No networks');
           }
         } else if (state is AuthNetworkSelected) {
-
-            CoreUtils.showSnackBar(context, 'Network selected ${state.network.Name}.');
-
-            Navigator.pushReplacementNamed(context, '/');
-
+          CoreUtils.showSnackBar(context, 'Network selected ${state.network.Name}.');
+          Navigator.pushReplacementNamed(context, '/');
         }
       }, builder: (context, state) {
         if (state is AuthNetworkListLoaded) {
-          final orgs = (state as AuthNetworkListLoaded).networks;
-          return GradientBackground(
-            image: MediaRes.backgroundImg,
-            child: SafeArea(
-              child: ListView(
-                shrinkWrap: true,
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                children: [
-                  Text(
-                    'Select network',
-                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      for (var org in orgs)
-                        Column(
-                          children: [
-                            ElevatedButton(
-                              child: Text(org.Name??""),
-                              onPressed: () {
-                                context
-                                    .read<AuthCubit>()
-                                    .selectNetwork(network: org);
-                              },
+          final orgs = state.networks;
+          return SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Select network',
+                      style: AppTextStyles.textStyleInterW500S32Black,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Expanded(
+                      child: ListView.separated(
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onTap: () {
+                              context.read<AuthCubit>().selectNetwork(network: orgs[index]);
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                color: AppColors.primaryOpa11,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(color: AppColors.primaryColor),
+                              ),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    height: 25,
+                                    width: 25,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.primaryColor,
+                                      borderRadius: BorderRadius.circular(100),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        (index+1).toString(),
+                                        style: AppTextStyles.textStyleInterW500S14White,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: Text(
+                                      '${orgs[index].Name ?? ''} - ${orgs[index].Id}' ,
+                                      style: AppTextStyles.textStyleInterW500S16Black,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                          ],
-                        )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                ],
+                          );
+                        },
+                        separatorBuilder: (context, index) => const SizedBox(height: 16),
+                        itemCount: orgs.length,
+                      ),
+                    ),
+                  ]
               ),
             ),
           );
         }
-
-        return GradientBackground(
-          image: MediaRes.backgroundImg,
-          child: SafeArea(
-            child: ListView(
-              shrinkWrap: true,
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              children: [
-                Text(
-                  'Select network',
-                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-              ],
-            ),
-          ),
-        );
+        return Container();
       }),
     );
   }

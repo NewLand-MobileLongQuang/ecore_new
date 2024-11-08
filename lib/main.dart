@@ -16,8 +16,8 @@ import 'package:ecore/src/dashboard/presentation/providers/dashboard_controller.
 import 'core/configs/app_config.dart';
 import 'core/res/colors.dart';
 import 'core/res/fonts.dart';
-import 'core/services/injection_container.dart';
-import 'core/services/router.dart';
+import 'core/services/injection/injection_container.dart';
+import 'core/services/router/router.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 
 SIPUAHelper? _callHelper = SIPUAHelper();
@@ -110,14 +110,11 @@ class _AppState extends State<MyApp>  with WidgetsBindingObserver { // (1) Use t
       child: MaterialApp(
         title: 'Ecore',
         theme: ThemeData(
-            useMaterial3: true,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-            fontFamily: AppFonts.interFont,
-            appBarTheme: const AppBarTheme(
-              color: AppColors.primaryColor,
-            ),
-            colorScheme:
-            ColorScheme.fromSwatch(accentColor: AppColors.primaryColor)),
+          useMaterial3: true,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          fontFamily: AppFonts.interFont,
+          scaffoldBackgroundColor: AppColors.textWhiteColor,
+        ),
         onGenerateRoute: generateRoute,
       ),
     );

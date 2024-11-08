@@ -1,3 +1,6 @@
+import 'package:ecore/core/utils/localization_helper.dart';
+import 'package:ecore/src/e_service/common/solution_context_extensions.dart';
+import 'package:ecore/src/e_service/guarantee_manage/presentation/views/guarantee_edit_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -15,6 +18,7 @@ import 'package:ecore/src/e_service/guarantee_manage/data/models/es_warranty_del
 import 'package:ecore/src/e_service/guarantee_manage/domain/entities/es_warranty_attach_file.dart';
 import 'package:ecore/src/e_service/guarantee_manage/domain/entities/es_warranty_detail.dart';
 import 'package:ecore/src/e_service/guarantee_manage/presentation/cubit/guarantee_detail_cubit/guarantee_detail_cubit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../../core/common/widgets/loading_view.dart';
 import '../../../../../core/res/text_styles.dart';
@@ -24,7 +28,7 @@ import '../../../common/widgets/i_scroll_image.dart';
 class GuaranteeDetailScreen extends StatefulWidget {
   const GuaranteeDetailScreen({required this.id, super.key});
 
-  static const routeName = '/guarantee-detail';
+  static const routeName = 'guarantee-detail';
   final String id;
 
   @override
@@ -43,38 +47,39 @@ class _GuaranteeDetailScreenState extends State<GuaranteeDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.localizer(GuaranteeDetailScreen.routeName);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.primaryColor,
         leading: IconButton(
           icon: const Icon(
-            Icons.arrow_back_ios_new_rounded,
+            FontAwesomeIcons.chevronLeft,
             color: AppColors.textWhiteColor,
+            size: 20,
           ),
           onPressed: () => Navigator.of(context).maybePop(),
         ),
-        title: _textTitle(),
+        title: _textTitle(l),
         actions: [
           InkWell(
             splashColor: AppColors.transparent,
             highlightColor: AppColors.transparent,
-            onTap: () async {
-              await Navigator.of(context)
-                  .pushNamed('/guarantee-edit', arguments: eS_WarrantyDetail.WarrantyNo)
-                  .then((value) {
+            onTap: () {
+              context.pushNamed(
+                GuaranteeEditScreen.routeName,
+                arguments: eS_WarrantyDetail.WarrantyNo,
+              ).then((value) {
                 if (value != null && value == true) {
                   context.read<GuaranteeDetailCubit>().init(widget.id);
                 }
               });
             },
-            child: Container(
+            child: const SizedBox(
               height: 36,
-              width: 48,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-              ),
-              child: const Icon(
-                Icons.edit,
+              width: 36,
+              child: Icon(
+                FontAwesomeIcons.pencil,
                 size: 20,
                 color: AppColors.textWhiteColor,
               ),
@@ -100,15 +105,11 @@ class _GuaranteeDetailScreenState extends State<GuaranteeDetailScreen> {
                 }
               });
             },
-            child: Container(
+            child: const SizedBox(
               height: 36,
-              width: 48,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(5),
-                ),
-              ),
-              child: const Icon(
-                Icons.delete,
+              width: 36,
+              child: Icon(
+                FontAwesomeIcons.trashCan,
                 size: 20,
                 color: AppColors.textWhiteColor,
               ),
@@ -136,13 +137,13 @@ class _GuaranteeDetailScreenState extends State<GuaranteeDetailScreen> {
               if(state is GuaranteeDetailLoaded){
                 return ListView(
                   children: [
-                    _titleProductInformation(),
+                    _titleProductInformation(l),
                     const SizedBox(height: 16),
-                    _titleCustomerInformation(),
+                    _titleCustomerInformation(l),
                     const SizedBox(height: 16),
-                    _titleInstallInformation(),
+                    _titleInstallInformation(l),
                     const SizedBox(height: 16),
-                    _imageArea(),
+                    _imageArea(l),
                   ],
                 );
               }
@@ -154,55 +155,55 @@ class _GuaranteeDetailScreenState extends State<GuaranteeDetailScreen> {
     );
   }
 
-  Widget _textTitle() {
+  Widget _textTitle(LocalizationHelper l) {
     return Text(
-      AppStrings.guaranteeDetailTitle,
+      l(AppStrings.guaranteeDetailTitle),
       style: AppTextStyles.textStyleInterW500S18White,
       maxLines: 2,
     );
   }
 
-  Widget _titleProductInformation() {
+  Widget _titleProductInformation(LocalizationHelper l) {
     return IExpansionTile(
       title: AppStrings.productInformation,
       trailingExpansionTrue: SvgPicture.asset(AppMediaRes.iconExpandUp),
       trailingExpansionFalse: SvgPicture.asset(AppMediaRes.iconExpandDown),
       children: [
-        _item(title: AppStrings.serialTitle, value: eS_WarrantyDetail.SerialNo),
-        _item(title: AppStrings.typeProductTitle, value: eS_WarrantyDetail.ProductCodeUser),
-        _item(title: AppStrings.manufactureDateTitle, value: eS_WarrantyDetail.ProductionDTimeUTC),
-        _item(title: AppStrings.workshopTitle, value: eS_WarrantyDetail.FactoryCode),
-        _item(title: AppStrings.kcsTitle, value: eS_WarrantyDetail.KCS),
+        _item(title: l(AppStrings.serialTitle), value: eS_WarrantyDetail.SerialNo),
+        _item(title: l(AppStrings.typeProductTitle), value: eS_WarrantyDetail.ProductCodeUser),
+        _item(title: l(AppStrings.manufactureDateTitle), value: eS_WarrantyDetail.ProductionDTimeUTC),
+        _item(title: l(AppStrings.workshopTitle), value: eS_WarrantyDetail.FactoryCode),
+        _item(title: l(AppStrings.kcsTitle), value: eS_WarrantyDetail.KCS),
       ]
     );
   }
 
-  Widget _titleCustomerInformation() {
+  Widget _titleCustomerInformation(LocalizationHelper l) {
     return IExpansionTile(
       title: AppStrings.customerInformation,
         trailingExpansionTrue: SvgPicture.asset(AppMediaRes.iconExpandUp),
         trailingExpansionFalse: SvgPicture.asset(AppMediaRes.iconExpandDown),
       children: [
-        _item(title: AppStrings.customerIdTitle, value: eS_WarrantyDetail.CustomerCodeSys),
-        _item(title: AppStrings.customerNameTitle, value: eS_WarrantyDetail.CustomerName),
-        _item(title: AppStrings.customerPhoneTitle, value: eS_WarrantyDetail.CustomerPhoneNo),
-        _item(title: AppStrings.customerAddressTitle, value: eS_WarrantyDetail.CustomerAddress),
-        _item(title: AppStrings.customerEmailTitle, value: eS_WarrantyDetail.CustomerEmail),
+        _item(title: l(AppStrings.customerIdTitle), value: eS_WarrantyDetail.CustomerCodeSys),
+        _item(title: l(AppStrings.customerNameTitle), value: eS_WarrantyDetail.CustomerName),
+        _item(title: l(AppStrings.customerPhoneTitle), value: eS_WarrantyDetail.CustomerPhoneNo),
+        _item(title: l(AppStrings.customerAddressTitle), value: eS_WarrantyDetail.CustomerAddress),
+        _item(title: l(AppStrings.customerEmailTitle), value: eS_WarrantyDetail.CustomerEmail),
       ]
     );
   }
 
-  Widget _titleInstallInformation() {
+  Widget _titleInstallInformation(LocalizationHelper l) {
     return IExpansionTile(
       title: AppStrings.installInformation,
       trailingExpansionTrue: SvgPicture.asset(AppMediaRes.iconExpandUp),
       trailingExpansionFalse: SvgPicture.asset(AppMediaRes.iconExpandDown),
       children: [
-        _item(title: AppStrings.installNameTitle, value: eS_WarrantyDetail.AgentCode),
-        _item(title: AppStrings.installDateTitle, value: eS_WarrantyDetail.InstallationDTimeUTC),
-        _item(title: AppStrings.installTimeTitle, value: eS_WarrantyDetail.WarrantyDTimeUTC),
-        _item(title: AppStrings.expiredDateTitle, value: eS_WarrantyDetail.WarrantyExpDTimeUTC),
-        _item(title: AppStrings.noteTitle, value: eS_WarrantyDetail.Remark, maxLine: 4),
+        _item(title: l(AppStrings.installNameTitle), value: eS_WarrantyDetail.AgentCode),
+        _item(title: l(AppStrings.installDateTitle), value: eS_WarrantyDetail.InstallationDTimeUTC),
+        _item(title: l(AppStrings.installTimeTitle), value: eS_WarrantyDetail.WarrantyDTimeUTC),
+        _item(title: l(AppStrings.expiredDateTitle), value: eS_WarrantyDetail.WarrantyExpDTimeUTC),
+        _item(title: l(AppStrings.noteTitle), value: eS_WarrantyDetail.Remark, maxLine: 4),
       ],
     );
   }
@@ -233,11 +234,11 @@ class _GuaranteeDetailScreenState extends State<GuaranteeDetailScreen> {
     );
   }
 
-  Widget _imageArea() {
+  Widget _imageArea(LocalizationHelper l) {
     return IScrollImage(
       listWarrantyAttachFile: Lst_ES_WarrantyAttachFile,
       flagDelete: false,
-      title: AppStrings.installImage,
+      title: l(AppStrings.installImage),
     );
   }
 }

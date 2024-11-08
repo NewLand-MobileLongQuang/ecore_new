@@ -1,14 +1,13 @@
+import 'package:ecore/core/common/widgets/inputs/i_text_field.dart';
 import 'package:flutter/material.dart';
-
 import 'package:iconly/iconly.dart';
 
-import '../../../../core/common/widgets/i_field.dart';
 class LoginForm extends StatefulWidget {
   const LoginForm(
       {required this.emailController,
-      required this.passwordController,
-      required this.formKey,
-      super.key});
+        required this.passwordController,
+        required this.formKey,
+        super.key});
 
   final TextEditingController emailController;
   final TextEditingController passwordController;
@@ -26,28 +25,25 @@ class _LoginFormState extends State<LoginForm> {
         key: widget.formKey,
         child: Column(
           children: [
-            IField(
+            ITextField(
               controller: widget.emailController,
-              hintText: 'Email address',
+              hintText: 'Email',
               keyboardType: TextInputType.emailAddress,
             ),
             const SizedBox(
-              height: 25,
+              height: 24,
             ),
-            IField(
+            ITextField(
               controller: widget.passwordController,
-              hintText: 'Enter password',
-
+              hintText: 'Password',
               obscureText: obscurePassword,
               keyboardType: TextInputType.visiblePassword,
               suffixIcon: IconButton(
-                onPressed: ()=>
-                  setState(() {
-                    obscurePassword=!obscurePassword;
-                  }),
-                icon: Icon( obscurePassword? IconlyLight.show: IconlyLight.hide)
-
-
+                  onPressed: () =>
+                      setState(() {
+                        obscurePassword = !obscurePassword;
+                      }),
+                  icon: Icon( obscurePassword? IconlyLight.show: IconlyLight.hide)
               ),
             ),
           ],
