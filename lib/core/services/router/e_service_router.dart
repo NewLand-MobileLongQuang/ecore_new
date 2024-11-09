@@ -1,6 +1,7 @@
 import 'package:ecore/src/e_service/common/utils.dart';
 import 'package:ecore/src/e_service/index/presentation/cubit/e_service_cubit/e_service_cubit.dart';
 import 'package:ecore/src/e_service/index/presentation/views/e_service_screen.dart';
+import 'package:ecore/src/e_service/repair_manage/presentation/cubit/repair_manage_cubit/repair_manage_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -65,7 +66,7 @@ PageRouteBuilder? handleCaseEService(RouteSettings settings) {
       return pageBuilder((p0) => BlocProvider(create: (_) => sl<CustomerDetailCubit>(), child: CustomerDetailScreen(customerCodeSys: customerCodeSys)), settings: settings);
 
     case RepairManageScreen.routeName:
-      return pageBuilder((p0) => const RepairManageScreen(), settings: settings);
+      return pageBuilder((p0) => BlocProvider(create: (_) => sl<RepairManageCubit>(), child: const RepairManageScreen()), settings: settings);
 
     case RepairDetailScreen.routeName:
       final id = settings.arguments as String;

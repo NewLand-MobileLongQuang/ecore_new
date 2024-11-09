@@ -65,16 +65,13 @@ class _GuaranteeManageScreenState extends State<GuaranteeManageScreen> {
             padding: const EdgeInsets.all(16),
             child: BlocConsumer<GuaranteeManageCubit, GuaranteeManageState>(
               listener: (context, state) {
-
+                if (state is GuaranteeManageError) {
+                  IDialog.showNotificationDialog(context, state.message);
+                }
               },
               builder: (context, state) {
                 if (state is GuaranteeManageLoading) {
                   return const LoadingView();
-                }
-                if (state is GuaranteeManageError) {
-                  return Center(
-                    child: Text(state.message),
-                  );
                 }
                 if(state is GuaranteeManageLoaded) {
                   return Column(
@@ -87,7 +84,7 @@ class _GuaranteeManageScreenState extends State<GuaranteeManageScreen> {
                     ],
                   );
                 }
-                return const SizedBox();
+                return Container();
               },
             ),
           ),

@@ -1,36 +1,37 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ecore/core/common/widgets/inputs/i_dialog.dart';
 import 'package:ecore/core/common/widgets/inputs/i_expansion_tile.dart';
 import 'package:ecore/core/common/widgets/inputs/i_multiselect_field.dart';
 import 'package:ecore/core/common/widgets/inputs/i_select_field.dart';
 import 'package:ecore/core/common/widgets/inputs/i_select_time.dart';
 import 'package:ecore/core/common/widgets/inputs/i_text_field.dart';
+import 'package:ecore/core/common/widgets/loading_view.dart';
+import 'package:ecore/core/common/widgets/qr_code_view.dart';
 import 'package:ecore/core/res/colors.dart';
 import 'package:ecore/core/res/media_res.dart';
 import 'package:ecore/core/res/strings.dart';
-import 'package:ecore/src/e_service/customer_manage/presentation/cubit/customer_detail_cubit/customer_detail_cubit.dart';
+import 'package:ecore/core/res/text_styles.dart';
+import 'package:ecore/src/e_service/common/solution_context_extensions.dart';
+import 'package:ecore/src/e_service/common/widgets/i_scroll_image.dart';
 import 'package:ecore/src/e_service/repair_manage/data/model/es_ro_component_model.dart';
 import 'package:ecore/src/e_service/repair_manage/data/model/es_ro_edit_model.dart';
 import 'package:ecore/src/e_service/repair_manage/domain/entities/es_ro_attach_file.dart';
-import 'package:ecore/src/e_service/repair_manage/domain/entities/es_ro_component.dart';
 import 'package:ecore/src/e_service/repair_manage/domain/entities/es_ro_detail.dart';
 import 'package:ecore/src/e_service/repair_manage/presentation/cubit/repair_edit_cubit/repair_edit_cubit.dart';
+import 'package:ecore/src/e_service/repair_manage/presentation/views/repair_manage_screen.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-
-import '../../../../../core/common/widgets/loading_view.dart';
-import '../../../../../core/res/text_styles.dart';
-import '../../../common/widgets/i_scroll_image.dart';
 
 class RepairEditScreen extends StatefulWidget {
   const RepairEditScreen({required this.id, super.key});
 
-  static const routeName = '/repair-edit';
+  static const routeName = 'repair-edit';
   final String id;
 
   @override
@@ -59,7 +60,9 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
 
   late List<String> listErrorType;
   late List<String> listProduct;
+  late List<String> listProductFull;
   late List<String> listErrorComponent;
+  late String ProductGrpCode;
 
   DateTime? selectedDate;
 
@@ -87,6 +90,8 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.localizer(RepairEditScreen.routeName);
+
     return BlocConsumer<RepairEditCubit, RepairEditState>(
       listener: (context, state) {
         if (state is RepairEditLoaded) {
@@ -94,14 +99,28 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
           Lst_ES_ROComponent = state.Lst_ES_ROComponent as List<ES_ROComponentModel>;
           Lst_ES_ROAttachFile = state.Lst_ES_ROAttachFile;
           listErrorType = state.listErrorType;
-          listProduct = state.listProduct;
+          listProduct = state.listProduct.map((e) => "${e.split(' - ')[0]} - ${e.split(' - ')[1]}").toList();
+          listProductFull = state.listProduct;
+
           listErrorComponent = state.listErrorComponent;
+          ProductGrpCode = state.ProductGrpCode;
 
           _serialController.text = eS_RODetail.SerialNo;
 
-          _errorTypeController.text = eS_RODetail.ErrorTypeCode;
-          _productController.text = eS_RODetail.ProductCode;
-          _listSysController.text = state.Lst_ES_ROComponent.map((e) => '${e.ProductGrpCode}-${e.ComponentCode}').join(' ');
+          for(var i = 0; i < listErrorType.length; i++) {
+            if(listErrorType[i].contains(eS_RODetail.ErrorTypeCode)) {
+              _errorTypeController.text = listErrorType[i];
+              break;
+            }
+          }
+          for(var i = 0; i < listProduct.length; i++) {
+            if(listProductFull[i].contains(eS_RODetail.ProductCode)) {
+              _productController.text = listProduct[i];
+              break;
+            }
+          }
+
+          _listSysController.text = state.Lst_ES_ROComponent.map((e) => '${e.ComponentCode} - ${e.ComponentName}').join('\n');
 
           _meetTimeController.text = state.eS_RODetail.AppointmentDTimeUTC;
           _noteController.text = state.eS_RODetail.Remark;
@@ -110,7 +129,7 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
           Lst_ES_ROAttachFileAfter = state.Lst_ES_ROAttachFile.where((element) => element.ROAttachFileType == '1').toList();
         }
         if (state is RepairEditSuccess) {
-          Navigator.of(context).pushReplacementNamed('/repair-manage');
+          context.pushReplacementNamed(RepairManageScreen.routeName);
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text('Sửa thành công!'),
@@ -134,15 +153,12 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
         }
       },
       builder: (context, state) {
-        if (state is RepairEditError) {
-          return Center(child: Text(state.message));
-        }
         if (state is RepairEditLoading) {
           return Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            color: AppColors.textWhiteColor,
-            child: const LoadingView()
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              color: AppColors.textWhiteColor,
+              child: const LoadingView()
           );
         }
         if (state is RepairEditLoaded) {
@@ -151,8 +167,9 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
               backgroundColor: AppColors.primaryColor,
               leading: IconButton(
                 icon: const Icon(
-                  Icons.arrow_back_ios_new_rounded,
+                  FontAwesomeIcons.chevronLeft,
                   color: AppColors.textWhiteColor,
+                  size: 20,
                 ),
                 onPressed: () => Navigator.of(context).maybePop(),
               ),
@@ -163,6 +180,18 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
                     splashColor: AppColors.transparent,
                     highlightColor: AppColors.transparent,
                     onTap: () {
+                      final listErrorTypeCodeSplit = _errorTypeController.text.split(' - ');
+                      final ErrorTypeCode = listErrorTypeCodeSplit[listErrorTypeCodeSplit.length - 1];
+
+                      var ProductCode = '';
+                      for(var i = 0; i < listProductFull.length; i++) {
+                        if(listProductFull[i].contains(_productController.text)) {
+                          final listProductCodeSplit = listProductFull[i].split(' - ');
+                          ProductCode = listProductCodeSplit[listProductCodeSplit.length - 1];
+                          print("TrungLQ: $ProductCode");
+                          break;
+                        }
+                      }
                       final es_ROEdit = ES_ROEditModel(
                         OrgID: eS_RODetail.OrgID ?? '',
                         RONo: eS_RODetail.RONo ?? '',
@@ -174,10 +203,10 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
                         AgentCode: eS_RODetail.AgentCode ?? '',
                         RODesc: eS_RODetail.RODesc ?? '',
                         Deadline: eS_RODetail.Deadline ?? '',
-                        ProductCode: _productController.text,
+                        ProductCode: ProductCode,
                         SerialNo: eS_RODetail.SerialNo,
                         FactoryCode: eS_RODetail.FactoryCode ?? '',
-                        ErrorTypeCode: _errorTypeController.text,
+                        ErrorTypeCode: ErrorTypeCode,
                         ROStatus: eS_RODetail.ROStatus ?? '',
                         AppointmentDTimeUTC: _meetTimeController.text,
                         Remark: _noteController.text,
@@ -201,14 +230,11 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
                         listFileAll,
                       );
                     },
-                    child: Container(
+                    child: const SizedBox(
                       height: 36,
-                      width: 48,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                      ),
-                      child: const Icon(
-                        Icons.save,
+                      width: 36,
+                      child: Icon(
+                        FontAwesomeIcons.floppyDisk,
                         size: 20,
                         color: AppColors.textWhiteColor,
                       ),
@@ -229,14 +255,11 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
                         }
                       });
                     },
-                    child: Container(
+                    child: const SizedBox(
                       height: 36,
-                      width: 48,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                      ),
-                      child: const Icon(
-                        Icons.done,
+                      width: 36,
+                      child: Icon(
+                        FontAwesomeIcons.checkDouble,
                         size: 20,
                         color: AppColors.textWhiteColor,
                       ),
@@ -287,7 +310,7 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Expanded(child: _item(title: '${AppStrings.customerNameTitle} (*)', value: eS_RODetail.CustomerName)),
+              Expanded(child: _item(title: '${AppStrings.customerNameTitle} (*)', value: eS_RODetail.CustomerNameReal)),
               const SizedBox(width: 8),
               InkWell(
                 onTap: () {
@@ -358,7 +381,7 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
               onTap: () {
                 Navigator.pushNamed(
                   context,
-                  'QrCodeView.routeName',
+                  QrCodeView.routeName,
                 ).then((value) {
                   if (value != null) {
                     //_serialController.text = StringGenerate.extractQRCode(value.toString());
@@ -495,20 +518,23 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
         const SizedBox(height: 16),
         IMultiSelectField<String>(
           options: list,
-          selectedValues: controller.text.split(' '),
+          selectedValues: controller.text.split('\n'),
           hintText: title,
           onChanged: (values) {
-            controller.text = values!.join(' ').trim();
-            final listComponent = values.join(' ').trim().split(' ');
+            controller.text = values!.join('\n').trim();
+            final listComponent = values.join('\n').trim().split('\n');
             Lst_ES_ROComponent.clear();
             for (var i = 0; i < listComponent.length; i++) {
-              final component = listComponent[i].split('-');
-              Lst_ES_ROComponent.add(
-                ES_ROComponentModel(
-                  ComponentCode: component[1],
-                  ProductGrpCode: component[0],
-                ),
-              );
+              final component = listComponent[i].split(' - ');
+              if(component[1] != '') {
+                Lst_ES_ROComponent.add(
+                  ES_ROComponentModel(
+                    ProductGrpCode: ProductGrpCode,
+                    ComponentCode: component[0],
+                    ComponentName: component[1],
+                  ),
+                );
+              }
             }
           },
           getLabel: (value) => value,

@@ -15,6 +15,7 @@ final class RepairEditLoaded extends RepairEditState {
     required this.listErrorType,
     required this.listProduct,
     required this.listErrorComponent,
+    required this.ProductGrpCode,
   });
 
   final ES_RODetail eS_RODetail;
@@ -24,6 +25,7 @@ final class RepairEditLoaded extends RepairEditState {
   final List<String> listErrorType;
   final List<String> listProduct;
   final List<String> listErrorComponent;
+  final String ProductGrpCode;
 }
 
 final class RepairEditSuccess extends RepairEditState {}

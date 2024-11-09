@@ -12,7 +12,7 @@ class RT_ES_WarrrantyActivateByQRModel extends RT_ES_WarrrantyActivateByQR {
     required super.ProductExpiry,
   });
 
-  factory RT_ES_WarrrantyActivateByQRModel.fromJson(Map<String, dynamic> json) {
+  factory RT_ES_WarrrantyActivateByQRModel.fromMap(Map<String, dynamic> json) {
     return RT_ES_WarrrantyActivateByQRModel(
       SerialNo: json['SerialNo'] as String? ?? '',
       ProductCode: json['ProductCode'] as String? ?? '',
@@ -25,7 +25,7 @@ class RT_ES_WarrrantyActivateByQRModel extends RT_ES_WarrrantyActivateByQR {
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
       'SerialNo': SerialNo,
       'ProductCode': ProductCode,

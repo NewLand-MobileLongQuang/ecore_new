@@ -20,11 +20,16 @@ class ES_CustomerDataSource extends EServiceSvDataSource {
       'Ft_PageSize': params.Ft_PageSize,
     };
     try {
-      final response = await postSearchCustomer(
+      final response = await post(
         path: 'MstCustomer/SearchForMobile',
         params: paramsInit,
       );
-      return response.objResult!;
+      final dataList = response['DataList'] as List;
+
+      List<ES_CustomerModel> res =
+      dataList.map<ES_CustomerModel>((i) => ES_CustomerModel.fromMap(i)).toList();
+
+      return res;
     }
     on ApiException {
       rethrow;
@@ -39,11 +44,15 @@ class ES_CustomerDataSource extends EServiceSvDataSource {
       'strJson': params.strJson,
     };
     try {
-      final response = await postCreateCustomer(
+      final response = await post(
         path: 'MstCustomer/CreateForMobile',
         params: paramsInit,
       );
-      return response.objResult!;
+      final data = response['Data'] as dynamic;
+
+      ES_CustomerModel res = ES_CustomerModel.fromMap(data);
+
+      return res;
     }
     on ApiException {
       rethrow;
@@ -55,10 +64,14 @@ class ES_CustomerDataSource extends EServiceSvDataSource {
 
   Future<String> getCustomerCodeSys({required GetCustomerCodeSysParams params}) async {
     try {
-      final response = await postGetCustomerCodeSys(
+      final response = await post(
         path: 'Seq/GetCustomerCodeSys',
       );
-      return response.objResult!;
+      final data = response['Data'] as dynamic;
+
+      String res = data as String;
+
+      return res;
     }
     on ApiException {
       rethrow;
@@ -76,11 +89,15 @@ class ES_CustomerDataSource extends EServiceSvDataSource {
       'Ft_PageSize': params.Ft_PageSize,
     };
     try {
-      final response = await postGetByCustomerCodeSys(
+      final response = await post(
         path: 'MstCustomer/GetByCustomerCodeSys',
         params: paramsInit,
       );
-      return response.objResult!;
+      final data = response['Data'] as dynamic;
+
+      RT_ESCustomerDetailModel res = RT_ESCustomerDetailModel.fromMap(data);
+
+      return res;
     }
     on ApiException {
       rethrow;

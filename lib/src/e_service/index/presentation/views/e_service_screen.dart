@@ -66,7 +66,7 @@ class _EServiceScreenState extends State<EServiceScreen> {
                           context.pushNamed(EServiceUtils.getFullRouteName(GuaranteeManageScreen.routeName));
                         }
                         if (index == 1) {
-
+                          context.pushNamed(EServiceUtils.getFullRouteName(RepairManageScreen.routeName));
                         }
                         if (index == 2) {
 

@@ -8,13 +8,9 @@ final class RepairManageInitial extends RepairManageState {}
 final class RepairManageLoading extends RepairManageState {}
 
 final class RepairManageLoaded extends RepairManageState {
-  RepairManageLoaded({required this.list,});
+  RepairManageLoaded({required this.list});
 
   final List<ES_RODetail> list;
-}
-
-final class RepairManageLoadingMore extends RepairManageLoaded {
-  RepairManageLoadingMore({required super.list});
 }
 
 final class RepairManageError extends RepairManageState {

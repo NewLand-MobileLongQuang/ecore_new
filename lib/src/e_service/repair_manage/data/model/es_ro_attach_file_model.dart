@@ -5,7 +5,7 @@ import '../../domain/entities/es_ro_attach_file.dart';
 class ES_ROAttachFileModel extends ES_ROAttachFile {
   ES_ROAttachFileModel({required super.Idx, required super.FileName, required super.FilePath, required super.FileType, required super.FileSize, required super.ROAttachFileType});
 
-  factory ES_ROAttachFileModel.fromJson(Map<String, dynamic> json) {
+  factory ES_ROAttachFileModel.fromMap(Map<String, dynamic> json) {
     return ES_ROAttachFileModel(
       Idx: json['Idx'] as int? ?? 0,
       FileName: json['FileName'] as String? ?? '',
@@ -16,7 +16,7 @@ class ES_ROAttachFileModel extends ES_ROAttachFile {
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
       'Idx': Idx,
       'FileName': FileName,

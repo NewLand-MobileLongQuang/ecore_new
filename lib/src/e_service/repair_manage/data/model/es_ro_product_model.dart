@@ -4,7 +4,7 @@ import '../../domain/entities/es_ro_product.dart';
 class ES_ROProductModel extends ES_ROProduct {
   ES_ROProductModel({required super.OrgID, required super.ProductCode, required super.NetworkID, required super.ProductLevelSys, required super.ProductCodeUser, required super.BrandCode, required super.ProductType, required super.ProductGrpCode, required super.ProductName, required super.ProductNameEN, required super.ProductBarCode, required super.ProductCodeNetwork, required super.ProductCodeBase, required super.ProductCodeRoot, required super.ProductImagePathList, required super.ProductFilePathList, required super.FlagSerial, required super.FlagLot, required super.ValConvert, required super.VATRateCode, required super.UnitCode, required super.FlagSell, required super.FlagBuy, required super.UPBuy, required super.UPSell, required super.QtyMaxSt, required super.QtyMinSt, required super.QtyEffSt, required super.ListOfPrdDynamicFieldValue, required super.ProductStd, required super.ProductExpiry, required super.ProductQuyCach, required super.ProductMnfUrl, required super.ProductIntro, required super.ProductUserGuide, required super.ProductDrawing, required super.ProductOrigin, required super.FlagFG, required super.DTimeUsed, required super.CustomField1, required super.CustomField2, required super.CustomField3, required super.CustomField4, required super.CustomField5, required super.CreateDTimeUTC, required super.CreateBy, required super.LUDTimeUTC, required super.LUBy, required super.FlagActive, required super.Remark, required super.LogLUDTimeUTC, required super.LogLUBy, required super.ListAttribute, required super.ListBOM, required super.ProductDelType, required super.mb_BrandName, required super.mpg_ProductGrpName, required super.mpt_ProductType, required super.mpt_ProductTypeName, required super.mvat_VATRate, required super.mu_UnitName, required super.SolutionCode, required super.FunctionActionType, required super.ThirdPartyInfo, required super.GTIN, required super.SSCCType, required super.ProductImagePathDefault, required super.Setting, required super.CustomDataDict});
 
-  factory ES_ROProductModel.fromJson(Map<String, dynamic> json) {
+  factory ES_ROProductModel.fromMap(Map<String, dynamic> json) {
     return ES_ROProductModel (
       OrgID: json['OrgID'] as String? ?? '',
       ProductCode: json['ProductCode'] as String? ?? '',
@@ -78,7 +78,7 @@ class ES_ROProductModel extends ES_ROProduct {
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
       'OrgID': super.OrgID,
       'ProductCode': super.ProductCode,

@@ -5,7 +5,7 @@ import 'es_ro_error_component_model.dart';
 class RT_ES_ROErrorComponentModel extends RT_ES_ROErrorComponent{
   RT_ES_ROErrorComponentModel({required super.Lst_Mst_ErrorComponent});
 
-  factory RT_ES_ROErrorComponentModel.fromJson(Map<String, dynamic> json) {
+  factory RT_ES_ROErrorComponentModel.fromMap(Map<String, dynamic> json) {
     return RT_ES_ROErrorComponentModel(
       Lst_Mst_ErrorComponent: json['Lst_Mst_ErrorComponent'] != null
           ? (json['Lst_Mst_ErrorComponent'] as List).map((item) => ES_ROErrorComponentModel.fromJson(item as Map<String, dynamic>)).toList()
@@ -13,7 +13,7 @@ class RT_ES_ROErrorComponentModel extends RT_ES_ROErrorComponent{
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
       'Lst_Mst_ErrorComponent': Lst_Mst_ErrorComponent,
     };

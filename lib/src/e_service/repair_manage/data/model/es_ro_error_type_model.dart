@@ -3,7 +3,7 @@ import '../../domain/entities/es_ro_error_type.dart';
 class ES_ROErrorTypeModel extends ES_ROErrorType {
   ES_ROErrorTypeModel({required super.OrgID, required super.ErrorTypeCode, required super.NetworkID, required super.ErrorTypeName, required super.ErrorTypeDesc, required super.NetworkErrorTypeCode, required super.FlagActive, required super.DTimeUsed, required super.LogLUDTimeUTC, required super.LogLUBy});
 
-  factory ES_ROErrorTypeModel.fromJson(Map<String, dynamic> json) {
+  factory ES_ROErrorTypeModel.fromMap(Map<String, dynamic> json) {
     return ES_ROErrorTypeModel(
       OrgID: json['OrgID'] as String? ?? '',
       ErrorTypeCode: json['ErrorTypeCode'] as String? ?? '',
@@ -18,7 +18,7 @@ class ES_ROErrorTypeModel extends ES_ROErrorType {
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
       'OrgID': OrgID,
       'ErrorTypeCode': ErrorTypeCode,

@@ -31,7 +31,7 @@ class ES_WarrantyDetailModel extends ES_WarrantyDetail {
     required super.LogLUBy,
   });
 
-  factory ES_WarrantyDetailModel.fromJson(Map<String, dynamic> map) {
+  factory ES_WarrantyDetailModel.fromMap(Map<String, dynamic> map) {
     return ES_WarrantyDetailModel(
       WarrantyNo: map['WarrantyNo'] as String? ?? '',
       OrgID: map['OrgID'] as String? ?? '',

@@ -37,11 +37,16 @@ class ES_RODataSource extends EServiceSvDataSource {
         'Ft_PageSize': params.Ft_PageSize,
       };
       try {
-        final response = await postSearchRO(
+        final response = await post(
           path: 'ESRO/Search',
           params: paramsInit,
         );
-        return response.objResult!;
+        final dataList = response['DataList'] as List;
+
+        List<ES_RODetailModel> res =
+        dataList.map<ES_RODetailModel>((i) => ES_RODetailModel.fromMap(i)).toList();
+
+        return res;
       }
       on ApiException {
         rethrow;
@@ -56,11 +61,15 @@ class ES_RODataSource extends EServiceSvDataSource {
       'RONo': params.RONo,
     };
     try {
-      final response = await postGetByRONo(
+      final response = await post(
         path: 'ESRO/GetByRONo',
         params: paramsInit,
       );
-      return response.objResult!;
+      final data = response['Data'] as dynamic;
+
+      RT_ES_RODetailModel res = RT_ES_RODetailModel.fromMap(data);
+
+      return res;
     }
     on ApiException {
       rethrow;
@@ -75,7 +84,7 @@ class ES_RODataSource extends EServiceSvDataSource {
       'strJson': params.strJson,
     };
     try {
-      final response = await postChange(
+      final response = await post(
         path: 'ESRO/Update',
         params: paramsInit,
       );
@@ -93,7 +102,7 @@ class ES_RODataSource extends EServiceSvDataSource {
       'strJson': params.strJson,
     };
     try {
-      final response = await postChange(
+      final response = await post(
         path: 'ESRO/Delete',
         params: paramsInit,
       );
@@ -108,10 +117,15 @@ class ES_RODataSource extends EServiceSvDataSource {
 
   Future<List<ES_ROErrorTypeModel>> searchErrorType({required SearchErrorTypeParams params}) async {
     try {
-      final response = await postSearchErrorType(
+      final response = await post(
         path: 'MstErrorType/GetAllActive',
       );
-      return response.objResult!;
+      final dataList = response['DataList'] as List;
+
+      List<ES_ROErrorTypeModel> res =
+      dataList.map<ES_ROErrorTypeModel>((i) => ES_ROErrorTypeModel.fromMap(i)).toList();
+
+      return res;
     }
     on ApiException {
       rethrow;
@@ -128,11 +142,16 @@ class ES_RODataSource extends EServiceSvDataSource {
       'Ft_PageSize': params.Ft_PageSize,
     };
     try {
-      final response = await postSearchProduct(
+      final response = await post(
         params: paramsInit,
         path: 'MstProduct/Search',
       );
-      return response.objResult!;
+      final dataList = response['DataList'] as List;
+
+      List<ES_ROProductModel> res =
+      dataList.map<ES_ROProductModel>((i) => ES_ROProductModel.fromMap(i)).toList();
+
+      return res;
     }
     on ApiException {
       rethrow;
@@ -148,11 +167,15 @@ class ES_RODataSource extends EServiceSvDataSource {
       'OrgID': params.OrgID,
     };
     try {
-      final response = await postSearchErrorComponent(
+      final response = await post(
         params: paramsInit,
         path: 'MstErrorComponent/GetByProductGrpCode',
       );
-      return response.objResult!;
+      final data = response['Data'] as dynamic;
+
+      RT_ES_ROErrorComponentModel res = RT_ES_ROErrorComponentModel.fromMap(data);
+
+      return res;
     }
     on ApiException {
       rethrow;
@@ -168,7 +191,7 @@ class ES_RODataSource extends EServiceSvDataSource {
       'FinishDTimeUser': params.FinishDTimeUser,
     };
     try {
-      final response = await postChange(
+      final response = await post(
         path: 'ESRO/Finish',
         params: paramsInit,
       );

@@ -37,24 +37,17 @@ class ES_WarrantyDataSource extends EServiceSvDataSource {
       'Ft_PageSize': params.Ft_PageSize,
     };
 
-
     try {
       final response = await post(
         path: 'ESWarranty/Search',
         params: paramsInit,
       );
-      //return response.objResult!;
+      final dataList = response['DataList'] as List;
 
+      List<ES_WarrantyDetailModel> res =
+      dataList.map<ES_WarrantyDetailModel>((i) => ES_WarrantyDetailModel.fromMap(i)).toList();
 
-
-      final list = response['DataList'] as List;
-      // .map((i) => AgentModel.fromMap(i)).toList();
-
-      List<ES_WarrantyDetailModel> ret =
-      list.map<ES_WarrantyDetailModel>((i) => ES_WarrantyDetailModel.fromJson(i)).toList();
-
-      return ret;
-
+      return res;
     }
     on ApiException {
       rethrow;
@@ -63,51 +56,21 @@ class ES_WarrantyDataSource extends EServiceSvDataSource {
       throw ApiException(Message: ex.toString());
     }
   }
-
-  Future<List<ES_WarrantyDetailModel>> search_old({required SearchWarrantyParams params}) async {
-    final paramsInit = {
-      'SerialNo': params.SerialNo,
-      'ProductCode': params.ProductCode,
-      'CustomerPhoneNo': params.CustomerPhoneNo,
-      'CustomerAddress': params.CustomerAddress,
-      'AgentCode': params.AgentCode,
-      'InstallationDTimeUTCFrom': params.InstallationDTimeUTCFrom,
-      'InstallationDTimeUTCTo': params.InstallationDTimeUTCTo,
-      'WarrantyDTimeUTCFrom': params.WarrantyDTimeUTCFrom,
-      'WarrantyDTimeUTCTo': params.WarrantyDTimeUTCTo,
-      'WarrantyExpDTimeUTCFrom': params.WarrantyExpDTimeUTCFrom,
-      'WarrantyExpDTimeUTCTo': params.WarrantyExpDTimeUTCTo,
-      'Remark': params.Remark,
-      'OrgID': params.OrgID,
-      'Ft_PageIndex': params.Ft_PageIndex,
-      'Ft_PageSize': params.Ft_PageSize,
-    };
-    try {
-      final response = await postSearchWarranty(
-        path: 'ESWarranty/Search',
-        params: paramsInit,
-      );
-      return response.objResult!;
-    }
-    on ApiException {
-      rethrow;
-    }
-    on Exception catch (ex) {
-      throw ApiException(Message: ex.toString());
-    }
-  }
-
 
   Future<RT_ES_WarrantyDetailModel> getByWarrantyNo({required GetByWarrantyNoParams params}) async {
     final paramsInit = {
       'WarrantyNo': params.WarrantyNo,
     };
     try {
-      final response = await postGetByWarrantyNo(
+      final response = await post(
         path: 'ESWarranty/GetByWarrantyNo',
         params: paramsInit,
       );
-      return response.objResult!;
+      final data = response['Data'] as dynamic;
+
+      RT_ES_WarrantyDetailModel res = RT_ES_WarrantyDetailModel.fromMap(data);
+
+      return res;
     }
     on ApiException {
       rethrow;
@@ -122,7 +85,7 @@ class ES_WarrantyDataSource extends EServiceSvDataSource {
       'strJson': params.strJson,
     };
     try {
-      final response = await postChange(
+      final response = await post(
         path: 'ESWarranty/Update',
         params: paramsInit,
       );
@@ -140,7 +103,7 @@ class ES_WarrantyDataSource extends EServiceSvDataSource {
       'strJson': params.strJson,
     };
     try {
-      final response = await postChange(
+      final response = await post(
         path: 'ESWarranty/Delete',
         params: paramsInit,
       );
@@ -158,11 +121,16 @@ class ES_WarrantyDataSource extends EServiceSvDataSource {
       'SerialNo': params.SerialNo,
     };
     try {
-      final response = await postGetInputBySerialNo(
+      final response = await post(
         path: 'ESWarranty/GetInputBySerialNo',
         params: paramsInit,
       );
-      return response.objResult!;
+      final dataList = response['DataList'] as List;
+
+      List<RT_ES_WarrrantyActivateByQRModel> res =
+      dataList.map<RT_ES_WarrrantyActivateByQRModel>((i) => RT_ES_WarrrantyActivateByQRModel.fromMap(i)).toList();
+
+      return res;
     }
     on ApiException {
       rethrow;
@@ -177,11 +145,15 @@ class ES_WarrantyDataSource extends EServiceSvDataSource {
       'strJson': params.strJson,
     };
     try {
-      final response = await postCreate(
+      final response = await post(
         path: 'ESWarranty/Create',
         params: paramsInit,
       );
-      return response.objResult!;
+      final data = response['Data'] as dynamic;
+
+      RT_ES_WarrantyDetailModel res = RT_ES_WarrantyDetailModel.fromMap(data);
+
+      return res;
     }
     on ApiException {
       rethrow;

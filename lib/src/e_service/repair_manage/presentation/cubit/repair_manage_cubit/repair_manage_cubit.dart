@@ -13,16 +13,14 @@ class RepairManageCubit extends Cubit<RepairManageState> {
         super(RepairManageInitial());
 
   final SearchROUseCase _searchROUseCase;
+
   List<ES_RODetail>? listDetail;
-  int pageIndex = 0;
-  bool loadingMore = true;
-  static const int pageSize = 20;
 
   Future<void> init() async {
     emit(RepairManageLoading());
     try {
       final list = await _searchROUseCase.call(
-        SearchROParams(
+        const SearchROParams(
           RONo: '',
           ProductCode: '',
           CustomerPhoneNo: '',
@@ -37,12 +35,10 @@ class RepairManageCubit extends Cubit<RepairManageState> {
           Remark: '',
           OrgID: '',
           SerialNo: '',
-          Ft_PageIndex: pageIndex.toString(),
-          Ft_PageSize: pageSize.toString(),
+          Ft_PageIndex: '0',
+          Ft_PageSize: '1000',
         ),
       );
-      loadingMore = (list.fold((l) => null, (r) => r)?.length ?? 0) == pageSize;
-      ++pageIndex;
       final prefs = await SharedPreferences.getInstance();
       final email = prefs.getString('cached_email') ?? '';
       listDetail =
@@ -93,49 +89,6 @@ class RepairManageCubit extends Cubit<RepairManageState> {
             || element.RONo.toLowerCase().contains(query.toLowerCase()) ;
       }).toList();
       emit(RepairManageLoaded(list: listSearch ?? []));
-    }
-    catch(e) {
-      emit(RepairManageError(e.toString()));
-    }
-  }
-
-  Future<void> loadMore() async {
-    try{
-      if(state is RepairManageLoaded && state is! RepairManageLoadingMore && loadingMore) {
-        emit(RepairManageLoadingMore(list: (state as RepairManageLoaded).list));
-        final listLoadMore = await _searchROUseCase.call(
-          SearchROParams(
-            RONo: '',
-            ProductCode: '',
-            CustomerPhoneNo: '',
-            CustomerAddress: '',
-            AgentCode: '',
-            InstallationDTimeUTCFrom: '',
-            InstallationDTimeUTCTo: '',
-            WarrantyDTimeUTCFrom: '',
-            WarrantyDTimeUTCTo: '',
-            WarrantyExpDTimeUTCFrom: '',
-            WarrantyExpDTimeUTCTo: '',
-            Remark: '',
-            OrgID: '',
-            SerialNo: '',
-            Ft_PageIndex: pageIndex.toString(),
-            Ft_PageSize: pageSize.toString(),
-          ),
-        );
-        final prefs = await SharedPreferences.getInstance();
-        final email = prefs.getString('cached_email') ?? '';
-        listDetail =
-            listLoadMore.fold((l) => null, (r) => r)
-                ?.where((element) => element.AgentCode.toUpperCase() == email.toUpperCase()).toList();
-        listDetail?.sort((a, b) => b.ReceptionDTimeUTC.compareTo(a.ReceptionDTimeUTC) != 0
-            ? b.ReceptionDTimeUTC.compareTo(a.ReceptionDTimeUTC)
-            : b.AppointmentDTimeUTC.compareTo(a.AppointmentDTimeUTC),
-        );
-        emit(RepairManageLoaded(list: (state as RepairManageLoaded).list + (listDetail ?? [])));
-        loadingMore = (listLoadMore.fold((l) => null, (r) => r)?.length ?? 0) == pageSize;
-        ++pageIndex;
-      }
     }
     catch(e) {
       emit(RepairManageError(e.toString()));

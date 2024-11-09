@@ -13,12 +13,16 @@ class ES_UploadFileDataSource extends EServiceSvDataSource {
       'file': params.file,
     };
     try {
-      final response = await postUploadFile(
+      final response = await postUpload(
           path: 'File/UploadFile',
           params: paramsInit,
           filePath: params.file.path
       );
-      return response.objResult!;
+      final data = response['Data'] as dynamic;
+
+      RT_ES_FileUploadModel res = RT_ES_FileUploadModel.fromMap(data);
+
+      return res;
     }
     on ApiException {
       rethrow;

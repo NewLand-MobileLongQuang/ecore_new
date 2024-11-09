@@ -55,25 +55,25 @@ class RepairEditCubit extends Cubit<RepairEditState> {
       // DS loi
       final rt_es_ROErrorType = await _searchErrorTypeUseCase.call(const SearchErrorTypeParams(),);
       final rt_es_ROErrorTypeFold = rt_es_ROErrorType.fold((l) => null, (r) => r)!;
-      final listErrorType = rt_es_ROErrorTypeFold.map((e) => e.ErrorTypeCode).toSet().toList();
+      final listErrorType = rt_es_ROErrorTypeFold.map((e) => '${e.ErrorTypeName} - ${e.ErrorTypeCode}').toSet().toList();
 
       List<String> listProduct;
       List<String> listErrorComponent;
 
+      var ProductGrpCode = '';
       if(rt_es_RODetailFold.Lst_ES_RODetail.first.SerialNo.isNotEmpty) {
         // DS san pham
         final rt_es_ROProduct = await _searchProductUseCase.call(
-          SearchProductParams(
-            ProductCodeUser: rt_es_RODetailFold.Lst_ES_RODetail.first.ProductCode,
-            Ft_PageIndex: '0',
-            Ft_PageSize: '1000',
-          )
+            SearchProductParams(
+              ProductCodeUser: rt_es_RODetailFold.Lst_ES_RODetail.first.ProductCode,
+              Ft_PageIndex: '0',
+              Ft_PageSize: '1000',
+            )
         );
         final rt_es_ROProductFold = rt_es_ROProduct.fold((l) => null, (r) => r)!;
-        listProduct = rt_es_ROProductFold.map((e) => e.ProductCode).toSet().toList();
+        listProduct = rt_es_ROProductFold.map((e) => '${e.ProductCodeUser} - ${e.ProductName} - ${e.ProductCode}').toSet().toList();
 
         // DS linh kien
-        var ProductGrpCode = '';
         for(var product in rt_es_ROProductFold){
           if(product.ProductCode == rt_es_RODetailFold.Lst_ES_RODetail.first.ProductCode){
             ProductGrpCode = product.ProductGrpCode;
@@ -81,13 +81,13 @@ class RepairEditCubit extends Cubit<RepairEditState> {
           }
         }
         final rt_es_ROErrorComponent = await _searchErrorComponentUseCase.call(
-          SearchErrorComponentParams(
-            ProductGrpCode: ProductGrpCode,
-            OrgID: rt_es_RODetailFold.Lst_ES_RODetail.first.OrgID,
-          )
+            SearchErrorComponentParams(
+              ProductGrpCode: ProductGrpCode,
+              OrgID: rt_es_RODetailFold.Lst_ES_RODetail.first.OrgID,
+            )
         );
         final rt_es_ROErrorComponentFold = rt_es_ROErrorComponent.fold((l) => null, (r) => r)!;
-        listErrorComponent = rt_es_ROErrorComponentFold.Lst_Mst_ErrorComponent.map((e) => '${e.ProductGrpCode}-${e.ComponentCode}').toSet().toList();
+        listErrorComponent = rt_es_ROErrorComponentFold.Lst_Mst_ErrorComponent.map((e) => '${e.ComponentCode} - ${e.ComponentName}').toSet().toList();
       }
       else {
         listProduct = [];
@@ -102,6 +102,7 @@ class RepairEditCubit extends Cubit<RepairEditState> {
           listErrorType: listErrorType,
           listProduct: listProduct,
           listErrorComponent: listErrorComponent,
+          ProductGrpCode: ProductGrpCode,
         ),
       );
     } catch (e) {
@@ -110,12 +111,12 @@ class RepairEditCubit extends Cubit<RepairEditState> {
   }
 
   Future<void> update(
-    ES_ROEdit es_ROEdit,
-    List<ES_ROComponent> lst_ES_ROComponent,
-    List<ES_ROAttachFile> lst_ES_ROAttachFile,
-    List<String> list_ES_ROAttachFileType,
-    List<File?> listFile,
-  ) async {
+      ES_ROEdit es_ROEdit,
+      List<ES_ROComponent> lst_ES_ROComponent,
+      List<ES_ROAttachFile> lst_ES_ROAttachFile,
+      List<String> list_ES_ROAttachFileType,
+      List<File?> listFile,
+      ) async {
     final currentState = state as RepairEditLoaded;
     emit(RepairEditLoading());
     // upload
@@ -144,12 +145,11 @@ class RepairEditCubit extends Cubit<RepairEditState> {
     }
     try {
       final objRQ_ES_ROEditModel = RQ_ES_ROEditModel(
-          es_ROEdit: es_ROEdit,
-          Lst_ES_ROComponent: lst_ES_ROComponent,
-          Lst_ES_ROAttachFile: lst_ES_ROAttachFile,
+        es_ROEdit: es_ROEdit,
+        Lst_ES_ROComponent: lst_ES_ROComponent,
+        Lst_ES_ROAttachFile: lst_ES_ROAttachFile,
       );
       final params = jsonEncode(objRQ_ES_ROEditModel.toJson());
-      print("TrungLQ1: ${objRQ_ES_ROEditModel.es_ROEdit.AppointmentDTimeUTC}");
       final appointmentTime = DateTime.parse(es_ROEdit.ReceptionDTimeUTC);
       final now = DateTime.now();
       final day5Now = DateTime(now.year, now.month, 5);
@@ -158,6 +158,7 @@ class RepairEditCubit extends Cubit<RepairEditState> {
         emit(currentState);
       }
       else {
+        print("TrungLQ: $params");
         await _updateROUseCase.call(UpdateROParams(strJson: params));
         emit(RepairEditSuccess());
       }
@@ -173,6 +174,8 @@ class RepairEditCubit extends Cubit<RepairEditState> {
     try {
       final prefs = await SharedPreferences.getInstance();
       final email = prefs.getString('cached_email') ?? '';
+      print("TrungLQ: $RONo");
+      print("TrungLQ: $FinishDTimeUser");
       if(email.toUpperCase() == AgentCode.toUpperCase()) {
         await _finishROUseCase.call(FinishROParams(RONo: RONo, FinishDTimeUser: FinishDTimeUser));
         emit(RepairFinishSuccess());
@@ -187,64 +190,64 @@ class RepairEditCubit extends Cubit<RepairEditState> {
     }
   }
 
-  // Future<void> scan(String serialNo) async {
-  //   emit(RepairEditLoading());
-  //   try{
-  //     // DS loi
-  //     final rt_es_ROErrorType = await _searchErrorTypeUseCase.call(const SearchErrorTypeParams(),);
-  //     final rt_es_ROErrorTypeFold = rt_es_ROErrorType.fold((l) => null, (r) => r)!;
-  //     final listErrorType = rt_es_ROErrorTypeFold.map((e) => e.ErrorTypeCode).toSet().toList();
-  //
-  //     List<String> listProduct;
-  //     List<String> listErrorComponent;
-  //
-  //     if(serialNo.isNotEmpty) {
-  //       // DS san pham
-  //       final rt_es_ROProduct = await _searchProductUseCase.call(
-  //           SearchProductParams(
-  //             ProductCodeUser: rt_es_RODetailFold.Lst_ES_RODetail.first.ProductCode,
-  //             Ft_PageIndex: '0',
-  //             Ft_PageSize: '1000',
-  //           )
-  //       );
-  //       final rt_es_ROProductFold = rt_es_ROProduct.fold((l) => null, (r) => r)!;
-  //       listProduct = rt_es_ROProductFold.map((e) => e.ProductCode).toSet().toList();
-  //
-  //       // DS linh kien
-  //       var ProductGrpCode = '';
-  //       for(var product in rt_es_ROProductFold){
-  //         if(product.ProductCode == rt_es_RODetailFold.Lst_ES_RODetail.first.ProductCode){
-  //           ProductGrpCode = product.ProductGrpCode;
-  //           break;
-  //         }
-  //       }
-  //       final rt_es_ROErrorComponent = await _searchErrorComponentUseCase.call(
-  //           SearchErrorComponentParams(
-  //             ProductGrpCode: ProductGrpCode,
-  //             OrgID: rt_es_RODetailFold.Lst_ES_RODetail.first.OrgID,
-  //           )
-  //       );
-  //       final rt_es_ROErrorComponentFold = rt_es_ROErrorComponent.fold((l) => null, (r) => r)!;
-  //       listErrorComponent = rt_es_ROErrorComponentFold.Lst_Mst_ErrorComponent.map((e) => '${e.ProductGrpCode}-${e.ComponentCode}').toSet().toList();
-  //     }
-  //     else {
-  //       listProduct = [];
-  //       listErrorComponent = [];
-  //     }
-  //
-  //     emit(
-  //       RepairEditLoaded(
-  //         eS_RODetail: rt_es_RODetailFold.Lst_ES_RODetail[0],
-  //         Lst_ES_ROComponent: rt_es_RODetailFold.Lst_ES_ROComponent,
-  //         Lst_ES_ROAttachFile: rt_es_RODetailFold.Lst_ES_ROAttachFile,
-  //         listErrorType: listErrorType,
-  //         listProduct: listProduct,
-  //         listErrorComponent: listErrorComponent,
-  //       ),
-  //     );
-  //   }
-  //   catch(e) {
-  //
-  //   }
-  // }
+// Future<void> scan(String serialNo) async {
+//   emit(RepairEditLoading());
+//   try{
+//     // DS loi
+//     final rt_es_ROErrorType = await _searchErrorTypeUseCase.call(const SearchErrorTypeParams(),);
+//     final rt_es_ROErrorTypeFold = rt_es_ROErrorType.fold((l) => null, (r) => r)!;
+//     final listErrorType = rt_es_ROErrorTypeFold.map((e) => e.ErrorTypeCode).toSet().toList();
+//
+//     List<String> listProduct;
+//     List<String> listErrorComponent;
+//
+//     if(serialNo.isNotEmpty) {
+//       // DS san pham
+//       final rt_es_ROProduct = await _searchProductUseCase.call(
+//           SearchProductParams(
+//             ProductCodeUser: rt_es_RODetailFold.Lst_ES_RODetail.first.ProductCode,
+//             Ft_PageIndex: '0',
+//             Ft_PageSize: '1000',
+//           )
+//       );
+//       final rt_es_ROProductFold = rt_es_ROProduct.fold((l) => null, (r) => r)!;
+//       listProduct = rt_es_ROProductFold.map((e) => e.ProductCode).toSet().toList();
+//
+//       // DS linh kien
+//       var ProductGrpCode = '';
+//       for(var product in rt_es_ROProductFold){
+//         if(product.ProductCode == rt_es_RODetailFold.Lst_ES_RODetail.first.ProductCode){
+//           ProductGrpCode = product.ProductGrpCode;
+//           break;
+//         }
+//       }
+//       final rt_es_ROErrorComponent = await _searchErrorComponentUseCase.call(
+//           SearchErrorComponentParams(
+//             ProductGrpCode: ProductGrpCode,
+//             OrgID: rt_es_RODetailFold.Lst_ES_RODetail.first.OrgID,
+//           )
+//       );
+//       final rt_es_ROErrorComponentFold = rt_es_ROErrorComponent.fold((l) => null, (r) => r)!;
+//       listErrorComponent = rt_es_ROErrorComponentFold.Lst_Mst_ErrorComponent.map((e) => '${e.ProductGrpCode}-${e.ComponentCode}').toSet().toList();
+//     }
+//     else {
+//       listProduct = [];
+//       listErrorComponent = [];
+//     }
+//
+//     emit(
+//       RepairEditLoaded(
+//         eS_RODetail: rt_es_RODetailFold.Lst_ES_RODetail[0],
+//         Lst_ES_ROComponent: rt_es_RODetailFold.Lst_ES_ROComponent,
+//         Lst_ES_ROAttachFile: rt_es_RODetailFold.Lst_ES_ROAttachFile,
+//         listErrorType: listErrorType,
+//         listProduct: listProduct,
+//         listErrorComponent: listErrorComponent,
+//       ),
+//     );
+//   }
+//   catch(e) {
+//
+//   }
+// }
 }

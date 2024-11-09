@@ -3,9 +3,9 @@
 import '../../domain/entities/es_ro_detail.dart';
 
 class ES_RODetailModel extends ES_RODetail {
-  ES_RODetailModel({required super.RONo, required super.OrgID, required super.NetworkID, required super.CustomerCodeSys, required super.CustomerName, required super.CustomerPhoneNo, required super.CustomerAddress, required super.CustomerAvatarPath, required super.ReceptionDTimeUTC, required super.AgentCode, required super.RODesc, required super.Deadline, required super.ROStatus, required super.ProductCode, required super.SerialNo, required super.FactoryCode, required super.ErrorTypeCode, required super.AppointmentDTimeUTC, required super.CreateDTimeUTC, required super.CreateBy, required super.Remark, required super.FinishDTimeUser, required super.FinishDTimeUTC, required super.FinishBy, required super.LUDTimeUTC, required super.LUBy, required super.LogLUDTimeUTC, required super.LogLUBy, required super.AgentName, required super.AgentAvatar, required super.ListComponentCode});
+  ES_RODetailModel({required super.RONo, required super.OrgID, required super.NetworkID, required super.CustomerCodeSys, required super.CustomerName, required super.CustomerPhoneNo, required super.CustomerAddress, required super.CustomerAvatarPath, required super.ReceptionDTimeUTC, required super.AgentCode, required super.RODesc, required super.Deadline, required super.ROStatus, required super.ProductCode, required super.SerialNo, required super.FactoryCode, required super.ErrorTypeCode, required super.AppointmentDTimeUTC, required super.CreateDTimeUTC, required super.CreateBy, required super.Remark, required super.FinishDTimeUser, required super.FinishDTimeUTC, required super.FinishBy, required super.LUDTimeUTC, required super.LUBy, required super.LogLUDTimeUTC, required super.LogLUBy, required super.AgentName, required super.AgentAvatar, required super.ListComponentCode, required super.CustomerNameReal});
 
-  factory ES_RODetailModel.fromJson(Map<String, dynamic> json) {
+  factory ES_RODetailModel.fromMap(Map<String, dynamic> json) {
     return ES_RODetailModel(
       RONo: json['RONo'] as String? ?? '',
       OrgID: json['OrgID'] as String? ?? '',
@@ -38,10 +38,11 @@ class ES_RODetailModel extends ES_RODetail {
       AgentName: json['AgentName'] as String? ?? '',
       AgentAvatar: json['AgentAvatar'] as String? ?? '',
       ListComponentCode: json['ListComponentCode'] as String? ?? '',
+      CustomerNameReal: json['CustomerNameReal'] as String? ?? '',
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
       'RONo': RONo,
       'OrgID': OrgID,
@@ -74,6 +75,7 @@ class ES_RODetailModel extends ES_RODetail {
       'AgentName': AgentName,
       'AgentAvatar': AgentAvatar,
       'ListComponentCode': ListComponentCode,
+      'CustomerNameReal': CustomerNameReal,
     };
   }
 }

@@ -3,7 +3,7 @@ import 'package:ecore/src/e_service/guarantee_manage/domain/entities/es_warranty
 class ES_WarrantyAttachFileModel extends ES_WarrantyAttachFile {
   ES_WarrantyAttachFileModel({required super.Idx, required super.FileName, required super.FilePath, required super.FileType, required super.FileSize});
 
-  factory ES_WarrantyAttachFileModel.fromJson(Map<String, dynamic> json) {
+  factory ES_WarrantyAttachFileModel.fromMap(Map<String, dynamic> json) {
     return ES_WarrantyAttachFileModel(
       Idx: json['Idx'] as int? ?? 1,
       FileName: json['FileName'] as String? ?? '',
@@ -13,7 +13,7 @@ class ES_WarrantyAttachFileModel extends ES_WarrantyAttachFile {
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
       'Idx': Idx,
       'FileName': FileName,

@@ -3,13 +3,13 @@ import 'package:ecore/src/e_service/customer_manage/domain/entities/es_customer_
 class ESCustomerPhoneModel extends ESCustomerPhone {
   const ESCustomerPhoneModel({required super.CtmPhoneNo});
 
-  factory ESCustomerPhoneModel.fromJson(Map<String, dynamic> json) {
+  factory ESCustomerPhoneModel.fromMap(Map<String, dynamic> json) {
     return ESCustomerPhoneModel(
       CtmPhoneNo: json['CtmPhoneNo'] as String? ?? '',
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
       'CtmPhoneNo': CtmPhoneNo,
     };
