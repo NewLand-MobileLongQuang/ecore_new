@@ -29,6 +29,8 @@ class ES_WarrantyDetailModel extends ES_WarrantyDetail {
     required super.LUBy,
     required super.LogLUDTimeUTC,
     required super.LogLUBy,
+    required super.CustomerCode,
+    required super.AgentName,
   });
 
   factory ES_WarrantyDetailModel.fromMap(Map<String, dynamic> map) {
@@ -60,8 +62,42 @@ class ES_WarrantyDetailModel extends ES_WarrantyDetail {
       LUBy: map['LUBy'] as String? ?? '',
       LogLUDTimeUTC: map['LogLUDTimeUTC'] as String? ?? '',
       LogLUBy: map['LogLUBy'] as String? ?? '',
+      CustomerCode: map['CustomerCode'] as String? ?? '',
+      AgentName: map['AgentName'] as String? ?? '',
     );
   }
 
-
+  Map<String, dynamic> toMap() {
+    return {
+      'WarrantyNo': WarrantyNo,
+      'OrgID': OrgID,
+      'NetworkID': NetworkID,
+      'SerialNo': SerialNo,
+      'ProductCode': ProductCode,
+      'ProductCodeUser': ProductCodeUser,
+      'ProductName': ProductName,
+      'ProductionDTimeUTC': ProductionDTimeUTC,
+      'FactoryCode': FactoryCode,
+      'KCS': KCS,
+      'CustomerCodeSys': CustomerCodeSys,
+      'CustomerName': CustomerName,
+      'CustomerPhoneNo': CustomerPhoneNo,
+      'CustomerAddress': CustomerAddress,
+      'CustomerEmail': CustomerEmail,
+      'AgentCode': AgentCode,
+      'InstallationDTimeUTC': InstallationDTimeUTC,
+      'WarrantyDTimeUTC': WarrantyDTimeUTC,
+      'WarrantyExpDTimeUTC': WarrantyExpDTimeUTC,
+      'CreateDTimeUTC': CreateDTimeUTC,
+      'CreateBy': CreateBy,
+      'WarrantyStatus': WarrantyStatus,
+      'Remark': Remark,
+      'LUDTimeUTC': LUDTimeUTC,
+      'LUBy': LUBy,
+      'LogLUDTimeUTC': LogLUDTimeUTC,
+      'LogLUBy': LogLUBy,
+      'CustomerCode': CustomerCode,
+      'AgentName': AgentName,
+    };
+  }
 }

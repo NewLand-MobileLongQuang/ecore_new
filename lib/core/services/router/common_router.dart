@@ -28,31 +28,6 @@ PageRouteBuilder? handleCaseCommon(RouteSettings settings) {
               create: (_) => sl<InitSessionCubit>(), child: const InitSessionScreen()),
           settings: settings);
 
-      // final session = SessionInfo.current();
-      //
-      // return pageBuilder((context) {
-      //   if (session.isAuthenticated()) {
-      //     context.sessionProvider.initSession(session);
-      //
-      //     //if (session.org != null) return const Dashboard();
-      //
-      //     if (session.org != null) {
-      //       // return BlocProvider(
-      //       //     create: (_) => sl<SkyCsCubit>(),
-      //       //     child: const SkyCsScreen());
-      //
-      //       return BlocProvider(
-      //           create: (_) => sl<DialpadCubit>(), child: const CallScreen());
-      //     } else
-      //       return BlocProvider(
-      //           create: (_) => sl<AuthCubit>(),
-      //           child: const SelectNetworkScreen());
-      //   }
-      //
-      //   return BlocProvider(
-      //       create: (_) => sl<AuthCubit>(), child: const LoginScreen());
-      // }, settings: settings);
-
     case CallRegisterScreen.routeName:
       return pageBuilder(
               (p0) => BlocProvider(

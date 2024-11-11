@@ -1,20 +1,20 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:ecore/core/common/widgets/inputs/i_text_field.dart';
+import 'package:ecore/core/common/widgets/loading_view.dart';
 import 'package:ecore/core/res/colors.dart';
 import 'package:ecore/core/res/strings.dart';
-
+import 'package:ecore/core/res/text_styles.dart';
+import 'package:ecore/core/utils/localization_helper.dart';
+import 'package:ecore/src/e_service/common/solution_context_extensions.dart';
 import 'package:ecore/src/e_service/customer_manage/domain/entities/rt_es_customer_detail.dart';
 import 'package:ecore/src/e_service/customer_manage/presentation/cubit/customer_detail_cubit/customer_detail_cubit.dart';
-
-import '../../../../../core/common/widgets/loading_view.dart';
-import '../../../../../core/res/text_styles.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomerDetailScreen extends StatefulWidget {
   const CustomerDetailScreen({required this.customerCodeSys, super.key});
 
-  static const routeName = '/customer-detail';
+  static const routeName = 'customer-detail';
   final String customerCodeSys;
 
   @override
@@ -30,17 +30,20 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.localizer(CustomerDetailScreen.routeName);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.primaryColor,
         leading: IconButton(
           icon: const Icon(
-            Icons.arrow_back_ios_new_rounded,
+            FontAwesomeIcons.chevronLeft,
             color: AppColors.textWhiteColor,
+            size: 20,
           ),
           onPressed: () => Navigator.of(context).maybePop(),
         ),
-        title: _textTitle(),
+        title: _textTitle(l),
       ),
       body: SafeArea(
         child: Padding(
@@ -56,7 +59,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
               if (state is CustomerDetailLoaded) {
                 return ListView(
                   children: [
-                    _titleCustomerInformation(state.rt_esCustomerDetail),
+                    _titleCustomerInformation(state.rt_esCustomerDetail, l),
                   ],
                 );
               }
@@ -73,39 +76,39 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
     super.dispose();
   }
 
-  Widget _textTitle() {
+  Widget _textTitle(LocalizationHelper l) {
     return Text(
-      AppStrings.detailCustomer,
+      l(AppStrings.detailCustomer),
       style: AppTextStyles.textStyleInterW500S18White,
       maxLines: 2,
     );
   }
 
-  Widget _titleCustomerInformation(RT_ESCustomerDetail rt_esCustomerDetail) {
+  Widget _titleCustomerInformation(RT_ESCustomerDetail rt_esCustomerDetail, LocalizationHelper l) {
     return Column(
       children: [
         CircleAvatar(
           radius: 50,
           backgroundColor: AppColors.primaryColor,
           child: rt_esCustomerDetail.Lst_Mst_Customer.first.CustomerAvatarPath != ''
-          ? Image.network(
-                rt_esCustomerDetail.Lst_Mst_Customer.first.CustomerAvatarPath,
-                width: 100,
-                height: 100,
-                fit: BoxFit.cover,
-              )
-        : const Icon(
+              ? Image.network(
+            rt_esCustomerDetail.Lst_Mst_Customer.first.CustomerAvatarPath,
+            width: 100,
+            height: 100,
+            fit: BoxFit.cover,
+          )
+              : const Icon(
             Icons.person,
             size: 50,
             color: AppColors.textWhiteColor,
           ),
         ),
         const SizedBox(height: 16),
-        _itemText(value: rt_esCustomerDetail.Lst_Mst_Customer.first.CustomerCode, title: AppStrings.customerIdTitle),
-        _itemText(value: rt_esCustomerDetail.Lst_Mst_Customer.first.CustomerName, title: AppStrings.customerNameTitle),
-        _itemText(value: rt_esCustomerDetail.Lst_Mst_Customer.first.CustomerAddress, title: AppStrings.customerAddressTitle),
-        _itemText(value: rt_esCustomerDetail.Lst_Mst_CustomerPhone.first.CtmPhoneNo, title: AppStrings.customerPhoneTitle),
-        _itemText(value: rt_esCustomerDetail.Lst_Mst_CustomerEmail.first.CtmEmail, title: AppStrings.customerEmailTitle),
+        _itemText(value: rt_esCustomerDetail.Lst_Mst_Customer.first.CustomerCode, title: l(AppStrings.customerIdTitle)),
+        _itemText(value: rt_esCustomerDetail.Lst_Mst_Customer.first.CustomerName, title: l(AppStrings.customerNameTitle)),
+        _itemText(value: rt_esCustomerDetail.Lst_Mst_Customer.first.CustomerAddress, title: l(AppStrings.customerAddressTitle)),
+        _itemText(value: rt_esCustomerDetail.Lst_Mst_CustomerPhone.first.CtmPhoneNo, title: l(AppStrings.customerPhoneTitle)),
+        _itemText(value: rt_esCustomerDetail.Lst_Mst_CustomerEmail.first.CtmEmail, title: l(AppStrings.customerEmailTitle)),
       ],
     );
   }

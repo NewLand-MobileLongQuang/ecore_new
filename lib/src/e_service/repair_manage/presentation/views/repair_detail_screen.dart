@@ -1,25 +1,25 @@
-import 'package:ecore/core/utils/localization_helper.dart';
-import 'package:ecore/src/e_service/common/solution_context_extensions.dart';
-import 'package:ecore/src/e_service/common/utils.dart';
-import 'package:ecore/src/e_service/repair_manage/presentation/views/repair_edit_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ecore/core/common/widgets/inputs/i_dialog.dart';
 import 'package:ecore/core/common/widgets/inputs/i_expansion_tile.dart';
 import 'package:ecore/core/common/widgets/inputs/i_text_field.dart';
+import 'package:ecore/core/common/widgets/loading_view.dart';
 import 'package:ecore/core/res/colors.dart';
 import 'package:ecore/core/res/media_res.dart';
 import 'package:ecore/core/res/strings.dart';
+import 'package:ecore/core/res/text_styles.dart';
+import 'package:ecore/core/utils/localization_helper.dart';
+import 'package:ecore/src/e_service/common/solution_context_extensions.dart';
+import 'package:ecore/src/e_service/common/utils.dart';
+import 'package:ecore/src/e_service/common/widgets/i_scroll_image.dart';
 import 'package:ecore/src/e_service/repair_manage/data/model/es_ro_delete_model.dart';
 import 'package:ecore/src/e_service/repair_manage/domain/entities/es_ro_attach_file.dart';
 import 'package:ecore/src/e_service/repair_manage/domain/entities/es_ro_component.dart';
 import 'package:ecore/src/e_service/repair_manage/domain/entities/es_ro_detail.dart';
 import 'package:ecore/src/e_service/repair_manage/presentation/cubit/repair_detail_cubit/repair_detail_cubit.dart';
+import 'package:ecore/src/e_service/repair_manage/presentation/views/repair_edit_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../../../../core/common/widgets/loading_view.dart';
-import '../../../../../core/res/text_styles.dart';
-import '../../../common/widgets/i_scroll_image.dart';
 
 class RepairDetailScreen extends StatefulWidget {
   const RepairDetailScreen({required this.id, super.key});
@@ -174,12 +174,12 @@ class _RepairDetailScreenState extends State<RepairDetailScreen> {
 
   Widget _titleRequestInformation(LocalizationHelper l) {
     return IExpansionTile(
-        title: AppStrings.requestInformation,
+        title: l(AppStrings.requestInformation),
         trailingExpansionTrue: SvgPicture.asset(AppMediaRes.iconExpandUp),
         trailingExpansionFalse: SvgPicture.asset(AppMediaRes.iconExpandDown),
         children: [
           _item(title: l(AppStrings.requestTimeTitle), value: eS_RODetail.ReceptionDTimeUTC),
-          _item(title: l(AppStrings.customerNameTitle), value: eS_RODetail.CustomerName),
+          _item(title: l(AppStrings.customerNameTitle), value: eS_RODetail.CustomerNameReal),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -216,7 +216,7 @@ class _RepairDetailScreenState extends State<RepairDetailScreen> {
   Widget _titleResponseInformation(LocalizationHelper l) {
     final listComponent = eS_RODetail.ListComponentCode?.split(' ') ?? [];
     return IExpansionTile(
-        title: AppStrings.requestActivityInformation,
+        title: l(AppStrings.requestActivityInformation),
         trailingExpansionTrue: SvgPicture.asset(AppMediaRes.iconExpandUp),
         trailingExpansionFalse: SvgPicture.asset(AppMediaRes.iconExpandDown),
         children: [

@@ -17,8 +17,8 @@ class RepairHistorySearchCubit extends Cubit<RepairHistorySearchState> {
     required SearchROUseCase searchROUseCase,
     required GetInputBySerialNoUseCase getInputBySerialNoUseCase,
   }) : _searchWarrantyUseCase = searchWarrantyUseCase,
-       _searchROUseCase = searchROUseCase,
-       _getInputBySerialNoUseCase = getInputBySerialNoUseCase,
+        _searchROUseCase = searchROUseCase,
+        _getInputBySerialNoUseCase = getInputBySerialNoUseCase,
         super(RepairHistorySearchInitial());
 
 
@@ -58,7 +58,7 @@ class RepairHistorySearchCubit extends Cubit<RepairHistorySearchState> {
           Remark: '',
           OrgID: '',
           Ft_PageIndex: '0',
-          Ft_PageSize: '200',
+          Ft_PageSize: '1000',
         ),
       );
       final listWarrantyDetail = listWarranty.fold((l) => null, (r) => r);
@@ -80,12 +80,18 @@ class RepairHistorySearchCubit extends Cubit<RepairHistorySearchState> {
           OrgID: '',
           SerialNo: query,
           Ft_PageIndex: '0',
-          Ft_PageSize: '200',
+          Ft_PageSize: '1000',
         ),
       );
       final listRODetail = listRO.fold((l) => null, (r) => r);
 
-      emit(RepairHistorySearchSearched(listQr: scannerFold ?? [],listWarranty: listWarrantyDetail ?? [], listRO: listRODetail ?? []));
+      emit(
+        RepairHistorySearchSearched(
+          listQr: scannerFold ?? [],
+          listWarranty: listWarrantyDetail ?? [],
+          listRO: listRODetail ?? [],
+        ),
+      );
     }
     catch (e) {
       emit(RepairHistorySearchError(message: e.toString()));

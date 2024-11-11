@@ -1,21 +1,24 @@
+import 'package:ecore/core/common/widgets/inputs/i_text_field.dart';
+import 'package:ecore/core/common/widgets/loading_view.dart';
+import 'package:ecore/src/e_service/common/widgets/qr_code_view.dart';
+import 'package:ecore/core/res/colors.dart';
+import 'package:ecore/core/res/strings.dart';
+import 'package:ecore/core/res/text_styles.dart';
+import 'package:ecore/core/utils/string_generate.dart';
+import 'package:ecore/src/e_service/common/solution_context_extensions.dart';
+import 'package:ecore/src/e_service/common/utils.dart';
+import 'package:ecore/src/e_service/guarantee_manage/domain/entities/es_warranty_detail.dart';
+import 'package:ecore/src/e_service/guarantee_manage/domain/entities/rt_es_warranty_activate_by_qr.dart';
+import 'package:ecore/src/e_service/repair_history_search/presentation/cubit/repair_history_search_cubit/repair_history_search_cubit.dart';
+import 'package:ecore/src/e_service/repair_manage/domain/entities/es_ro_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../../core/common/widgets/inputs/i_text_field.dart';
-import '../../../../../core/res/colors.dart';
-import '../../../../../core/res/strings.dart';
-import '../../../../../core/res/text_styles.dart';
-import '../../../../../core/utils/string_generate.dart';
-import '../../../guarantee_manage/domain/entities/es_warranty_detail.dart';
-import '../../../guarantee_manage/domain/entities/rt_es_warranty_activate_by_qr.dart';
-import '../../../repair_manage/domain/entities/es_ro_detail.dart';
-import '../cubit/repair_history_search_cubit/repair_history_search_cubit.dart';
-
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class RepairHistorySearchScreen extends StatefulWidget {
   const RepairHistorySearchScreen({super.key});
 
-  static const routeName = 'eservice/repair-history-search';
+  static const routeName = 'repair-history-search';
 
   @override
   State<RepairHistorySearchScreen> createState() =>
@@ -54,7 +57,7 @@ class _RepairHistorySearchScreenState extends State<RepairHistorySearchScreen> {
             },
             builder: (context, state) {
               if(state is RepairHistorySearchLoading) {
-                return const Center(child: CircularProgressIndicator());
+                return const LoadingView();
               }
               if(state is RepairHistorySearchLoaded) {
                 return Center(
@@ -97,14 +100,13 @@ class _RepairHistorySearchScreenState extends State<RepairHistorySearchScreen> {
         const SizedBox(width: 16),
         InkWell(
           onTap: () {
-            Navigator.pushNamed(
-              context,
-              'QrCodeView.routeName',
+            context.pushNamed(
+              EServiceUtils.getFullRouteName(QrCodeView.routeName),
             ).then((value) {
               if (value != null) {
                 _serialNoController.text = value.toString();
                 context.read<RepairHistorySearchCubit>().search(
-                  StringGenerate.extractQRCode(value.toString())
+                    StringGenerate.extractQRCode(value.toString())
                 );
               }
             });
@@ -117,8 +119,8 @@ class _RepairHistorySearchScreenState extends State<RepairHistorySearchScreen> {
               borderRadius: BorderRadius.all(Radius.circular(5)),
             ),
             child: const Icon(
-              Icons.qr_code,
-              size: 28,
+              FontAwesomeIcons.qrcode,
+              size: 24,
               color: AppColors.textWhiteColor,
             ),
           ),
@@ -128,106 +130,94 @@ class _RepairHistorySearchScreenState extends State<RepairHistorySearchScreen> {
   }
 
   Widget _infoHistorySearch(List<RT_ES_WarrrantyActivateByQR> listQr, List<ES_WarrantyDetail> listWarranty, List<ES_RODetail> listRO) {
-    return Stack(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Positioned(
-          top: 0,
-          right: 0,
-          child: InkWell(
-            onTap: () {
-              context.read<RepairHistorySearchCubit>().init();
-              _serialNoController.clear();
-            },
-            child: Container(
-              height: 36,
-              width: 48,
-              decoration: const BoxDecoration(
-                color: AppColors.buttonRedColor,
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-              ),
-              child: const Icon(
-                Icons.close,
-                size: 20,
-                color: AppColors.textWhiteColor,
-              ),
-            ),
-          ),
+        Text(
+          'Số serial: ${StringGenerate.extractQRCode(listQr[0].SerialNo)}',
+          style: AppTextStyles.textStyleInterW400S16Black,
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Số serial: ${StringGenerate.extractQRCode(listQr[0].SerialNo)}',
-              style: AppTextStyles.textStyleInterW400S16Black,
+        const SizedBox(height: 4),
+        Text(
+          'Mã SP: ${listQr[0].ProductCodeUser}',
+          style: AppTextStyles.textStyleInterW400S16Black,
+        ),
+        const SizedBox(height: 4),
+        Text(
+          'Tên SP: ${listQr[0].ProductName}',
+          style: AppTextStyles.textStyleInterW400S16Black,
+        ),
+        // const Divider(color: AppColors.divideColor,),
+        const SizedBox(height: 16),
+        if(listWarranty.isNotEmpty)
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              color: AppColors.textBlueColor.withOpacity(0.1),
+              border: Border.all(color: AppColors.textBlueColor),
+              borderRadius: BorderRadius.circular(5),
             ),
-            Text(
-              'Mã SP: ${listQr[0].ProductCodeUser}',
-              style: AppTextStyles.textStyleInterW400S16Black,
-            ),
-            Text(
-              'Tên SP: ${listQr[0].ProductName}',
-              style: AppTextStyles.textStyleInterW400S16Black,
-            ),
-            const Divider(color: AppColors.divideColor,),
-            if(listWarranty.isNotEmpty)...[
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      listWarranty[0].CreateDTimeUTC,
-                      style: AppTextStyles.textStyleInterW400S16Black,
-                      overflow: TextOverflow.ellipsis,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        listWarranty[0].CreateDTimeUTC,
+                        style: AppTextStyles.textStyleInterW400S16Black,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Text(
-                      listWarranty[0].CreateBy,
+                    const SizedBox(width: 16),
+                    Text(
+                      listWarranty[0].AgentName,
                       style: AppTextStyles.textStyleInterW400S14Grey,
                       overflow: TextOverflow.ellipsis,
                     ),
-                  ),
-                ],
-              ),
-            ],
-            if(listWarranty.isNotEmpty)...[
-              Text(
-                'KH: ${listWarranty[0].CustomerName} - ${listWarranty[0].CustomerCodeSys}',
-                style: AppTextStyles.textStyleInterW400S14Grey,
-              ),
-            ],
-            if(listWarranty.isNotEmpty)...[
-              Text(
-                'DC: ${listWarranty[0].CustomerAddress}',
-                style: AppTextStyles.textStyleInterW400S14Grey,
-              ),
-            ],
-            if(listWarranty.isNotEmpty)...[
-              const Divider(color: AppColors.divideColor,),
-            ],
-            if(listRO.isNotEmpty)...[
-              Expanded(
-                child: ListView.separated(
-                  itemCount: listRO.length,
-                  separatorBuilder: (context, index) => Container(height: 1, color: AppColors.divideColor,),
-                  itemBuilder: (context, index) {
-                    return _itemGuarantee(context, listRO[index]);
-                  },
+                  ],
                 ),
-              ),
-            ],
-          ],
-        ),
-      ]
+                const SizedBox(height: 8),
+                Text(
+                  'KH: ${listWarranty[0].CustomerName} - ${listWarranty[0].CustomerCode}',
+                  style: AppTextStyles.textStyleInterW400S14Grey,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'ĐC: ${listWarranty[0].CustomerAddress}',
+                  style: AppTextStyles.textStyleInterW400S14Grey,
+                ),
+              ],
+            ),
+          ),
+        if(listWarranty.isNotEmpty)...[
+          // const Divider(color: AppColors.divideColor,),
+          const SizedBox(height: 16),
+        ],
+        if(listRO.isNotEmpty)...[
+          Expanded(
+            child: ListView.separated(
+              itemCount: listRO.length,
+              separatorBuilder: (context, index) => Container(height: 8),
+              itemBuilder: (context, index) {
+                return _itemGuarantee(context, listRO[index]);
+              },
+            ),
+          ),
+        ],
+      ],
     );
   }
 
   Widget _itemGuarantee(BuildContext context, ES_RODetail roDetail) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      decoration: const BoxDecoration(
-        color: AppColors.textWhiteColor,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: AppColors.textYellowColor.withOpacity(0.1),
+        border: Border.all(color: AppColors.textYellowColor),
+        borderRadius: BorderRadius.circular(5),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -238,38 +228,38 @@ class _RepairHistorySearchScreenState extends State<RepairHistorySearchScreen> {
                 child: Text(
                   roDetail.ReceptionDTimeUTC,
                   style: AppTextStyles.textStyleInterW500S16Black,
+                  maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
               const SizedBox(width: 16),
-              Expanded(
-                child: Text(
-                  roDetail.RONo,
-                  style: AppTextStyles.textStyleInterW400S14Grey,
-                  overflow: TextOverflow.ellipsis,
-                ),
+              Text(
+                roDetail.RONo,
+                style: AppTextStyles.textStyleInterW400S14Grey,
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
+          const SizedBox(height: 8),
           Row(
             children: [
               Expanded(
                 child: Text(
                   'KTV: ${roDetail.AgentName}',
                   style: AppTextStyles.textStyleInterW400S14Grey,
+                  maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
               const SizedBox(width: 16),
-              Expanded(
-                child: Text(
-                  'Ngày thực hiện: ${roDetail.AppointmentDTimeUTC}',
-                  style: AppTextStyles.textStyleInterW400S14Grey,
-                  overflow: TextOverflow.ellipsis,
-                ),
+              Text(
+                roDetail.FinishDTimeUser,
+                style: AppTextStyles.textStyleInterW400S14Grey,
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
+          const SizedBox(height: 8),
           Text(
             'Cụm linh kiện lỗi: ${roDetail.ListComponentCode ?? ''}',
             style: AppTextStyles.textStyleInterW400S14Grey,

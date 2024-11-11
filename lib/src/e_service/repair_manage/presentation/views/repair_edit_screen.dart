@@ -7,13 +7,16 @@ import 'package:ecore/core/common/widgets/inputs/i_select_field.dart';
 import 'package:ecore/core/common/widgets/inputs/i_select_time.dart';
 import 'package:ecore/core/common/widgets/inputs/i_text_field.dart';
 import 'package:ecore/core/common/widgets/loading_view.dart';
-import 'package:ecore/core/common/widgets/qr_code_view.dart';
+import 'package:ecore/src/e_service/common/utils.dart';
+import 'package:ecore/src/e_service/common/widgets/qr_code_view.dart';
 import 'package:ecore/core/res/colors.dart';
 import 'package:ecore/core/res/media_res.dart';
 import 'package:ecore/core/res/strings.dart';
 import 'package:ecore/core/res/text_styles.dart';
+import 'package:ecore/core/utils/localization_helper.dart';
 import 'package:ecore/src/e_service/common/solution_context_extensions.dart';
 import 'package:ecore/src/e_service/common/widgets/i_scroll_image.dart';
+import 'package:ecore/src/e_service/customer_manage/presentation/views/customer_detail_screen.dart';
 import 'package:ecore/src/e_service/repair_manage/data/model/es_ro_component_model.dart';
 import 'package:ecore/src/e_service/repair_manage/data/model/es_ro_edit_model.dart';
 import 'package:ecore/src/e_service/repair_manage/domain/entities/es_ro_attach_file.dart';
@@ -173,7 +176,7 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
                 ),
                 onPressed: () => Navigator.of(context).maybePop(),
               ),
-              title: _textTitle(),
+              title: _textTitle(l),
               actions: [
                 if(eS_RODetail.ROStatus != 'FINISH')
                   InkWell(
@@ -274,13 +277,13 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
                   children: [
                     _item(title: '${AppStrings.requestTitle} (*)', value: eS_RODetail.RONo ?? ''),
                     const SizedBox(height: 16),
-                    _titleRequestInformation(),
+                    _titleRequestInformation(l),
                     const SizedBox(height: 16),
-                    _titleResponseInformation(),
+                    _titleResponseInformation(l),
                     const SizedBox(height: 16),
-                    _imageAreaBeforeInstall(),
+                    _imageAreaBeforeInstall(l),
                     const SizedBox(height: 16),
-                    _imageAreaAfterInstall(),
+                    _imageAreaAfterInstall(l),
                   ],
                 ),
               ),
@@ -292,29 +295,32 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
     );
   }
 
-  Widget _textTitle() {
+  Widget _textTitle(LocalizationHelper l) {
     return Text(
-      AppStrings.repairRequestEditTitle,
+      l(AppStrings.repairRequestEditTitle),
       style: AppTextStyles.textStyleInterW500S18White,
       maxLines: 2,
     );
   }
 
-  Widget _titleRequestInformation() {
+  Widget _titleRequestInformation(LocalizationHelper l) {
     return IExpansionTile(
-        title: AppStrings.requestInformation,
+        title: l(AppStrings.requestInformation),
         trailingExpansionTrue: SvgPicture.asset(AppMediaRes.iconExpandUp),
         trailingExpansionFalse: SvgPicture.asset(AppMediaRes.iconExpandDown),
         children: [
-          _item(title: '${AppStrings.requestTimeTitle} (*)', value: eS_RODetail.ReceptionDTimeUTC),
+          _item(title: '${l(AppStrings.requestTimeTitle)} (*)', value: eS_RODetail.ReceptionDTimeUTC),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Expanded(child: _item(title: '${AppStrings.customerNameTitle} (*)', value: eS_RODetail.CustomerNameReal)),
+              Expanded(child: _item(title: '${l(AppStrings.customerNameTitle)} (*)', value: eS_RODetail.CustomerNameReal)),
               const SizedBox(width: 8),
               InkWell(
                 onTap: () {
-                  Navigator.of(context).pushNamed('/customer-detail', arguments: eS_RODetail.CustomerCodeSys);
+                  context.pushNamed(
+                    EServiceUtils.getFullRouteName(CustomerDetailScreen.routeName),
+                    arguments: eS_RODetail.CustomerCodeSys,
+                  );
                 },
                 child: Container(
                   height: 48,
@@ -324,8 +330,8 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
                     borderRadius: BorderRadius.all(Radius.circular(5)),
                   ),
                   child: const Icon(
-                    Icons.info,
-                    size: 28,
+                    FontAwesomeIcons.info,
+                    size: 24,
                     color: AppColors.textWhiteColor,
                   ),
                 ),
@@ -335,7 +341,7 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Expanded(child: _item(title: AppStrings.customerPhoneTitle, value: eS_RODetail.CustomerPhoneNo)),
+              Expanded(child: _item(title: l(AppStrings.customerPhoneTitle), value: eS_RODetail.CustomerPhoneNo)),
               const SizedBox(width: 8),
               InkWell(
                 onTap: () {
@@ -349,39 +355,38 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
                     borderRadius: BorderRadius.all(Radius.circular(5)),
                   ),
                   child: const Icon(
-                    Icons.call,
-                    size: 28,
+                    FontAwesomeIcons.phone,
+                    size: 24,
                     color: AppColors.textWhiteColor,
                   ),
                 ),
               ),
             ],
           ),
-          _item(title: AppStrings.customerAddressTitle, value: eS_RODetail.CustomerAddress),
-          _item(title: '${AppStrings.repairStaffName} (*)', value: eS_RODetail.AgentName),
-          _item(title: AppStrings.requestDescription, value: eS_RODetail.RODesc, maxLine: 4),
-          _item(title: AppStrings.requestDeadlineTitle, value: eS_RODetail.Deadline),
-          _item(title: '${AppStrings.requestStatus} (*)', value: eS_RODetail.ROStatus),
+          _item(title: l(AppStrings.customerAddressTitle), value: eS_RODetail.CustomerAddress),
+          _item(title: '${l(AppStrings.repairStaffName)} (*)', value: eS_RODetail.AgentName),
+          _item(title: l(AppStrings.requestDescription), value: eS_RODetail.RODesc, maxLine: 4),
+          _item(title: l(AppStrings.requestDeadlineTitle), value: eS_RODetail.Deadline),
+          _item(title: '${l(AppStrings.requestStatus)} (*)', value: eS_RODetail.ROStatus),
         ]
     );
   }
 
-  Widget _titleResponseInformation() {
+  Widget _titleResponseInformation(LocalizationHelper l) {
     return IExpansionTile(
-        title: AppStrings.requestActivityInformation,
+        title: l(AppStrings.requestActivityInformation),
         trailingExpansionTrue: SvgPicture.asset(AppMediaRes.iconExpandUp),
         trailingExpansionFalse: SvgPicture.asset(AppMediaRes.iconExpandDown),
         children: [
-          _itemTime(controller: _meetTimeController, title: AppStrings.requestMeetTimeTitle,),
-          _item(title: '${AppStrings.requestExpiredDateTitle} (*)', value: eS_RODetail.FinishDTimeUser),
+          _itemTime(controller: _meetTimeController, title: l(AppStrings.requestMeetTimeTitle),),
+          _item(title: '${l(AppStrings.requestExpiredDateTitle)} (*)', value: eS_RODetail.FinishDTimeUser),
           _itemTextField(
               controller: _serialController,
-              title: AppStrings.serialTitle,
-              icon: Icons.qr_code,
+              title: l(AppStrings.serialTitle),
+              icon: FontAwesomeIcons.qrcode,
               onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  QrCodeView.routeName,
+                context.pushNamed(
+                  EServiceUtils.getFullRouteName(QrCodeView.routeName),
                 ).then((value) {
                   if (value != null) {
                     //_serialController.text = StringGenerate.extractQRCode(value.toString());
@@ -390,10 +395,10 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
                 });
               }
           ),
-          _itemListTextField(controller: _productController, title: AppStrings.productName, list: listProduct),
-          _itemListTextField(controller: _errorTypeController, title: AppStrings.errorType, list: listErrorType),
-          _itemMultiListTextField(controller: _listSysController, title: AppStrings.listComponents, list: listErrorComponent),
-          _itemTextField(controller: _noteController, title: AppStrings.noteTitle, maxLine: 5, maxLength: 500),
+          _itemListTextField(controller: _productController, title: l(AppStrings.productName), list: listProduct),
+          _itemListTextField(controller: _errorTypeController, title: l(AppStrings.errorType), list: listErrorType),
+          _itemMultiListTextField(controller: _listSysController, title: l(AppStrings.listComponents), list: listErrorComponent),
+          _itemTextField(controller: _noteController, title: l(AppStrings.noteTitle), maxLine: 5, maxLength: 500),
         ]
     );
   }
@@ -475,7 +480,7 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
                   ),
                   child: Icon(
                     icon,
-                    size: 28,
+                    size: 24,
                     color: AppColors.textWhiteColor,
                   ),
                 ),
@@ -543,25 +548,25 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
     );
   }
 
-  Widget _imageAreaBeforeInstall() {
+  Widget _imageAreaBeforeInstall(LocalizationHelper l) {
     return IScrollImage(
       listFile: listFileBefore,
       listROAttachFile: Lst_ES_ROAttachFileBefore,
       flagGallery: true,
       flagCamera: true,
       flagDelete: true,
-      title: AppStrings.requestImageBefore,
+      title: l(AppStrings.requestImageBefore),
     );
   }
 
-  Widget _imageAreaAfterInstall() {
+  Widget _imageAreaAfterInstall(LocalizationHelper l) {
     return IScrollImage(
       listFile: listFileAfter,
       listROAttachFile: Lst_ES_ROAttachFileAfter,
       flagGallery: true,
       flagCamera: true,
       flagDelete: true,
-      title: AppStrings.requestImageAfter,
+      title: l(AppStrings.requestImageAfter),
     );
   }
 }

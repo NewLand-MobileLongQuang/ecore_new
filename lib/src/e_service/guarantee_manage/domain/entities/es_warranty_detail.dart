@@ -29,6 +29,8 @@ class ES_WarrantyDetail extends Equatable {
     required this.LUBy,
     required this.LogLUDTimeUTC,
     required this.LogLUBy,
+    required this.CustomerCode,
+    required this.AgentName,
   });
 
   final String WarrantyNo;
@@ -58,6 +60,8 @@ class ES_WarrantyDetail extends Equatable {
   final String LUBy;
   final String LogLUDTimeUTC;
   final String LogLUBy;
+  final String CustomerCode;
+  final String AgentName;
 
   @override
   List<Object?> get props => [
@@ -88,5 +92,7 @@ class ES_WarrantyDetail extends Equatable {
     LUBy,
     LogLUDTimeUTC,
     LogLUBy,
+    CustomerCode,
+    AgentName,
   ];
 }

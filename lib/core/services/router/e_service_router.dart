@@ -1,3 +1,4 @@
+import 'package:ecore/src/e_service/common/widgets/qr_code_view.dart';
 import 'package:ecore/src/e_service/common/utils.dart';
 import 'package:ecore/src/e_service/index/presentation/cubit/e_service_cubit/e_service_cubit.dart';
 import 'package:ecore/src/e_service/index/presentation/views/e_service_screen.dart';
@@ -78,6 +79,9 @@ PageRouteBuilder? handleCaseEService(RouteSettings settings) {
 
     case RepairHistorySearchScreen.routeName:
       return pageBuilder((p0) => BlocProvider(create: (_) => sl<RepairHistorySearchCubit>(), child: const RepairHistorySearchScreen()), settings: settings);
+
+    case QrCodeView.routeName:
+      return pageBuilder((p0) => const QrCodeView(), settings: settings);
 
     default:
       return null;

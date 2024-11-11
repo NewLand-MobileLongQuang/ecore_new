@@ -4,7 +4,7 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 class QrCodeView extends StatefulWidget {
   const QrCodeView({super.key});
 
-  static const routeName = 'QRCODE/qr-code-view';
+  static const routeName = 'qr-code-view';
 
   @override
   State<QrCodeView> createState() => _QrCodeViewState();

@@ -1,8 +1,11 @@
 import 'dart:io';
 
-import 'package:ecore/core/common/widgets/qr_code_view.dart';
+import 'package:ecore/src/e_service/common/utils.dart';
+import 'package:ecore/src/e_service/common/widgets/qr_code_view.dart';
 import 'package:ecore/core/utils/localization_helper.dart';
 import 'package:ecore/src/e_service/common/solution_context_extensions.dart';
+import 'package:ecore/src/e_service/customer_manage/presentation/views/customer_create_screen.dart';
+import 'package:ecore/src/e_service/customer_manage/presentation/views/customer_manage_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -208,9 +211,8 @@ class _GuaranteeActivateScreenState extends State<GuaranteeActivateScreen> {
         InkWell(
           onTap: (){
             saveLocalInformation();
-            Navigator.pushNamed(
-              context,
-              QrCodeView.routeName
+            context.pushNamed(
+              EServiceUtils.getFullRouteName(QrCodeView.routeName),
             ).then((value) {
               if (value != null) {
                 context.read<GuaranteeActivateCubit>().scanQrCode(
@@ -241,7 +243,7 @@ class _GuaranteeActivateScreenState extends State<GuaranteeActivateScreen> {
 
   Widget _titleProductInformation(LocalizationHelper l) {
     return IExpansionTile(
-      title: AppStrings.productInformation,
+      title: l(AppStrings.productInformation),
       trailingExpansionTrue: SvgPicture.asset(AppMediaRes.iconExpandUp),
       trailingExpansionFalse: SvgPicture.asset(AppMediaRes.iconExpandDown),
       children: [
@@ -256,7 +258,7 @@ class _GuaranteeActivateScreenState extends State<GuaranteeActivateScreen> {
 
   Widget _titleCustomerInformation(LocalizationHelper l) {
     return IExpansionTile(
-        title: AppStrings.customerInformation,
+        title: l(AppStrings.customerInformation),
         trailingExpansionTrue: _buttonCustomer(true),
         trailingExpansionFalse: _buttonCustomer(false),
         children: [
@@ -271,7 +273,7 @@ class _GuaranteeActivateScreenState extends State<GuaranteeActivateScreen> {
 
   Widget _titleInstallInformation(LocalizationHelper l) {
     return IExpansionTile(
-        title: AppStrings.installInformation,
+        title: l(AppStrings.installInformation),
         trailingExpansionTrue: SvgPicture.asset(AppMediaRes.iconExpandUp),
         trailingExpansionFalse: SvgPicture.asset(AppMediaRes.iconExpandDown),
         children: [
@@ -368,7 +370,9 @@ class _GuaranteeActivateScreenState extends State<GuaranteeActivateScreen> {
       children: [
         InkWell(
           onTap: () {
-            Navigator.pushNamed(context, '/customer-manage').then((value) => {
+            context.pushNamed(
+              EServiceUtils.getFullRouteName(CustomerManageScreen.routeName),
+            ).then((value) => {
               if(value != null) {
                 value as ES_Customer,
                 context.read<GuaranteeActivateCubit>().fillCustomer(
@@ -387,8 +391,8 @@ class _GuaranteeActivateScreenState extends State<GuaranteeActivateScreen> {
               borderRadius: BorderRadius.all(Radius.circular(5)),
             ),
             child: const Icon(
-              Icons.list,
-              size: 20,
+              FontAwesomeIcons.listUl,
+              size: 16,
               color: AppColors.textWhiteColor,
             ),
           ),
@@ -396,7 +400,9 @@ class _GuaranteeActivateScreenState extends State<GuaranteeActivateScreen> {
         const SizedBox(width: 8),
         InkWell(
           onTap: () {
-            Navigator.pushNamed(context, '/customer-create').then((value) => {
+            context.pushNamed(
+              EServiceUtils.getFullRouteName(CustomerCreateScreen.routeName),
+            ).then((value) => {
               if(value != null) {
                 value as ES_Customer,
                 context.read<GuaranteeActivateCubit>().fillCustomer(
@@ -415,8 +421,8 @@ class _GuaranteeActivateScreenState extends State<GuaranteeActivateScreen> {
               borderRadius: BorderRadius.all(Radius.circular(5)),
             ),
             child: const Icon(
-              Icons.add,
-              size: 20,
+              FontAwesomeIcons.plus,
+              size: 16,
               color: AppColors.textWhiteColor,
             ),
           ),

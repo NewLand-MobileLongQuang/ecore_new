@@ -18,7 +18,6 @@ import 'core/res/colors.dart';
 import 'core/res/fonts.dart';
 import 'core/services/injection/injection_container.dart';
 import 'core/services/router/router.dart';
-import 'package:flutter_background_service/flutter_background_service.dart';
 
 SIPUAHelper? _callHelper = SIPUAHelper();
 MyBackgroundService _backgroundService= MyBackgroundService();

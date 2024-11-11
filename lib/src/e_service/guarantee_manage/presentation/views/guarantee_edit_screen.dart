@@ -170,7 +170,7 @@ class _GuaranteeEditScreenState extends State<GuaranteeEditScreen> {
 
   Widget _titleProductInformation(LocalizationHelper l) {
     return IExpansionTile(
-      title: AppStrings.productInformation,
+      title: l(AppStrings.productInformation),
       trailingExpansionTrue: SvgPicture.asset(AppMediaRes.iconExpandUp),
       trailingExpansionFalse: SvgPicture.asset(AppMediaRes.iconExpandDown),
       children: [
@@ -185,7 +185,7 @@ class _GuaranteeEditScreenState extends State<GuaranteeEditScreen> {
 
   Widget _titleCustomerInformation(LocalizationHelper l) {
     return IExpansionTile(
-      title: AppStrings.customerInformation,
+      title: l(AppStrings.customerInformation),
       trailingExpansionTrue: _buttonCustomer(true),
       trailingExpansionFalse: _buttonCustomer(false),
       children: [
@@ -200,7 +200,7 @@ class _GuaranteeEditScreenState extends State<GuaranteeEditScreen> {
 
   Widget _titleInstallInformation(LocalizationHelper l) {
     return IExpansionTile(
-      title: AppStrings.productInformation,
+      title: l(AppStrings.productInformation),
       trailingExpansionTrue: SvgPicture.asset(AppMediaRes.iconExpandUp),
       trailingExpansionFalse: SvgPicture.asset(AppMediaRes.iconExpandDown),
       children: [

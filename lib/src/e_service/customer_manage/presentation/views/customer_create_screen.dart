@@ -1,3 +1,5 @@
+import 'package:ecore/core/utils/localization_helper.dart';
+import 'package:ecore/src/e_service/common/solution_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,6 +9,7 @@ import 'package:ecore/core/res/strings.dart';
 
 import 'package:ecore/src/e_service/customer_manage/data/models/rq_es_customer_model.dart';
 import 'package:ecore/src/e_service/customer_manage/presentation/cubit/customer_create_cubit/customer_create_cubit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../../core/common/widgets/loading_view.dart';
 import '../../../../../core/res/text_styles.dart';
@@ -14,7 +17,7 @@ import '../../../../../core/res/text_styles.dart';
 class CustomerCreateScreen extends StatefulWidget {
   const CustomerCreateScreen({super.key});
 
-  static const routeName = '/customer-create';
+  static const routeName = 'customer-create';
 
   @override
   State<CustomerCreateScreen> createState() => _CustomerCreateScreenState();
@@ -35,17 +38,20 @@ class _CustomerCreateScreenState extends State<CustomerCreateScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.localizer(CustomerCreateScreen.routeName);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.primaryColor,
         leading: IconButton(
           icon: const Icon(
-            Icons.arrow_back_ios_new_rounded,
+            FontAwesomeIcons.chevronLeft,
             color: AppColors.textWhiteColor,
+            size: 20,
           ),
           onPressed: () => Navigator.of(context).maybePop(),
         ),
-        title: _textTitle(),
+        title: _textTitle(l),
         actions: [
           InkWell(
             splashColor: AppColors.transparent,
@@ -60,15 +66,11 @@ class _CustomerCreateScreenState extends State<CustomerCreateScreen> {
               );
               context.read<CustomerCreateCubit>().create(customer);
             },
-            child: Container(
+            child: const SizedBox(
               height: 36,
-              width: 48,
-              decoration: const BoxDecoration(
-                color: AppColors.primaryColor,
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-              ),
-              child: const Icon(
-                Icons.save,
+              width: 36,
+              child: Icon(
+                FontAwesomeIcons.floppyDisk,
                 size: 20,
                 color: AppColors.textWhiteColor,
               ),
@@ -99,7 +101,7 @@ class _CustomerCreateScreenState extends State<CustomerCreateScreen> {
               if (state is CustomerCreateLoaded) {
                 return ListView(
                   children: [
-                    _titleCustomerInformation(),
+                    _titleCustomerInformation(l),
                   ],
                 );
               }
@@ -116,22 +118,22 @@ class _CustomerCreateScreenState extends State<CustomerCreateScreen> {
     super.dispose();
   }
 
-  Widget _textTitle() {
+  Widget _textTitle(LocalizationHelper l) {
     return Text(
-      AppStrings.createCustomer,
+      l(AppStrings.createCustomer),
       style: AppTextStyles.textStyleInterW500S18White,
       maxLines: 2,
     );
   }
 
-  Widget _titleCustomerInformation() {
+  Widget _titleCustomerInformation(LocalizationHelper l) {
     return Column(
       children: [
-        _itemTextField(controller: _customerCodeController, title: AppStrings.customerIdTitle),
-        _itemTextField(controller: _customerNameController, title: AppStrings.customerNameTitle),
-        _itemTextField(controller: _customerAddressController, title: AppStrings.customerAddressTitle),
-        _itemTextField(controller: _customerPhoneNoController, title: AppStrings.customerPhoneTitle),
-        _itemTextField(controller: _customerEmailController, title: AppStrings.customerEmailTitle),
+        _itemTextField(controller: _customerCodeController, title: l(AppStrings.customerIdTitle)),
+        _itemTextField(controller: _customerNameController, title: l(AppStrings.customerNameTitle)),
+        _itemTextField(controller: _customerAddressController, title: l(AppStrings.customerAddressTitle)),
+        _itemTextField(controller: _customerPhoneNoController, title: l(AppStrings.customerPhoneTitle)),
+        _itemTextField(controller: _customerEmailController, title: l(AppStrings.customerEmailTitle)),
       ],
     );
   }

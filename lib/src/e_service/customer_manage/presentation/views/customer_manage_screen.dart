@@ -1,3 +1,5 @@
+import 'package:ecore/core/utils/localization_helper.dart';
+import 'package:ecore/src/e_service/common/solution_context_extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -10,6 +12,7 @@ import 'package:ecore/core/res/strings.dart';
 import 'package:ecore/core/utils/string_generate.dart';
 import 'package:ecore/src/e_service/customer_manage/domain/entities/es_customer.dart';
 import 'package:ecore/src/e_service/customer_manage/presentation/cubit/customer_manage_cubit/customer_manage_cubit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../../core/common/widgets/loading_view.dart';
 import '../../../../../core/res/text_styles.dart';
@@ -17,7 +20,7 @@ import '../../../../../core/res/text_styles.dart';
 class CustomerManageScreen extends StatefulWidget {
   const CustomerManageScreen({super.key});
 
-  static const routeName = '/customer-manage';
+  static const routeName = 'customer-manage';
 
   @override
   State<CustomerManageScreen> createState() => _CustomerManageScreenState();
@@ -34,17 +37,20 @@ class _CustomerManageScreenState extends State<CustomerManageScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.localizer(CustomerManageScreen.routeName);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.primaryColor,
         leading: IconButton(
           icon: const Icon(
-            Icons.arrow_back_ios_new_rounded,
+            FontAwesomeIcons.chevronLeft,
             color: AppColors.textWhiteColor,
+            size: 20,
           ),
           onPressed: () => Navigator.of(context).maybePop(),
         ),
-        title: _textTitle(),
+        title: _textTitle(l),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -60,9 +66,9 @@ class _CustomerManageScreenState extends State<CustomerManageScreen> {
     );
   }
 
-  Widget _textTitle() {
+  Widget _textTitle(LocalizationHelper l) {
     return Text(
-      AppStrings.chooseCustomer,
+      l(AppStrings.chooseCustomer),
       style: AppTextStyles.textStyleInterW500S18White,
       maxLines: 2,
     );
@@ -78,21 +84,22 @@ class _CustomerManageScreenState extends State<CustomerManageScreen> {
           ),
         ),
         const SizedBox(width: 8),
-        ElevatedButton(
-          onPressed: () {
+        InkWell(
+          onTap: () {
             context.read<CustomerManageCubit>().search(_searchController.text);
           },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.primaryColor,
-            minimumSize: const Size(64, 36),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5),
+          child: Container(
+            height: 48,
+            width: 48,
+            decoration: const BoxDecoration(
+              color: AppColors.primaryColor,
+              borderRadius: BorderRadius.all(Radius.circular(5)),
             ),
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-          ),
-          child: const Icon(
-            Icons.search,
-            color: AppColors.textWhiteColor,
+            child: const Icon(
+              FontAwesomeIcons.magnifyingGlass,
+              size: 24,
+              color: AppColors.textWhiteColor,
+            ),
           ),
         ),
       ],
