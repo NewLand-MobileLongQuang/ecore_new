@@ -1,7 +1,8 @@
-import 'package:ecore/src/call/presentation/views/call_screen.dart';
 import 'package:ecore/src/e_service/common/solution_context_extensions.dart';
 import 'package:ecore/src/e_service/common/utils.dart';
 import 'package:ecore/src/e_service/index/presentation/views/e_service_screen.dart';
+import 'package:ecore/src/sky_cs/common/utils.dart';
+import 'package:ecore/src/sky_cs/index/presentation/view/sky_cs_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -51,10 +52,10 @@ class _DashboardState extends State<Dashboard> {
                   InkWell(
                     onTap: () {
                       if(index == 0) {
-                        context.pushNamed(EServiceUtils.getFullRouteName(EServiceScreen.routeName));
+                        Navigator.pushNamed(context, EServiceUtils.getFullRouteName(EServiceScreen.routeName));
                       }
                       if(index == 1) {
-
+                        Navigator.pushNamed(context, SkyCsUtils.getFullRouteName(SkyCsScreen.routeName));
                       }
                     },
                     child: Image.asset(

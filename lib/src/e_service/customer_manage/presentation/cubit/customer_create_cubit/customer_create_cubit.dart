@@ -37,14 +37,11 @@ class CustomerCreateCubit extends Cubit<CustomerCreateState> {
     emit(CustomerCreateLoading());
     try {
       final params = jsonEncode(customer.toJson());
-      print('TrungLQ: params: $params');
       final result = await _createCustomerUseCase.call(CreateCustomerParams(strJson: params));
       final resultFold = result.fold((l) => null, (r) => r)!;
-      print('TrungLQ: resultFold: $resultFold');
       emit(CustomerCreateSuccess(customer: resultFold));
     }
     catch (e) {
-      print("TrungLQ: Error: $e");
       emit(CustomerCreateError(e.toString()));
     }
   }

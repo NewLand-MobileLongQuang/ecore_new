@@ -158,7 +158,6 @@ class RepairEditCubit extends Cubit<RepairEditState> {
         emit(currentState);
       }
       else {
-        print("TrungLQ: $params");
         await _updateROUseCase.call(UpdateROParams(strJson: params));
         emit(RepairEditSuccess());
       }
@@ -174,8 +173,6 @@ class RepairEditCubit extends Cubit<RepairEditState> {
     try {
       final prefs = await SharedPreferences.getInstance();
       final email = prefs.getString('cached_email') ?? '';
-      print("TrungLQ: $RONo");
-      print("TrungLQ: $FinishDTimeUser");
       if(email.toUpperCase() == AgentCode.toUpperCase()) {
         await _finishROUseCase.call(FinishROParams(RONo: RONo, FinishDTimeUser: FinishDTimeUser));
         emit(RepairFinishSuccess());

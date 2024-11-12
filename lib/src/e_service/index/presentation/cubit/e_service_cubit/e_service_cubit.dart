@@ -13,30 +13,19 @@ class EServiceCubit extends Cubit<EServiceState> {
 
   Future<void> init() async {
     emit(EServiceLoading());
-
     var ss = SessionInfo.current();
-
     if (ss.org == null) {
-      emit(EServiceError('No Org Data'));
+      emit(EServiceError(message: 'No Org Data'));
       return;
     }
-
-
-    emit(EServiceLoading());
-
-
-
     try {
-
       final test = await sl<GetByNetworks>()(GetByNetworksParams(solutionCode: EServiceUtils.getSolution().code, networkId: ss.org!.getNetworkId().toString()));
       //TEST client service
       final baseUrl = test.fold((l) => '', (r) => r[0].WSUrlAddr);
-
       SessionInfo.setCacheData(EServiceUtils.getApiUrlKey(), baseUrl);
-
       emit(EServiceLoaded());
     } catch (e) {
-      emit(EServiceError(e.toString()));
+      emit(EServiceError(message: e.toString()));
     }
   }
 }

@@ -1,12 +1,14 @@
 import 'package:ecore/core/common/views/page_notfound.dart';
 import 'package:ecore/core/services/router/common_router.dart';
 import 'package:ecore/core/services/router/e_service_router.dart';
+import 'package:ecore/core/services/router/sky_cs_router.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings){
   return handleCaseCommon(settings)
       ?? handleCaseEService(settings)
+      ?? handleCaseSkyCS(settings)
       ?? handleDefault(settings);
 }
 

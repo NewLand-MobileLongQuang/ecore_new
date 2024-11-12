@@ -1,0 +1,81 @@
+import 'package:ecore/src/sky_cs/customer/domain/entities/sky_customer_cpn_campaign_customer.dart';
+
+class SKY_CustomerCpnCampaignCustomerModel extends SKY_CustomerCpnCampaignCustomer {
+  const SKY_CustomerCpnCampaignCustomerModel({required super.CampaignCode, required super.OrgID, required super.AgentCode, required super.JsonCustomerInfo, required super.CustomerCodeSys, required super.LogLUDTimeUTC, required super.LogLUBy, required super.CustomerName, required super.CustomerPhoneNo1, required super.CustomerPhoneNo2, required super.CustomerEmail, required super.CustomerAddress, required super.CustomerCompany, required super.CampaignCustomerStatus, required super.CustomerPhoneNo, required super.CallOutDTimeUTC, required super.CallTime, required super.RecordFilePath, required super.CampaignCustomerCallStatus, required super.CustomerFeedBack, required super.Remark, required super.AgentName, required super.CampaignName, required super.CampaignStatus, required super.CampaignTypeName, required super.cc_CreateDTimeUTC, required super.cc_CreateBy, required super.CampaignTypeCode, required super.CustomerAvatarName, required super.CustomerAvatarPath, required super.CustomerCode, required super.CallID, required super.CpnCustomerSaveType});
+
+  factory SKY_CustomerCpnCampaignCustomerModel.fromJson(Map<String, dynamic> json) {
+    return SKY_CustomerCpnCampaignCustomerModel(
+      CampaignCode: json['CampaignCode'] as String? ?? '',
+      OrgID: json['OrgID'] as String? ?? '',
+      AgentCode: json['AgentCode'] as String? ?? '',
+      JsonCustomerInfo: json['JsonCustomerInfo'] as String? ?? '',
+      CustomerCodeSys: json['CustomerCodeSys'] as String? ?? '',
+      LogLUDTimeUTC: json['LogLUDTimeUTC'] as String? ?? '',
+      LogLUBy: json['LogLUBy'] as String? ?? '',
+      CustomerName: json['CustomerName'] as String? ?? '',
+      CustomerPhoneNo1: json['CustomerPhoneNo1'] as String? ?? '',
+      CustomerPhoneNo2: json['CustomerPhoneNo2'] as String? ?? '',
+      CustomerEmail: json['CustomerEmail'] as String? ?? '',
+      CustomerAddress: json['CustomerAddress'] as String? ?? '',
+      CustomerCompany: json['CustomerCompany'] as String? ?? '',
+      CampaignCustomerStatus: json['CampaignCustomerStatus'] as String? ?? '',
+      CustomerPhoneNo: json['CustomerPhoneNo'] as String? ?? '',
+      CallOutDTimeUTC: json['CallOutDTimeUTC'] as String? ?? '',
+      CallTime: json['CallTime'] as String? ?? '',
+      RecordFilePath: json['RecordFilePath'] as String? ?? '',
+      CampaignCustomerCallStatus: json['CampaignCustomerCallStatus'] as String? ?? '',
+      CustomerFeedBack: json['CustomerFeedBack'] as String? ?? '',
+      Remark: json['Remark'] as String? ?? '',
+      AgentName: json['AgentName'] as String? ?? '',
+      CampaignName: json['CampaignName'] as String? ?? '',
+      CampaignStatus: json['CampaignStatus'] as String? ?? '',
+      CampaignTypeName: json['CampaignTypeName'] as String? ?? '',
+      cc_CreateDTimeUTC: json['cc_CreateDTimeUTC'] as String? ?? '',
+      cc_CreateBy: json['cc_CreateBy'] as String? ?? '',
+      CampaignTypeCode: json['CampaignTypeCode'] as String? ?? '',
+      CustomerAvatarName: json['CustomerAvatarName'] as String? ?? '',
+      CustomerAvatarPath: json['CustomerAvatarPath'] as String? ?? '',
+      CustomerCode: json['CustomerCode'] as String? ?? '',
+      CallID: json['CallID'] as String? ?? '',
+      CpnCustomerSaveType: json['CpnCustomerSaveType'] as String? ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'CampaignCode': CampaignCode,
+      'OrgID': OrgID,
+      'AgentCode': AgentCode,
+      'JsonCustomerInfo': JsonCustomerInfo,
+      'CustomerCodeSys': CustomerCodeSys,
+      'LogLUDTimeUTC': LogLUDTimeUTC,
+      'LogLUBy': LogLUBy,
+      'CustomerName': CustomerName,
+      'CustomerPhoneNo1': CustomerPhoneNo1,
+      'CustomerPhoneNo2': CustomerPhoneNo2,
+      'CustomerEmail': CustomerEmail,
+      'CustomerAddress': CustomerAddress,
+      'CustomerCompany': CustomerCompany,
+      'CampaignCustomerStatus': CampaignCustomerStatus,
+      'CustomerPhoneNo': CustomerPhoneNo,
+      'CallOutDTimeUTC': CallOutDTimeUTC,
+      'CallTime': CallTime,
+      'RecordFilePath': RecordFilePath,
+      'CampaignCustomerCallStatus': CampaignCustomerCallStatus,
+      'CustomerFeedBack': CustomerFeedBack,
+      'Remark': Remark,
+      'AgentName': AgentName,
+      'CampaignName': CampaignName,
+      'CampaignStatus': CampaignStatus,
+      'CampaignTypeName': CampaignTypeName,
+      'cc_CreateDTimeUTC': cc_CreateDTimeUTC,
+      'cc_CreateBy': cc_CreateBy,
+      'CampaignTypeCode': CampaignTypeCode,
+      'CustomerAvatarName': CustomerAvatarName,
+      'CustomerAvatarPath': CustomerAvatarPath,
+      'CustomerCode': CustomerCode,
+      'CallID': CallID,
+      'CpnCustomerSaveType': CpnCustomerSaveType,
+    };
+  }
+}

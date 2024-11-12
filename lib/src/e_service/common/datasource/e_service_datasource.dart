@@ -2,21 +2,9 @@ import 'package:ecore/core/errors/exceptions.dart';
 import 'package:ecore/core/utils/string_generate.dart';
 import 'package:ecore/core/utils/typedef.dart';
 import 'package:ecore/src/e_service/common/utils.dart';
-import 'package:ecore/src/e_service/customer_manage/data/models/es_customer_model.dart';
-import 'package:ecore/src/e_service/customer_manage/data/models/rt_es_customer_detail_model.dart';
-import 'package:ecore/src/e_service/customer_manage/data/models/rt_es_file_upload_model.dart';
-import 'package:ecore/src/e_service/guarantee_manage/data/models/es_warranty_detail_model.dart';
-import 'package:ecore/src/e_service/guarantee_manage/data/models/rt_es_warranty_activate_by_qr_model.dart';
-import 'package:ecore/src/e_service/guarantee_manage/data/models/rt_es_warranty_detail_model.dart';
-import 'package:ecore/src/e_service/repair_manage/data/model/es_ro_detail_model.dart';
-import 'package:ecore/src/e_service/repair_manage/data/model/es_ro_error_type_model.dart';
-import 'package:ecore/src/e_service/repair_manage/data/model/es_ro_product_model.dart';
-import 'package:ecore/src/e_service/repair_manage/data/model/rt_es_ro_detail_model.dart';
-import 'package:ecore/src/e_service/repair_manage/data/model/rt_es_ro_error_component_model.dart';
 
 import '../../../../core/data/datasource/base_remote_data_source.dart';
 import '../../../../core/data/models/clientgate_model.dart';
-import '../../../../core/modules/auth/data/models/data_user_model.dart';
 import '../../../../core/modules/auth/domain/entities/session_info.dart';
 
 class EServiceSvDataSource extends BaseRemoteDataSrc {
@@ -62,7 +50,6 @@ class EServiceSvDataSource extends BaseRemoteDataSrc {
         );
 
     final res = ClientGateModel.fromMap(response['Data'] as DataMap);
-
     if(res.strErrCode!="0") {
       throw ApiException(Code: res.strErrCode, Message: 'Error ${res.strErrCode}');
     }

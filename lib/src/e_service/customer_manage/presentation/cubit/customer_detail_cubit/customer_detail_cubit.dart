@@ -25,7 +25,6 @@ class CustomerDetailCubit extends Cubit<CustomerDetailState> {
         ),
       );
       final resultFold = result.fold((l) => null, (r) => r)!;
-      print('TrungLQ: resultFold: $resultFold');
       emit(CustomerDetailLoaded(rt_esCustomerDetail: resultFold));
     }
     catch (e) {

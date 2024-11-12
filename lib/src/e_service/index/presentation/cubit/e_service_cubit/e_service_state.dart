@@ -12,5 +12,5 @@ final class EServiceLoaded extends EServiceState {}
 final class EServiceError extends EServiceState {
   final String message;
 
-  EServiceError(this.message);
+  EServiceError({required this.message});
 }

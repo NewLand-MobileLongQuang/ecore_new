@@ -5,8 +5,7 @@ import 'package:flutter/widgets.dart';
 import '../../../core/utils/localization_helper.dart';
 
 
-extension SolutionContextExtensions on BuildContext {
-
+extension EserviceContextExtensions on BuildContext {
 
   LocalizationHelper localizer(String cate)
   {

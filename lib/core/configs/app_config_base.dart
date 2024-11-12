@@ -14,10 +14,6 @@ class SolutionInfo{
 }
 abstract class AppConfigValuesBase
 {
-
-
-
-
   // MobileServiceSv
   String get appId;
   String get appSecret;
@@ -40,6 +36,6 @@ abstract class AppConfigValuesBase
 
   Map<String, SolutionInfo> get solutions;
 
-
+  String get scrTplCodeSys;
 }
 

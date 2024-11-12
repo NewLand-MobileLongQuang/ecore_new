@@ -72,5 +72,27 @@ class StringGenerate {
 
       return qrCode;
     }
+
+    static String convertDurationToString(int duration) {
+      final hours = duration ~/ 3600;
+      final minutes = (duration % 3600) ~/ 60;
+      final seconds = duration % 60;
+
+      final hoursStr = hours.toString().padLeft(2, '0');
+      final minutesStr = minutes.toString().padLeft(2, '0');
+      final secondsStr = seconds.toString().padLeft(2, '0');
+
+      return '$hoursStr:$minutesStr:$secondsStr';
+    }
+
+    static String convertDurationToStringWithoutHour(int duration) {
+      final minutes = duration ~/ 60;
+      final seconds = duration % 60;
+
+      final minutesStr = minutes.toString().padLeft(2, '0');
+      final secondsStr = seconds.toString().padLeft(2, '0');
+
+      return '$minutesStr:$secondsStr';
+    }
 }
 

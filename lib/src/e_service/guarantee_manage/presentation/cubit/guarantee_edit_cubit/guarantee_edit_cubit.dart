@@ -57,7 +57,6 @@ class GuaranteeEditCubit extends Cubit<GuaranteeEditState> {
         if (file != null) {
           final image = await _uploadFileUseCase.call(UploadFileParams(file: file));
           final imageFold = image.fold((l) => null, (r) => r)!;
-          //print("TrungLQ upload: $imageFold");
           lst_ES_WarrantyAttachFile.add(
               ES_WarrantyAttachFileModel(
                 Idx: lst_ES_WarrantyAttachFile.length + 1,

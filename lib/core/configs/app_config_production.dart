@@ -5,11 +5,9 @@ import 'app_config_base.dart';
 class AppConfigValuesProduction extends AppConfigValuesBase
 {
   @override
-
   String get appId => 'EcoreMobile';
 
   @override
-
   String get appSecret => '';
 
   @override
@@ -19,7 +17,6 @@ class AppConfigValuesProduction extends AppConfigValuesBase
   String get ccsvSolutionCode => 'ECORE';
 
   @override
-
   String get mobileServiceBaseUrl => 'mobilesv.ecore.vn';
 
   @override
@@ -30,6 +27,7 @@ class AppConfigValuesProduction extends AppConfigValuesBase
 
   @override
   String get entryCenterGateBaseUrl => r'https://devwebapi228.ecore.vn/idocNet.Test.EntryCenterGate.WA';
+
   @override
   String get entryCenterGateGwPassword => 'idocNet.idn.EntryCenterGate.Sv';
 
@@ -37,11 +35,9 @@ class AppConfigValuesProduction extends AppConfigValuesBase
   String get entryCenterGateGwUserCode => 'idocNet.idn.EntryCenterGate.Sv';
 
   @override
-
   String get appAgent => 'Mobile-eService';
 
   @override
-
   String get appVerCode => 'V1';
 
   final Map<String, SolutionInfo> _solutions={
@@ -54,10 +50,19 @@ class AppConfigValuesProduction extends AppConfigValuesBase
         appVerCode: 'V1',
         scrTplCodeSys: 'SCRTPLCODESYS.2023'),
 
+    "SKYCS": SolutionInfo(
+        code: 'DEVSKYCS',
+        secretKey: '',
+        gwUserCode: 'idocNet.idn.eService.Sv',
+        gwPassword: 'idocNet.idn.eService.Sv',
+        appAgent:  'Mobile-eService',
+        appVerCode: 'V1',
+        scrTplCodeSys: 'SCRTPLCODESYS.2023'),
   };
 
   @override
-
   Map<String, SolutionInfo> get solutions =>_solutions;
 
+  @override
+  String get scrTplCodeSys => 'SCRTPLCODESYS.2023';
 }

@@ -11,23 +11,17 @@ class AppConfigValuesDev extends AppConfigValuesBase
 
   @override
   String get ccsvBaseUrl=>'https://devccsv.ecore.vn';
-  //String get ccsvBaseUrl=>'https://dcfe-42-118-176-117.ngrok-free.app';
 
   @override
   String get ccsvSolutionCode => 'DEV_ECORE_MOBILE';
 
-
-
   @override
-
   String get mobileServiceBaseUrl => 'https://devmobilesv.ecore.vn';
-  //String get mobileServiceBaseUrl => 'mobilesv.ecore.vn';
 
   @override
   String get callServiceBaseUrl =>  'https://devcc.ecore.vn';
 
   @override
-
   String get realtimeServiceBaseUrl => 'https://devrealtime.ecore.vn';
 
   @override
@@ -38,17 +32,16 @@ class AppConfigValuesDev extends AppConfigValuesBase
 
   @override
   String get entryCenterGateGwUserCode => 'idocNet.idn.EntryCenterGate.Sv';
-  @override
 
+  @override
   String get appAgent => 'Mobile-eService';
 
   @override
-
   String get appVerCode => 'V1';
 
 
   final Map<String, SolutionInfo> _solutions={
-      "ESERVICE":new SolutionInfo(
+      "ESERVICE": SolutionInfo(
           code: 'ESERVICE',
           secretKey: '',
           gwUserCode: 'idocNet.idn.eService.Sv',
@@ -57,12 +50,20 @@ class AppConfigValuesDev extends AppConfigValuesBase
           appVerCode: 'V1',
           scrTplCodeSys: 'SCRTPLCODESYS.2023'),
 
+      "SKYCS": SolutionInfo(
+          code: 'DEVSKYCS',
+          secretKey: '',
+          gwUserCode: 'idocNet.idn.SkyCS.Sv',
+          gwPassword: 'idocNet.idn.SkyCS.Sv',
+          appAgent:  'Mobile-eService',
+          appVerCode: 'V1',
+          scrTplCodeSys: 'SCRTPLCODESYS.2023'),
+
   };
 
   @override
-
   Map<String, SolutionInfo> get solutions =>_solutions;
 
-
-
+  @override
+  String get scrTplCodeSys => 'SCRTPLCODESYS.2023';
 }

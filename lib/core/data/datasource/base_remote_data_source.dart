@@ -29,7 +29,7 @@ class BaseRemoteDataSrc {
       }
 
       //final uri = Uri.https(baseUrl, path);
-      final uri = UriForm.convertUri(url: baseUrl, path: path);
+      final uri = UriForm.convertUri(url: baseUrl, path: path);;
       final response = await _client.post(uri,
           headers: headers,
           //body: jsonEncode({'email': email, 'password': password})
@@ -41,9 +41,10 @@ class BaseRemoteDataSrc {
         // throw ApiException(
         //     Message:response.body, Code: 'res.ErrorCode');
         return jsonDecode(response.body);
-      } else
+      } else {
         throw ApiException(
             Message: response.body, Code: response.statusCode.toString());
+      }
     } on ApiException {
       rethrow;
     } catch (e) {
@@ -53,6 +54,9 @@ class BaseRemoteDataSrc {
 
   Future<dynamic> doPost({required String path, DataMap? params}) async {
     final  headers = getHeaders() ?? {};
+    print("LOG_CHECK_API: $path");
+    print("LOG_CHECK_API: $params");
+    print("LOG_CHECK_API: $headers");
     return await doPostWithHeaders(path: path, headers: headers, params: params);
   }
 
@@ -88,6 +92,7 @@ class BaseRemoteDataSrc {
       final response = await request.send();
       final responseStr = await response.stream.bytesToString();
       if (response.statusCode == 200 || response.statusCode == 201) {
+        print("LOG_CHECK_API: $responseStr");
         return jsonDecode(responseStr);
       } else {
         throw ApiException(

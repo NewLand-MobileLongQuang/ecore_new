@@ -47,7 +47,6 @@ import 'injection_container.dart';
 Future<void> authInit() async {
   final prefs = await SharedPreferences.getInstance();
   sl
-    //..registerFactory(() => ProfileCubit(saveUserProfile: sl(), saveSessionInfo: sl()))
     ..registerFactory(() => AuthCubit(
         login: sl(),
         getCurrentUser: sl(),

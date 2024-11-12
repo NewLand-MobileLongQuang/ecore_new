@@ -191,7 +191,6 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
                         if(listProductFull[i].contains(_productController.text)) {
                           final listProductCodeSplit = listProductFull[i].split(' - ');
                           ProductCode = listProductCodeSplit[listProductCodeSplit.length - 1];
-                          print("TrungLQ: $ProductCode");
                           break;
                         }
                       }
