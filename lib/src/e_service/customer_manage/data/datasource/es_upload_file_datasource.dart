@@ -5,13 +5,16 @@ import 'package:ecore/src/e_service/customer_manage/domain/usecases/upload_file.
 
 import '../../../common/datasource/e_service_datasource.dart';
 
-class ES_UploadFileDataSource extends EServiceSvDataSource {
-  ES_UploadFileDataSource(super.client);
+abstract class ES_UploadFileDataSource {
+  Future<RT_ES_FileUploadModel> uploadFile({required UploadFileParams params});
+}
 
+class ES_UploadFileRemoteDataSource extends EServiceSvDataSource implements ES_UploadFileDataSource {
+  ES_UploadFileRemoteDataSource(super.client);
+
+  @override
   Future<RT_ES_FileUploadModel> uploadFile({required UploadFileParams params}) async {
-    final paramsInit = {
-      'file': params.file,
-    };
+    final paramsInit = params.toMap();
     try {
       final response = await postUpload(
           path: 'File/UploadFile',

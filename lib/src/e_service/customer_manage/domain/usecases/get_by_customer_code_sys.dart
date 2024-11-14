@@ -14,6 +14,15 @@ class GetByCustomerCodeSysParams extends Equatable {
 
   @override
   List<Object?> get props => [ScrTplCodeSys, CustomerCodeSys, Ft_PageIndex, Ft_PageSize];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'ScrTplCodeSys': ScrTplCodeSys,
+      'CustomerCodeSys': CustomerCodeSys,
+      'Ft_PageIndex': Ft_PageIndex,
+      'Ft_PageSize': Ft_PageSize,
+    };
+  }
 }
 
 class GetByCustomerCodeSysUseCase extends UsecaseWithParams<RT_ESCustomerDetail, GetByCustomerCodeSysParams> {

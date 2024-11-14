@@ -11,6 +11,12 @@ class GetByRONoParams extends Equatable {
 
   @override
   List<Object?> get props => [RONo];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'RONo': RONo,
+    };
+  }
 }
 
 class GetByRONoUseCase extends UsecaseWithParams<RT_ES_RODetail, GetByRONoParams> {

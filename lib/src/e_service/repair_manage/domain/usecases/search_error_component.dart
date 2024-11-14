@@ -12,6 +12,13 @@ class SearchErrorComponentParams extends Equatable {
 
   @override
   List<Object?> get props => [];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'ProductGrpCode': ProductGrpCode,
+      'OrgID': OrgID,
+    };
+  }
 }
 
 class SearchErrorComponentUseCase extends UsecaseWithParams<RT_ES_ROErrorComponent, SearchErrorComponentParams> {

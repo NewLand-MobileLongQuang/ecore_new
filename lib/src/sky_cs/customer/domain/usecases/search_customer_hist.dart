@@ -13,6 +13,14 @@ class SearchCustomerHistParams extends Equatable {
 
   @override
   List<Object?> get props => [CustomerCodeSys, Ft_PageIndex, Ft_PageSize];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'CustomerCodeSys': CustomerCodeSys,
+      'Ft_PageIndex': Ft_PageIndex,
+      'Ft_PageSize': Ft_PageSize,
+    };
+  }
 }
 
 class SearchCustomerHistUseCase extends UsecaseWithParams<List<SKY_CustomerHist>, SearchCustomerHistParams> {

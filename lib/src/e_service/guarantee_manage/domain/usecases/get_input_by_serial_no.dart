@@ -10,6 +10,12 @@ class GetInputBySerialNoParams extends Equatable {
 
   @override
   List<Object?> get props => [SerialNo];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'SerialNo': SerialNo,
+    };
+  }
 }
 
 class GetInputBySerialNoUseCase extends UsecaseWithParams<List<RT_ES_WarrrantyActivateByQR>, GetInputBySerialNoParams> {

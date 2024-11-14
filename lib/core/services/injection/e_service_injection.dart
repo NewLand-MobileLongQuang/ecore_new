@@ -59,9 +59,10 @@ Future<void> eServiceManageInit() async {
     ..registerLazySingleton(() => GetByCustomerCodeSysUseCase(sl()))
     ..registerLazySingleton(() => UploadFileUseCase(sl()))
     ..registerLazySingleton<ES_CustomerRepository>(() => ES_CustomerRepositoryImpl(sl()))
-    ..registerLazySingleton<ES_CustomerDataSource>(() => ES_CustomerDataSource(sl()))
+    ..registerLazySingleton<ES_CustomerDataSource>(() => ES_CustomerRemoteDataSource(sl()))
     ..registerLazySingleton<ES_UploadFileRepository>(() => ES_UploadFileRepositoryImpl(sl()))
-    ..registerLazySingleton<ES_UploadFileDataSource>(() => ES_UploadFileDataSource(sl()))
+    ..registerLazySingleton<ES_UploadFileDataSource>(() => ES_UploadFileRemoteDataSource(sl()))
+
 
   // Them moi khach hang
     ..registerFactory(() => CustomerCreateCubit(
@@ -82,7 +83,7 @@ Future<void> eServiceManageInit() async {
     ..registerLazySingleton(() => SearchWarrantyUseCase(sl()))
     ..registerLazySingleton(() => UpdateWarrantyUseCase(sl()))
     ..registerLazySingleton<ES_WarrantyRepository>(() => ES_WarrantyRepositoryImpl(sl()))
-    ..registerLazySingleton<ES_WarrantyDataSource>(() => ES_WarrantyDataSource(sl()))
+    ..registerLazySingleton<ES_WarrantyDataSource>(() => ES_WarrantyRemoteDataSource(sl()))
 
   // Thong tin chi tiet bao hanh
     ..registerFactory(() => GuaranteeDetailCubit(
@@ -115,7 +116,7 @@ Future<void> eServiceManageInit() async {
     ..registerLazySingleton(() => CreateWarrantyUseCase(sl()))
     ..registerLazySingleton(() => FinishROUseCase(sl()))
     ..registerLazySingleton<ES_RORepository>(() => ES_RORepositoryImpl(sl()))
-    ..registerLazySingleton<ES_RODataSource>(() => ES_RODataSource(sl()))
+    ..registerLazySingleton<ES_RODataSource>(() => ES_RORemoteDataSource(sl()))
 
   // Chi tiet sua chua
     ..registerFactory(() => RepairDetailCubit(

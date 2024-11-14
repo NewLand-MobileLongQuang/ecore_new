@@ -12,6 +12,12 @@ class UploadFileParams extends Equatable {
 
   @override
   List<Object?> get props => [file];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'file': file,
+    };
+  }
 }
 
 class UploadFileUseCase extends UsecaseWithParams<RT_ES_FileUpload, UploadFileParams> {

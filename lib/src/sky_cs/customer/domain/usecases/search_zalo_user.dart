@@ -11,6 +11,12 @@ class SearchZaloUserParams extends Equatable {
 
   @override
   List<Object?> get props => [ZaloUserName];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'ZaloUserName': ZaloUserName,
+    };
+  }
 }
 
 class SearchZaloUserUseCase extends UsecaseWithParams<List<SKY_CustomerZaloUser>, SearchZaloUserParams> {

@@ -1,5 +1,3 @@
-
-
 import 'package:ecore/core/errors/exceptions.dart';
 import 'package:ecore/src/sky_cs/common/datasource/sky_cs_datasource.dart';
 import 'package:ecore/src/sky_cs/customer/data/models/rt_sky_customer_all_detail_model.dart';
@@ -26,16 +24,30 @@ import 'package:ecore/src/sky_cs/customer/domain/usecases/search_customer_group.
 import 'package:ecore/src/sky_cs/customer/domain/usecases/search_customer_hist.dart';
 import 'package:ecore/src/sky_cs/customer/domain/usecases/search_zalo_user.dart';
 
-class SKY_CustomerDataSource extends SkyCsSvDataSource {
-  SKY_CustomerDataSource(super.client);
+abstract class SKY_CustomerDataSource {
+  Future<List<SKY_CustomerGroupModel>> searchCustomerGroup({required SearchCustomerGroupParams params});
 
+  Future<List<SKY_CustomerColumnModel>> searchCustomerColumn({required SearchCustomerColumnParams params});
+  Future<List<SKY_CustomerColumnModel>> getListOption({required GetListOptionParams params});
+  Future<String> createCustomerSkyCS({required CreateCustomerSkyCSParams params});
+  Future<RT_SKY_CustomerTypeModel> getAllCustomerType({required GetAllCustomerTypeParams params});
+  Future<List<SKY_CustomerPartnerTypeModel>> getAllCustomerPartnerType({required GetAllCustomerPartnerTypeParams params});
+  Future<List<SKY_CustomerZaloUserModel>> searchZaloUser({required SearchZaloUserParams params});
+  // manage + detail
+  Future<List<SKY_CustomerInfoModel>> searchCustomer({required SearchCustomerSkyCSParams params});
+  Future<SKY_CustomerDetailModel> getByCustomerCodeSys({required GetByCustomerCodeSysParams params});
+  Future<List<SKY_CustomerHistModel>> searchCustomerHist({required SearchCustomerHistParams params});
+  Future<List<SKY_CustomerContactModel>> searchCustomerContact({required SearchCustomerContactParams params});
+  Future<RT_SKY_CustomerAllDetailModel> getAllByCustomerCodeSys({required GetAllByCustomerCodeSysParams params});
+  Future<String> deleteCustomerSkyCS({required DeleteCustomerParams params});
+}
+
+class SKY_CustomerRemoteDataSource extends SkyCsSvDataSource implements SKY_CustomerDataSource {
+  SKY_CustomerRemoteDataSource(super.client);
+
+  @override
   Future<List<SKY_CustomerGroupModel>> searchCustomerGroup({required SearchCustomerGroupParams params}) async {
-    final paramsInit = {
-      'ScrTplCodeSys': params.ScrTplCodeSys,
-      'FlagActive': params.FlagActive,
-      'Ft_PageIndex': params.Ft_PageIndex,
-      'Ft_PageSize': params.Ft_PageSize,
-    };
+    final paramsInit = params.toMap();
     try {
       final response = await post(
         path: 'MDMetaColGroup/Search',
@@ -56,14 +68,9 @@ class SKY_CustomerDataSource extends SkyCsSvDataSource {
     }
   }
 
+  @override
   Future<List<SKY_CustomerColumnModel>> searchCustomerColumn({required SearchCustomerColumnParams params}) async {
-    final paramsInit = {
-      'ScrTplCodeSys': params.ScrTplCodeSys,
-      'FlagActive': params.FlagActive,
-      'Ft_PageIndex': params.Ft_PageIndex,
-      'Ft_PageSize': params.Ft_PageSize,
-      'OrderByClause': params.OrderByClause,
-    };
+    final paramsInit = params.toMap();
     try {
       final response = await post(
         path: 'MDMetaColGroupSpec/Search',
@@ -84,12 +91,9 @@ class SKY_CustomerDataSource extends SkyCsSvDataSource {
     }
   }
 
+  @override
   Future<List<SKY_CustomerColumnModel>> getListOption({required GetListOptionParams params}) async {
-    final paramsInit = {
-      'ScrTplCodeSys': params.ScrTplCodeSys,
-      'ColCodeSys': params.ColCodeSys,
-      'FlagActive': params.FlagActive,
-    };
+    final paramsInit = params.toMap();
     try {
       final response = await post(
         path: 'MDMetaColGroupSpec/GetListOption',
@@ -110,18 +114,9 @@ class SKY_CustomerDataSource extends SkyCsSvDataSource {
     }
   }
 
+  @override
   Future<String> createCustomerSkyCS({required CreateCustomerSkyCSParams params}) async {
-    final paramsInit = {
-      'strJson': params.strJson,
-      'strJsonZaloUserFollower': params.strJsonZaloUserFollower,
-      'strJsonEmail': params.strJsonEmail,
-      'strJsonPhone': params.strJsonPhone,
-      'strJsonCtmGroup': params.strJsonCtmGroup,
-      'strJsonCtmPartnerType': params.strJsonCtmPartnerType,
-      'strJsonUserManager': params.strJsonUserManager,
-      'strJsonGovID': params.strJsonGovID,
-      'ScrTplCodeSys': params.ScrTplCodeSys,
-    };
+    final paramsInit = params.toMap();
     try {
       final response = await post(
         path: 'MstCustomer/Create',
@@ -141,6 +136,7 @@ class SKY_CustomerDataSource extends SkyCsSvDataSource {
     }
   }
 
+  @override
   Future<RT_SKY_CustomerTypeModel> getAllCustomerType({required GetAllCustomerTypeParams params}) async {
     try {
       final response = await post(
@@ -160,6 +156,7 @@ class SKY_CustomerDataSource extends SkyCsSvDataSource {
     }
   }
 
+  @override
   Future<List<SKY_CustomerPartnerTypeModel>> getAllCustomerPartnerType({required GetAllCustomerPartnerTypeParams params}) async {
     try {
       final response = await post(
@@ -180,10 +177,9 @@ class SKY_CustomerDataSource extends SkyCsSvDataSource {
     }
   }
 
+  @override
   Future<List<SKY_CustomerZaloUserModel>> searchZaloUser({required SearchZaloUserParams params}) async {
-    final paramsInit = {
-      'ZaloUserName': params.ZaloUserName,
-    };
+    final paramsInit = params.toMap();
     try {
       final response = await post(
         path: 'Zalo/SearchZaloUser',
@@ -206,14 +202,9 @@ class SKY_CustomerDataSource extends SkyCsSvDataSource {
 
   // manage + detail
 
+  @override
   Future<List<SKY_CustomerInfoModel>> searchCustomer({required SearchCustomerSkyCSParams params}) async {
-    final paramsInit = {
-      'ScrTplCodeSys': params.ScrTplCodeSys,
-      'KeyWord': params.KeyWord,
-      'FlagActive': params.FlagActive,
-      'Ft_PageIndex': params.Ft_PageIndex,
-      'Ft_PageSize': params.Ft_PageSize,
-    };
+    final paramsInit = params.toMap();
     try {
       final response = await post(
         path: 'MstCustomer/Search',
@@ -233,13 +224,9 @@ class SKY_CustomerDataSource extends SkyCsSvDataSource {
     }
   }
 
+  @override
   Future<SKY_CustomerDetailModel> getByCustomerCodeSys({required GetByCustomerCodeSysParams params}) async {
-    final paramsInit = {
-      'ScrTplCodeSys': params.ScrTplCodeSys,
-      'CustomerCodeSys': params.CustomerCodeSys,
-      'Ft_PageIndex': params.Ft_PageIndex,
-      'Ft_PageSize': params.Ft_PageSize,
-    };
+    final paramsInit = params.toMap();
     try {
       final response = await post(
         path: 'MstCustomer/GetByCustomerCodeSys',
@@ -259,12 +246,9 @@ class SKY_CustomerDataSource extends SkyCsSvDataSource {
     }
   }
 
+  @override
   Future<List<SKY_CustomerHistModel>> searchCustomerHist({required SearchCustomerHistParams params}) async {
-    final paramsInit = {
-      'CustomerCodeSys': params.CustomerCodeSys,
-      'Ft_PageIndex': params.Ft_PageIndex,
-      'Ft_PageSize': params.Ft_PageSize,
-    };
+    final paramsInit = params.toMap();
     try {
       final response = await post(
         path: 'MstCustomerHist/Search',
@@ -285,14 +269,9 @@ class SKY_CustomerDataSource extends SkyCsSvDataSource {
     }
   }
 
+  @override
   Future<List<SKY_CustomerContactModel>> searchCustomerContact({required SearchCustomerContactParams params}) async {
-    final paramsInit = {
-      'CustomerCodeSys': params.CustomerCodeSys,
-      'FlagActive': params.FlagActive,
-      'Ft_PageIndex': params.Ft_PageIndex,
-      'Ft_PageSize': params.Ft_PageSize,
-      'OrderByClause': params.OrderByClause,
-    };
+    final paramsInit = params.toMap();
     try {
       final response = await post(
         path: 'MstCustomerContact/Search',
@@ -313,10 +292,9 @@ class SKY_CustomerDataSource extends SkyCsSvDataSource {
     }
   }
 
+  @override
   Future<RT_SKY_CustomerAllDetailModel> getAllByCustomerCodeSys({required GetAllByCustomerCodeSysParams params}) async {
-    final paramsInit = {
-      'CustomerCodeSys': params.CustomerCodeSys,
-    };
+    final paramsInit = params.toMap();
     try {
       final response = await post(
         path: 'MstCustomer/GetAllByCustomerCodeSys',
@@ -336,10 +314,9 @@ class SKY_CustomerDataSource extends SkyCsSvDataSource {
     }
   }
 
+  @override
   Future<String> deleteCustomerSkyCS({required DeleteCustomerParams params}) async {
-    final paramsInit = {
-      'strJson': params.strJson,
-    };
+    final paramsInit = params.toMap();
     try {
       final response = await post(
         path: 'MstCustomer/Delete',

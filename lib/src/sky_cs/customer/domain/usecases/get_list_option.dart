@@ -22,6 +22,14 @@ class GetListOptionParams extends Equatable{
     ColCodeSys,
     FlagActive,
   ];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'ScrTplCodeSys': ScrTplCodeSys,
+      'ColCodeSys': ColCodeSys,
+      'FlagActive': FlagActive,
+    };
+  }
 }
 
 class GetListOptionUseCase extends UsecaseWithParams<List<SKY_CustomerColumn>, GetListOptionParams> {

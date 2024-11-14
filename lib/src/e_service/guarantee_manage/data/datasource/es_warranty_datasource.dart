@@ -15,27 +15,21 @@ import '../../../../../core/utils/typedef.dart';
 import '../../../common/datasource/e_service_datasource.dart';
 import '../models/rt_es_warranty_activate_by_qr_model.dart';
 
-class ES_WarrantyDataSource extends EServiceSvDataSource {
-  ES_WarrantyDataSource(super.client);
+abstract class ES_WarrantyDataSource {
+  Future<List<ES_WarrantyDetailModel>> search({required SearchWarrantyParams params});
+  Future<RT_ES_WarrantyDetailModel> getByWarrantyNo({required GetByWarrantyNoParams params});
+  Future<void> update({required UpdateWarrantyParams params});
+  Future<void> delete({required DeleteWarrantyParams params});
+  Future<List<RT_ES_WarrrantyActivateByQRModel>> getInputBySerialNo({required GetInputBySerialNoParams params});
+  Future<RT_ES_WarrantyDetailModel> create({required CreateWarrantyParams params});
+}
 
+class ES_WarrantyRemoteDataSource extends EServiceSvDataSource implements ES_WarrantyDataSource {
+  ES_WarrantyRemoteDataSource(super.client);
+
+  @override
   Future<List<ES_WarrantyDetailModel>> search({required SearchWarrantyParams params}) async {
-    final paramsInit = {
-      'SerialNo': params.SerialNo,
-      'ProductCode': params.ProductCode,
-      'CustomerPhoneNo': params.CustomerPhoneNo,
-      'CustomerAddress': params.CustomerAddress,
-      'AgentCode': params.AgentCode,
-      'InstallationDTimeUTCFrom': params.InstallationDTimeUTCFrom,
-      'InstallationDTimeUTCTo': params.InstallationDTimeUTCTo,
-      'WarrantyDTimeUTCFrom': params.WarrantyDTimeUTCFrom,
-      'WarrantyDTimeUTCTo': params.WarrantyDTimeUTCTo,
-      'WarrantyExpDTimeUTCFrom': params.WarrantyExpDTimeUTCFrom,
-      'WarrantyExpDTimeUTCTo': params.WarrantyExpDTimeUTCTo,
-      'Remark': params.Remark,
-      'OrgID': params.OrgID,
-      'Ft_PageIndex': params.Ft_PageIndex,
-      'Ft_PageSize': params.Ft_PageSize,
-    };
+    final paramsInit = params.toMap();
 
     try {
       final response = await post(
@@ -57,10 +51,9 @@ class ES_WarrantyDataSource extends EServiceSvDataSource {
     }
   }
 
+  @override
   Future<RT_ES_WarrantyDetailModel> getByWarrantyNo({required GetByWarrantyNoParams params}) async {
-    final paramsInit = {
-      'WarrantyNo': params.WarrantyNo,
-    };
+    final paramsInit = params.toMap();
     try {
       final response = await post(
         path: 'ESWarranty/GetByWarrantyNo',
@@ -80,10 +73,9 @@ class ES_WarrantyDataSource extends EServiceSvDataSource {
     }
   }
 
+  @override
   Future<void> update({required UpdateWarrantyParams params}) async {
-    final paramsInit = {
-      'strJson': params.strJson,
-    };
+    final paramsInit = params.toMap();
     try {
       final response = await post(
         path: 'ESWarranty/Update',
@@ -98,10 +90,9 @@ class ES_WarrantyDataSource extends EServiceSvDataSource {
     }
   }
 
+  @override
   Future<void> delete({required DeleteWarrantyParams params}) async {
-    final paramsInit = {
-      'strJson': params.strJson,
-    };
+    final paramsInit = params.toMap();
     try {
       final response = await post(
         path: 'ESWarranty/Delete',
@@ -116,10 +107,9 @@ class ES_WarrantyDataSource extends EServiceSvDataSource {
     }
   }
 
+  @override
   Future<List<RT_ES_WarrrantyActivateByQRModel>> getInputBySerialNo({required GetInputBySerialNoParams params}) async {
-    final paramsInit = {
-      'SerialNo': params.SerialNo,
-    };
+    final paramsInit = params.toMap();
     try {
       final response = await post(
         path: 'ESWarranty/GetInputBySerialNo',
@@ -140,10 +130,9 @@ class ES_WarrantyDataSource extends EServiceSvDataSource {
     }
   }
 
+  @override
   Future<RT_ES_WarrantyDetailModel> create({required CreateWarrantyParams params}) async {
-    final paramsInit = {
-      'strJson': params.strJson,
-    };
+    final paramsInit = params.toMap();
     try {
       final response = await post(
         path: 'ESWarranty/Create',

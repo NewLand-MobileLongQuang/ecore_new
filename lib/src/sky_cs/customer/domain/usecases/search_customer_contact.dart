@@ -15,6 +15,16 @@ class SearchCustomerContactParams extends Equatable {
 
   @override
   List<Object?> get props => [CustomerCodeSys, FlagActive, Ft_PageIndex, Ft_PageSize, OrderByClause];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'CustomerCodeSys': CustomerCodeSys,
+      'FlagActive': FlagActive,
+      'Ft_PageIndex': Ft_PageIndex,
+      'Ft_PageSize': Ft_PageSize,
+      'OrderByClause': OrderByClause,
+    };
+  }
 }
 
 class SearchCustomerContactUseCase extends UsecaseWithParams<List<SKY_CustomerContact>, SearchCustomerContactParams> {

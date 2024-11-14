@@ -9,6 +9,12 @@ class UpdateWarrantyParams extends Equatable {
 
   @override
   List<Object?> get props => [strJson];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'strJson': strJson,
+    };
+  }
 }
 
 class UpdateWarrantyUseCase extends UsecaseWithParams<void, UpdateWarrantyParams>{

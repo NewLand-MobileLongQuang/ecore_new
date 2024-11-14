@@ -60,7 +60,7 @@ Future<void> skyCSManageInit() async {
     ..registerLazySingleton(() => GetAllByCustomerCodeSysUseCase(sl()))
     ..registerLazySingleton(() => DeleteCustomerUseCase(sl()))
     ..registerLazySingleton<SKY_CustomerRepository>(() => SKY_CustomerRepositoryImpl(sl()))
-    ..registerLazySingleton<SKY_CustomerDataSource>(() => SKY_CustomerDataSource(sl()))
+    ..registerLazySingleton<SKY_CustomerDataSource>(() => SKY_CustomerRemoteDataSource(sl()))
 
     ..registerFactory(ChangeDetailCubit.new);
 

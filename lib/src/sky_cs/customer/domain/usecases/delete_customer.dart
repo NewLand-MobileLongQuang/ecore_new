@@ -12,6 +12,12 @@ class DeleteCustomerParams extends Equatable {
   List<Object?> get props => [
     strJson,
   ];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'strJson': strJson,
+    };
+  }
 }
 
 class DeleteCustomerUseCase extends UsecaseWithParams<String, DeleteCustomerParams> {

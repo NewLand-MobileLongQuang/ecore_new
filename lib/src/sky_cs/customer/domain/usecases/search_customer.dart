@@ -21,6 +21,16 @@ class SearchCustomerSkyCSParams extends Equatable {
 
   @override
   List<Object> get props => [ScrTplCodeSys, KeyWord, FlagActive, Ft_PageIndex, Ft_PageSize];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'ScrTplCodeSys': ScrTplCodeSys,
+      'KeyWord': KeyWord,
+      'FlagActive': FlagActive,
+      'Ft_PageIndex': Ft_PageIndex,
+      'Ft_PageSize': Ft_PageSize,
+    };
+  }
 }
 
 class SearchCustomerSkyCSUseCase extends UsecaseWithParams<List<SKY_CustomerInfo>, SearchCustomerSkyCSParams> {

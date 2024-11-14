@@ -27,6 +27,16 @@ class SearchCustomerColumnParams extends Equatable {
     Ft_PageSize,
     OrderByClause,
   ];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'ScrTplCodeSys': ScrTplCodeSys,
+      'FlagActive': FlagActive,
+      'Ft_PageIndex': Ft_PageIndex,
+      'Ft_PageSize': Ft_PageSize,
+      'OrderByClause': OrderByClause,
+    };
+  }
 }
 
 class SearchCustomerColumnUseCase extends UsecaseWithParams<List<SKY_CustomerColumn>, SearchCustomerColumnParams> {

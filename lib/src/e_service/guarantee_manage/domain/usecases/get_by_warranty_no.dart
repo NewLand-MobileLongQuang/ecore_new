@@ -11,6 +11,11 @@ class GetByWarrantyNoParams extends Equatable {
   @override
   List<Object?> get props => [WarrantyNo];
 
+  Map<String, dynamic> toMap() {
+    return {
+      'WarrantyNo': WarrantyNo,
+    };
+  }
 }
 
 class GetByWarrantyNoUseCase extends UsecaseWithParams<RT_ES_WarrantyDetail, GetByWarrantyNoParams> {

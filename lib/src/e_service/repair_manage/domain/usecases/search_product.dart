@@ -13,6 +13,14 @@ class SearchProductParams extends Equatable {
 
   @override
   List<Object?> get props => [];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'ProductCodeUser': ProductCodeUser,
+      'Ft_PageIndex': Ft_PageIndex,
+      'Ft_PageSize': Ft_PageSize,
+    };
+  }
 }
 
 class SearchProductUseCase extends UsecaseWithParams<List<ES_ROProduct>, SearchProductParams> {

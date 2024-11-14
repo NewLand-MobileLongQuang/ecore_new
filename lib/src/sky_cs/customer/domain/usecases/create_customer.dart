@@ -18,6 +18,20 @@ class CreateCustomerSkyCSParams extends Equatable {
 
   @override
   List<Object?> get props => [strJson, strJsonZaloUserFollower, strJsonEmail, strJsonPhone, strJsonCtmGroup, strJsonCtmPartnerType, strJsonUserManager, strJsonGovID, ScrTplCodeSys];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'strJson': strJson,
+      'strJsonZaloUserFollower': strJsonZaloUserFollower,
+      'strJsonEmail': strJsonEmail,
+      'strJsonPhone': strJsonPhone,
+      'strJsonCtmGroup': strJsonCtmGroup,
+      'strJsonCtmPartnerType': strJsonCtmPartnerType,
+      'strJsonUserManager': strJsonUserManager,
+      'strJsonGovID': strJsonGovID,
+      'ScrTplCodeSys': ScrTplCodeSys,
+    };
+  }
 }
 
 class CreateCustomerSkyCSUseCase extends UsecaseWithParams<String, CreateCustomerSkyCSParams> {

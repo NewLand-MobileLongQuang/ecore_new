@@ -9,6 +9,12 @@ class DeleteROParams extends Equatable{
 
   @override
   List<Object?> get props => [strJson];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'strJson': strJson,
+    };
+  }
 }
 
 class DeleteROUseCase extends UsecaseWithParams <void, DeleteROParams>{

@@ -21,6 +21,14 @@ class SearchCustomerParams extends Equatable {
     Ft_PageIndex,
     Ft_PageSize,
   ];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'KeyWord': KeyWord,
+      'Ft_PageIndex': Ft_PageIndex,
+      'Ft_PageSize': Ft_PageSize,
+    };
+  }
 }
 
 class SearchCustomerUseCase extends UsecaseWithParams<List<ES_Customer>, SearchCustomerParams> {

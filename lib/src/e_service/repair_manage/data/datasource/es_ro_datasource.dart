@@ -15,27 +15,23 @@ import '../model/es_ro_product_model.dart';
 import '../model/rt_es_ro_detail_model.dart';
 import '../model/rt_es_ro_error_component_model.dart';
 
-class ES_RODataSource extends EServiceSvDataSource {
-  ES_RODataSource(super.client);
+abstract class ES_RODataSource {
+  Future<List<ES_RODetailModel>> search({required SearchROParams params});
+  Future<RT_ES_RODetailModel> getByRONo({required GetByRONoParams params});
+  Future<void> update({required UpdateROParams params});
+  Future<void> delete({required DeleteROParams params});
+  Future<List<ES_ROErrorTypeModel>> searchErrorType({required SearchErrorTypeParams params});
+  Future<List<ES_ROProductModel>> searchProduct({required SearchProductParams params});
+  Future<RT_ES_ROErrorComponentModel> searchErrorComponent({required SearchErrorComponentParams params});
+  Future<void> finish({required FinishROParams params});
+}
 
+class ES_RORemoteDataSource extends EServiceSvDataSource implements ES_RODataSource {
+  ES_RORemoteDataSource(super.client);
+
+  @override
   Future<List<ES_RODetailModel>> search({required SearchROParams params}) async {
-      final paramsInit = {
-        'SerialNo': params.SerialNo,
-        'ProductCode': params.ProductCode,
-        'CustomerPhoneNo': params.CustomerPhoneNo,
-        'CustomerAddress': params.CustomerAddress,
-        'AgentCode': params.AgentCode,
-        'InstallationDTimeUTCFrom': params.InstallationDTimeUTCFrom,
-        'InstallationDTimeUTCTo': params.InstallationDTimeUTCTo,
-        'WarrantyDTimeUTCFrom': params.WarrantyDTimeUTCFrom,
-        'WarrantyDTimeUTCTo': params.WarrantyDTimeUTCTo,
-        'WarrantyExpDTimeUTCFrom': params.WarrantyExpDTimeUTCFrom,
-        'WarrantyExpDTimeUTCTo': params.WarrantyExpDTimeUTCTo,
-        'Remark': params.Remark,
-        'OrgID': params.OrgID,
-        'Ft_PageIndex': params.Ft_PageIndex,
-        'Ft_PageSize': params.Ft_PageSize,
-      };
+      final paramsInit = params.toMap();
       try {
         final response = await post(
           path: 'ESRO/Search',
@@ -56,10 +52,9 @@ class ES_RODataSource extends EServiceSvDataSource {
       }
     }
 
+  @override
   Future<RT_ES_RODetailModel> getByRONo({required GetByRONoParams params}) async {
-    final paramsInit = {
-      'RONo': params.RONo,
-    };
+    final paramsInit = params.toMap();
     try {
       final response = await post(
         path: 'ESRO/GetByRONo',
@@ -79,10 +74,9 @@ class ES_RODataSource extends EServiceSvDataSource {
     }
   }
 
+  @override
   Future<void> update({required UpdateROParams params}) async {
-    final paramsInit = {
-      'strJson': params.strJson,
-    };
+    final paramsInit = params.toMap();
     try {
       final response = await post(
         path: 'ESRO/Update',
@@ -97,10 +91,9 @@ class ES_RODataSource extends EServiceSvDataSource {
     }
   }
 
+  @override
   Future<void> delete({required DeleteROParams params}) async {
-    final paramsInit = {
-      'strJson': params.strJson,
-    };
+    final paramsInit = params.toMap();
     try {
       final response = await post(
         path: 'ESRO/Delete',
@@ -115,6 +108,7 @@ class ES_RODataSource extends EServiceSvDataSource {
     }
   }
 
+  @override
   Future<List<ES_ROErrorTypeModel>> searchErrorType({required SearchErrorTypeParams params}) async {
     try {
       final response = await post(
@@ -135,12 +129,9 @@ class ES_RODataSource extends EServiceSvDataSource {
     }
   }
 
+  @override
   Future<List<ES_ROProductModel>> searchProduct({required SearchProductParams params}) async {
-    final paramsInit = {
-      'ProductCodeUser': params.ProductCodeUser,
-      'Ft_PageIndex': params.Ft_PageIndex,
-      'Ft_PageSize': params.Ft_PageSize,
-    };
+    final paramsInit = params.toMap();
     try {
       final response = await post(
         params: paramsInit,
@@ -161,11 +152,9 @@ class ES_RODataSource extends EServiceSvDataSource {
     }
   }
 
+  @override
   Future<RT_ES_ROErrorComponentModel> searchErrorComponent({required SearchErrorComponentParams params}) async {
-    final paramsInit = {
-      'ProductGrpCode': params.ProductGrpCode,
-      'OrgID': params.OrgID,
-    };
+    final paramsInit = params.toMap();
     try {
       final response = await post(
         params: paramsInit,
@@ -185,11 +174,9 @@ class ES_RODataSource extends EServiceSvDataSource {
     }
   }
 
+  @override
   Future<void> finish({required FinishROParams params}) async {
-    final paramsInit = {
-      'RONo': params.RONo,
-      'FinishDTimeUser': params.FinishDTimeUser,
-    };
+    final paramsInit = params.toMap();
     try {
       final response = await post(
         path: 'ESRO/Finish',

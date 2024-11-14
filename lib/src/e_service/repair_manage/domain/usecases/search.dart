@@ -43,6 +43,27 @@ class SearchROParams extends Equatable {
     Ft_PageIndex,
     Ft_PageSize,
   ];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'RONo': RONo,
+      'ProductCode': ProductCode,
+      'CustomerPhoneNo': CustomerPhoneNo,
+      'CustomerAddress': CustomerAddress,
+      'AgentCode': AgentCode,
+      'InstallationDTimeUTCFrom': InstallationDTimeUTCFrom,
+      'InstallationDTimeUTCTo': InstallationDTimeUTCTo,
+      'WarrantyDTimeUTCFrom': WarrantyDTimeUTCFrom,
+      'WarrantyDTimeUTCTo': WarrantyDTimeUTCTo,
+      'WarrantyExpDTimeUTCFrom': WarrantyExpDTimeUTCFrom,
+      'WarrantyExpDTimeUTCTo': WarrantyExpDTimeUTCTo,
+      'Remark': Remark,
+      'OrgID': OrgID,
+      'SerialNo': SerialNo,
+      'Ft_PageIndex': Ft_PageIndex,
+      'Ft_PageSize': Ft_PageSize,
+    };
+  }
 }
 
 class SearchROUseCase extends UsecaseWithParams<List<ES_RODetail>, SearchROParams> {

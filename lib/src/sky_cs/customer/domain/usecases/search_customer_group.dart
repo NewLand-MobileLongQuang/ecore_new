@@ -24,6 +24,15 @@ class SearchCustomerGroupParams extends Equatable {
     Ft_PageIndex,
     Ft_PageSize,
   ];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'ScrTplCodeSys': ScrTplCodeSys,
+      'FlagActive': FlagActive,
+      'Ft_PageIndex': Ft_PageIndex,
+      'Ft_PageSize': Ft_PageSize,
+    };
+  }
 }
 
 class SearchCustomerGroupUseCase extends UsecaseWithParams<List<SKY_CustomerGroup>, SearchCustomerGroupParams> {

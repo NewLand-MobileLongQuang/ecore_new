@@ -11,6 +11,13 @@ class FinishROParams extends Equatable {
 
   @override
   List<Object?> get props => [RONo, FinishDTimeUser];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'RONo': RONo,
+      'FinishDTimeUser': FinishDTimeUser,
+    };
+  }
 }
 
 class FinishROUseCase extends UsecaseWithParams<void, FinishROParams> {

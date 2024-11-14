@@ -14,6 +14,12 @@ class GetAllByCustomerCodeSysParams extends Equatable{
 
   @override
   List<Object?> get props => [CustomerCodeSys];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'CustomerCodeSys': CustomerCodeSys,
+    };
+  }
 }
 
 class GetAllByCustomerCodeSysUseCase extends UsecaseWithParams<RT_SKY_CustomerAllDetail, GetAllByCustomerCodeSysParams> {

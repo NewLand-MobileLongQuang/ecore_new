@@ -58,6 +58,25 @@ class SearchWarrantyParams extends Equatable {
     Ft_PageSize,
   ];
 
+  Map<String, dynamic> toMap() {
+    return {
+      'SerialNo': SerialNo,
+      'ProductCode': ProductCode,
+      'CustomerPhoneNo': CustomerPhoneNo,
+      'CustomerAddress': CustomerAddress,
+      'AgentCode': AgentCode,
+      'InstallationDTimeUTCFrom': InstallationDTimeUTCFrom,
+      'InstallationDTimeUTCTo': InstallationDTimeUTCTo,
+      'WarrantyDTimeUTCFrom': WarrantyDTimeUTCFrom,
+      'WarrantyDTimeUTCTo': WarrantyDTimeUTCTo,
+      'WarrantyExpDTimeUTCFrom': WarrantyExpDTimeUTCFrom,
+      'WarrantyExpDTimeUTCTo': WarrantyExpDTimeUTCTo,
+      'Remark': Remark,
+      'OrgID': OrgID,
+      'Ft_PageIndex': Ft_PageIndex,
+      'Ft_PageSize': Ft_PageSize,
+    };
+  }
 }
 
 class SearchWarrantyUseCase extends UsecaseWithParams<List<ES_WarrantyDetail>, SearchWarrantyParams> {

@@ -10,15 +10,19 @@ import 'package:ecore/src/e_service/customer_manage/domain/usecases/search_custo
 
 import '../../../common/datasource/e_service_datasource.dart';
 
-class ES_CustomerDataSource extends EServiceSvDataSource {
-  ES_CustomerDataSource(super.client);
+abstract class ES_CustomerDataSource {
+  Future<List<ES_CustomerModel>> search({required SearchCustomerParams params});
+  Future<ES_CustomerModel> create({required CreateCustomerParams params});
+  Future<String> getCustomerCodeSys({required GetCustomerCodeSysParams params});
+  Future<RT_ESCustomerDetailModel> getByCustomerCodeSys({required GetByCustomerCodeSysParams params});
+}
 
+class ES_CustomerRemoteDataSource extends EServiceSvDataSource implements ES_CustomerDataSource {
+  ES_CustomerRemoteDataSource(super.client);
+
+  @override
   Future<List<ES_CustomerModel>> search({required SearchCustomerParams params}) async {
-    final paramsInit = {
-      'KeyWord': params.KeyWord,
-      'Ft_PageIndex': params.Ft_PageIndex,
-      'Ft_PageSize': params.Ft_PageSize,
-    };
+    final paramsInit = params.toMap();
     try {
       final response = await post(
         path: 'MstCustomer/SearchForMobile',
@@ -39,10 +43,9 @@ class ES_CustomerDataSource extends EServiceSvDataSource {
     }
   }
 
+  @override
   Future<ES_CustomerModel> create({required CreateCustomerParams params}) async {
-    final paramsInit = {
-      'strJson': params.strJson,
-    };
+    final paramsInit = params.toMap();
     try {
       final response = await post(
         path: 'MstCustomer/CreateForMobile',
@@ -62,6 +65,7 @@ class ES_CustomerDataSource extends EServiceSvDataSource {
     }
   }
 
+  @override
   Future<String> getCustomerCodeSys({required GetCustomerCodeSysParams params}) async {
     try {
       final response = await post(
@@ -81,13 +85,9 @@ class ES_CustomerDataSource extends EServiceSvDataSource {
     }
   }
 
+  @override
   Future<RT_ESCustomerDetailModel> getByCustomerCodeSys({required GetByCustomerCodeSysParams params}) async {
-    final paramsInit = {
-      'ScrTplCodeSys': params.ScrTplCodeSys,
-      'CustomerCodeSys': params.CustomerCodeSys,
-      'Ft_PageIndex': params.Ft_PageIndex,
-      'Ft_PageSize': params.Ft_PageSize,
-    };
+    final paramsInit = params.toMap();
     try {
       final response = await post(
         path: 'MstCustomer/GetByCustomerCodeSys',
