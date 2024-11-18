@@ -2,15 +2,12 @@ import 'package:ecore/core/utils/localization_helper.dart';
 import 'package:ecore/src/e_service/common/solution_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:ecore/core/common/widgets/inputs/i_text_field.dart';
 import 'package:ecore/core/res/colors.dart';
 import 'package:ecore/core/res/strings.dart';
-
 import 'package:ecore/src/e_service/customer_manage/data/models/rq_es_customer_model.dart';
 import 'package:ecore/src/e_service/customer_manage/presentation/cubit/customer_create_cubit/customer_create_cubit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import '../../../../../core/common/widgets/loading_view.dart';
 import '../../../../../core/res/text_styles.dart';
 

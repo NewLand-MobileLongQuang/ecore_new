@@ -3,7 +3,7 @@
 import '../../domain/entities/es_ro_detail.dart';
 
 class ES_RODetailModel extends ES_RODetail {
-  ES_RODetailModel({required super.RONo, required super.OrgID, required super.NetworkID, required super.CustomerCodeSys, required super.CustomerName, required super.CustomerPhoneNo, required super.CustomerAddress, required super.CustomerAvatarPath, required super.ReceptionDTimeUTC, required super.AgentCode, required super.RODesc, required super.Deadline, required super.ROStatus, required super.ProductCode, required super.SerialNo, required super.FactoryCode, required super.ErrorTypeCode, required super.AppointmentDTimeUTC, required super.CreateDTimeUTC, required super.CreateBy, required super.Remark, required super.FinishDTimeUser, required super.FinishDTimeUTC, required super.FinishBy, required super.LUDTimeUTC, required super.LUBy, required super.LogLUDTimeUTC, required super.LogLUBy, required super.AgentName, required super.AgentAvatar, required super.ListComponentCode, required super.CustomerNameReal});
+  ES_RODetailModel({required super.RONo, required super.OrgID, required super.NetworkID, required super.CustomerCodeSys, required super.CustomerName, required super.CustomerPhoneNo, required super.CustomerAddress, required super.CustomerAvatarPath, required super.ReceptionDTimeUTC, required super.AgentCode, required super.RODesc, required super.Deadline, required super.ROStatus, required super.ProductCode, required super.ProductName, required super.SerialNo, required super.FactoryCode, required super.ErrorTypeCode, required super.ErrorTypeName, required super.AppointmentDTimeUTC, required super.CreateDTimeUTC, required super.CreateBy, required super.Remark, required super.FinishDTimeUser, required super.FinishDTimeUTC, required super.FinishBy, required super.LUDTimeUTC, required super.LUBy, required super.LogLUDTimeUTC, required super.LogLUBy, required super.AgentName, required super.AgentAvatar, required super.ListComponentCode, required super.CustomerNameReal, required super.ProductCodeUser});
 
   factory ES_RODetailModel.fromMap(Map<String, dynamic> json) {
     return ES_RODetailModel(
@@ -21,9 +21,12 @@ class ES_RODetailModel extends ES_RODetail {
       Deadline: json['Deadline'] as String? ?? '',
       ROStatus: json['ROStatus'] as String? ?? '',
       ProductCode: json['ProductCode'] as String? ?? '',
+      ProductName: json['ProductName'] as String? ?? '',
+      ProductCodeUser: json['ProductCodeUser'] as String? ?? '',
       SerialNo: json['SerialNo'] as String? ?? '',
       FactoryCode: json['FactoryCode'] as String? ?? '',
       ErrorTypeCode: json['ErrorTypeCode'] as String? ?? '',
+      ErrorTypeName: json['ErrorTypeName'] as String? ?? '',
       AppointmentDTimeUTC: json['AppointmentDTimeUTC'] as String? ?? '',
       CreateDTimeUTC: json['CreateDTimeUTC'] as String? ?? '',
       CreateBy: json['CreateBy'] as String? ?? '',
@@ -58,9 +61,11 @@ class ES_RODetailModel extends ES_RODetail {
       'Deadline': Deadline,
       'ROStatus': ROStatus,
       'ProductCode': ProductCode,
+      'ProductName': ProductName,
       'SerialNo': SerialNo,
       'FactoryCode': FactoryCode,
       'ErrorTypeCode': ErrorTypeCode,
+      'ErrorTypeName': ErrorTypeName,
       'AppointmentDTimeUTC': AppointmentDTimeUTC,
       'CreateDTimeUTC': CreateDTimeUTC,
       'CreateBy': CreateBy,
@@ -76,6 +81,7 @@ class ES_RODetailModel extends ES_RODetail {
       'AgentAvatar': AgentAvatar,
       'ListComponentCode': ListComponentCode,
       'CustomerNameReal': CustomerNameReal,
+      'ProductCodeUser': ProductCodeUser,
     };
   }
 }

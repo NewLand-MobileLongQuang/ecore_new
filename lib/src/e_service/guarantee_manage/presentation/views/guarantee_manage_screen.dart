@@ -1,6 +1,7 @@
 import 'package:ecore/core/common/widgets/loading_view.dart';
 import 'package:ecore/core/res/text_styles.dart';
 import 'package:ecore/core/utils/localization_helper.dart';
+import 'package:ecore/core/utils/string_generate.dart';
 import 'package:ecore/src/e_service/common/solution_context_extensions.dart';
 import 'package:ecore/src/e_service/common/utils.dart';
 import 'package:ecore/src/e_service/guarantee_manage/presentation/views/guarantee_activate_screen.dart';
@@ -281,19 +282,23 @@ class _GuaranteeManageScreenState extends State<GuaranteeManageScreen> {
                       eS_WarrantyDetail.SerialNo,
                       style: AppTextStyles.textStyleInterW600S16Primary,
                     ),
-                    const Expanded(child: SizedBox()),
-                    Text(
-                      eS_WarrantyDetail.InstallationDTimeUTC,
-                      style: AppTextStyles.textStyleInterW400S14Grey,
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        StringGenerate.convertTimeUTC(eS_WarrantyDetail.InstallationDTimeUTC),
+                        style: AppTextStyles.textStyleInterW400S14Grey,
+                        textAlign: TextAlign.end,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ],
                 ),
                 Text(
-                  eS_WarrantyDetail.ProductCodeUser,
+                  '${eS_WarrantyDetail.ProductName} (${eS_WarrantyDetail.ProductCodeUser})',
                   style: AppTextStyles.textStyleInterW400S14Grey,
                 ),
                 Text(
-                  'KH: ${eS_WarrantyDetail.CustomerName}',
+                  'KH: ${eS_WarrantyDetail.CustomerName} (${eS_WarrantyDetail.CustomerPhoneNo})',
                   style: AppTextStyles.textStyleInterW400S14Grey,
                 ),
               ],

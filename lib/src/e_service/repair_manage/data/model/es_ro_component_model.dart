@@ -13,7 +13,7 @@ class ES_ROComponentModel extends ES_ROComponent {
     );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'ProductGrpCode': ProductGrpCode,
       'ComponentCode': ComponentCode,

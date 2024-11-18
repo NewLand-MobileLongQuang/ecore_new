@@ -5,7 +5,7 @@ import 'package:ecore/src/e_service/guarantee_manage/domain/entities/rq_es_warra
 class RQ_ES_WarrantyEditModel extends RQ_ES_WarrantyEdit{
   RQ_ES_WarrantyEditModel({required super.es_WarrantyEdit, required super.Lst_ES_WarrantyAttachFile});
 
-  factory RQ_ES_WarrantyEditModel.fromJson(Map<String, dynamic> json) {
+  factory RQ_ES_WarrantyEditModel.fromMap(Map<String, dynamic> json) {
     return RQ_ES_WarrantyEditModel(
       es_WarrantyEdit: json['ES_Warranty'] as ES_WarrantyEditModel,
       Lst_ES_WarrantyAttachFile: json['Lst_ES_WarrantyAttachFile'] as List<ES_WarrantyAttachFileModel>,

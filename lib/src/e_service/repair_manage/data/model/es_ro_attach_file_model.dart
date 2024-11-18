@@ -16,7 +16,7 @@ class ES_ROAttachFileModel extends ES_ROAttachFile {
     );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'Idx': Idx,
       'FileName': FileName,

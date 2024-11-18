@@ -94,5 +94,18 @@ class StringGenerate {
 
       return '$minutesStr:$secondsStr';
     }
+
+    static String convertTimeUTC(String time) {
+      // Parse chuỗi thời gian UTC
+      DateTime utcTime = DateTime.parse(time);
+
+      // Chuyển sang múi giờ +7
+      DateTime localTime = utcTime.add(const Duration(hours: 7));
+
+      // Định dạng lại theo dạng "yyyy-MM-dd HH:mm:ss"
+      String formattedLocalTime = DateFormat('yyyy-MM-dd HH:mm:ss').format(localTime);
+
+      return formattedLocalTime;
+    }
 }
 

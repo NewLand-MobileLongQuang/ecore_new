@@ -249,7 +249,7 @@ class _RepairManageScreenState extends State<RepairManageScreen> {
                     child: Container(
                       alignment: Alignment.center,
                       child: Text(
-                        StringGenerate.getCurrentName(eS_RODetail.CustomerName).toUpperCase(),
+                        StringGenerate.getCurrentName(eS_RODetail.CustomerNameReal).toUpperCase(),
                         style: const TextStyle(fontSize: 16),
                       ),
                     ),

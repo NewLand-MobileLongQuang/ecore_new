@@ -177,6 +177,7 @@ class _RepairDetailScreenState extends State<RepairDetailScreen> {
         title: l(AppStrings.requestInformation),
         trailingExpansionTrue: SvgPicture.asset(AppMediaRes.iconExpandUp),
         trailingExpansionFalse: SvgPicture.asset(AppMediaRes.iconExpandDown),
+        initiallyExpanded: false,
         children: [
           _item(title: l(AppStrings.requestTimeTitle), value: eS_RODetail.ReceptionDTimeUTC),
           _item(title: l(AppStrings.customerNameTitle), value: eS_RODetail.CustomerNameReal),
@@ -197,8 +198,8 @@ class _RepairDetailScreenState extends State<RepairDetailScreen> {
                     borderRadius: BorderRadius.all(Radius.circular(5)),
                   ),
                   child: const Icon(
-                    Icons.call,
-                    size: 28,
+                    FontAwesomeIcons.phone,
+                    size: 24,
                     color: AppColors.textWhiteColor,
                   ),
                 ),
@@ -214,7 +215,7 @@ class _RepairDetailScreenState extends State<RepairDetailScreen> {
   }
 
   Widget _titleResponseInformation(LocalizationHelper l) {
-    final listComponent = eS_RODetail.ListComponentCode?.split(' ') ?? [];
+    final listComponent = Lst_ES_ROComponent.map((e) => '${e.ComponentName} - ${e.ComponentCode}').join('\n');
     return IExpansionTile(
         title: l(AppStrings.requestActivityInformation),
         trailingExpansionTrue: SvgPicture.asset(AppMediaRes.iconExpandUp),
@@ -223,12 +224,10 @@ class _RepairDetailScreenState extends State<RepairDetailScreen> {
           _item(title: l(AppStrings.requestStatus), value: eS_RODetail.ROStatus),
           _item(title: l(AppStrings.requestExpiredDateTitle), value: eS_RODetail.FinishDTimeUser),
           _item(title: l(AppStrings.serialTitle), value: eS_RODetail.SerialNo),
-          _item(title: l(AppStrings.productName), value: eS_RODetail.ProductCode),
-          _item(title: l(AppStrings.errorType), value: eS_RODetail.ErrorTypeCode),
-          _item(title: l(AppStrings.listComponents), value: listComponent.join('\n') ?? '', maxLine: listComponent.isEmpty ? 1 : eS_RODetail.ListComponentCode
-              ?.split(' ')
-              .length),
-          _item(title: l(AppStrings.noteTitle), value: eS_RODetail.Remark, maxLine: 4),
+          _item(title: l(AppStrings.productName), value: '${eS_RODetail.ProductName} - ${eS_RODetail.ProductCodeUser}'),
+          _item(title: l(AppStrings.errorType), value: '${eS_RODetail.ErrorTypeName} - ${eS_RODetail.ErrorTypeCode}'),
+          _item(title: l(AppStrings.listComponents), value: listComponent, maxLine: null),
+          _item(title: l(AppStrings.noteTitle), value: eS_RODetail.Remark, maxLine: null),
         ]
     );
   }

@@ -41,8 +41,7 @@ class RepairManageCubit extends Cubit<RepairManageState> {
       );
       final prefs = await SharedPreferences.getInstance();
       final email = prefs.getString('cached_email') ?? '';
-      listDetail =
-          list.fold((l) => null, (r) => r)
+      listDetail = list.fold((l) => null, (r) => r)
               ?.where((element) => element.AgentCode.toUpperCase() == email.toUpperCase()).toList();
       listDetail?.sort((a, b) => b.ReceptionDTimeUTC.compareTo(a.ReceptionDTimeUTC) != 0
         ? b.ReceptionDTimeUTC.compareTo(a.ReceptionDTimeUTC)
@@ -55,38 +54,16 @@ class RepairManageCubit extends Cubit<RepairManageState> {
   }
 
   Future<void> search(String query) async {
-    emit(RepairManageLoading());
+    if(query.isEmpty) {
+      emit(RepairManageLoaded(list: listDetail ?? []));
+      return;
+    }
     try{
-      final list = await _searchROUseCase.call(
-        const SearchROParams(
-          RONo: '',
-          ProductCode: '',
-          CustomerPhoneNo: '',
-          CustomerAddress: '',
-          AgentCode: '',
-          InstallationDTimeUTCFrom: '',
-          InstallationDTimeUTCTo: '',
-          WarrantyDTimeUTCFrom: '',
-          WarrantyDTimeUTCTo: '',
-          WarrantyExpDTimeUTCFrom: '',
-          WarrantyExpDTimeUTCTo: '',
-          Remark: '',
-          OrgID: '',
-          SerialNo: '',
-          Ft_PageIndex: '0',
-          Ft_PageSize: '1000',
-        ),
-      );
-      final prefs = await SharedPreferences.getInstance();
-      final email = prefs.getString('cached_email') ?? '';
-      final listSearch = list.fold((l) => null, (r) => r)
-          ?.where((element) => element.AgentCode.toUpperCase() == email.toUpperCase()).toList().where((element) {
-        return element.CustomerName.toLowerCase().contains(query.toLowerCase())
+      final listSearch = listDetail?.where((element) {
+        return element.CustomerNameReal.toLowerCase().contains(query.toLowerCase())
             || element.CustomerPhoneNo.toLowerCase().contains(query.toLowerCase())
             || element.CustomerAddress.toLowerCase().contains(query.toLowerCase())
-            || element.ROStatus.toLowerCase().contains(query.toLowerCase())
-            || element.RODesc.toLowerCase().contains(query.toLowerCase())
-            || element.RONo.toLowerCase().contains(query.toLowerCase()) ;
+            || element.RONo.toLowerCase().contains(query.toLowerCase());
       }).toList();
       emit(RepairManageLoaded(list: listSearch ?? []));
     }

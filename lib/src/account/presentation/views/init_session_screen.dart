@@ -42,11 +42,9 @@ class _InitSessionScreenState extends State<InitSessionScreen> {
             //Navigator.pushReplacementNamed(context, Dashboard.routeName);
           }
           else {
-            CoreUtils.showSnackBar(context, 'No calling information');
             Navigator.pushReplacementNamed(context, LoginScreen.routeName);
           }
         } else if (state is InitSessionOk) {
-          CoreUtils.showSnackBar(context, 'InitSessionOk');
           Navigator.pushReplacementNamed(context, Dashboard.routeName);
         }
       }, builder: (context, state) {

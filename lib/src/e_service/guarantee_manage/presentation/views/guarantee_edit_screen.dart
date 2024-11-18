@@ -1,7 +1,11 @@
 import 'dart:io';
 
+import 'package:ecore/core/common/widgets/inputs/i_dialog.dart';
 import 'package:ecore/core/utils/localization_helper.dart';
 import 'package:ecore/src/e_service/common/solution_context_extensions.dart';
+import 'package:ecore/src/e_service/common/utils.dart';
+import 'package:ecore/src/e_service/customer_manage/presentation/views/customer_create_screen.dart';
+import 'package:ecore/src/e_service/customer_manage/presentation/views/customer_manage_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -131,13 +135,13 @@ class _GuaranteeEditScreenState extends State<GuaranteeEditScreen> {
               if (state is GuaranteeEditSuccess) {
                 Navigator.of(context).maybePop(true);
               }
+              if (state is GuaranteeEditError) {
+                IDialog.showNotificationDialog(context, state.message);
+              }
             },
             builder: (context, state) {
               if (state is GuaranteeEditLoading) {
                 return const LoadingView();
-              }
-              if (state is GuaranteeEditError) {
-                return Center(child: Text(state.message));
               }
               if (state is GuaranteeEditLoaded) {
                 return ListView(
@@ -206,8 +210,8 @@ class _GuaranteeEditScreenState extends State<GuaranteeEditScreen> {
       children: [
         _itemText(title: l(AppStrings.installNameTitle), value: eS_WarrantyDetail.AgentCode),
         _itemText(title: l(AppStrings.installDateTitle), value: eS_WarrantyDetail.InstallationDTimeUTC),
-        _itemTime(controller: _installTimeController, title: l(AppStrings.installTimeTitle)),
-        _itemTime(controller: _expiredDateController, title: l(AppStrings.expiredDateTitle)),
+        _itemTime(controller: _installTimeController, title: '${l(AppStrings.installTimeTitle)} (*)'),
+        _itemTime(controller: _expiredDateController, title: '${l(AppStrings.expiredDateTitle)} (*)'),
         _itemTextField(controller: _noteController, title: l(AppStrings.noteTitle)),
       ],
     );
@@ -287,7 +291,9 @@ class _GuaranteeEditScreenState extends State<GuaranteeEditScreen> {
         InkWell(
           onTap: () {
             saveLocalInformation();
-            Navigator.pushNamed(context, '/customer-manage').then((value) {
+            context.pushNamed(
+              EServiceUtils.getFullRouteName(CustomerManageScreen.routeName),
+            ).then((value) {
               if (value != null) {
                 value as ES_Customer;
                 context.read<GuaranteeEditCubit>().fillCustomer(
@@ -315,7 +321,9 @@ class _GuaranteeEditScreenState extends State<GuaranteeEditScreen> {
         const SizedBox(width: 8),
         InkWell(
           onTap: () {
-            Navigator.pushNamed(context, '/customer-create').then((value) {
+            context.pushNamed(
+              EServiceUtils.getFullRouteName(CustomerCreateScreen.routeName),
+            ).then((value) {
               if (value != null) {
                 value as ES_Customer;
                 context.read<GuaranteeEditCubit>().fillCustomer(

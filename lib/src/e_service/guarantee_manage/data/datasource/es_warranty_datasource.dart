@@ -115,7 +115,7 @@ class ES_WarrantyRemoteDataSource extends EServiceSvDataSource implements ES_War
         path: 'ESWarranty/GetInputBySerialNo',
         params: paramsInit,
       );
-      final dataList = response['DataList'] as List;
+      final dataList = response['Data'] as List;
 
       List<RT_ES_WarrrantyActivateByQRModel> res =
       dataList.map<RT_ES_WarrrantyActivateByQRModel>((i) => RT_ES_WarrrantyActivateByQRModel.fromMap(i)).toList();

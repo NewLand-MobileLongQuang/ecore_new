@@ -26,7 +26,6 @@ import 'package:ecore/src/sky_cs/customer/domain/usecases/search_zalo_user.dart'
 
 abstract class SKY_CustomerDataSource {
   Future<List<SKY_CustomerGroupModel>> searchCustomerGroup({required SearchCustomerGroupParams params});
-
   Future<List<SKY_CustomerColumnModel>> searchCustomerColumn({required SearchCustomerColumnParams params});
   Future<List<SKY_CustomerColumnModel>> getListOption({required GetListOptionParams params});
   Future<String> createCustomerSkyCS({required CreateCustomerSkyCSParams params});

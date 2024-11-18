@@ -23,6 +23,7 @@ class UpdateWarrantyUseCase extends UsecaseWithParams<void, UpdateWarrantyParams
 
   @override
   ResultFuture<void> call(UpdateWarrantyParams params) async {
+    print("LOG_CHECK_API: tessssssssssssst ${params.strJson}");
     return _repo.update(params: params);
   }
 }

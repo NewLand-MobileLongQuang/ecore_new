@@ -3,7 +3,7 @@ import 'package:ecore/src/e_service/guarantee_manage/domain/entities/es_warranty
 class ES_WarrantyEditModel extends ES_WarrantyEdit {
   ES_WarrantyEditModel({required super.WarrantyNo, required super.OrgID, required super.SerialNo, required super.ProductCode, required super.ProductionDTimeUTC, required super.FactoryCode, required super.KCS, required super.CustomerCodeSys, required super.CustomerName, required super.CustomerPhoneNo, required super.CustomerAddress, required super.CustomerEmail, required super.AgentCode, required super.InstallationDTimeUTC, required super.WarrantyDTimeUTC, required super.WarrantyExpDTimeUTC, required super.WarrantyStatus, required super.Remark});
 
-  factory ES_WarrantyEditModel.fromJson(Map<String, dynamic> json) {
+  factory ES_WarrantyEditModel.fromMap(Map<String, dynamic> json) {
     return ES_WarrantyEditModel(
       WarrantyNo: json['WarrantyNo'] as String? ?? '',
       OrgID: json['OrgID'] as String? ?? '',

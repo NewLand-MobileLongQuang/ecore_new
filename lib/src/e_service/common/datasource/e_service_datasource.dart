@@ -48,13 +48,10 @@ class EServiceSvDataSource extends BaseRemoteDataSrc {
         path: path,
         params: params,
         );
-
     final res = ClientGateModel.fromMap(response['Data'] as DataMap);
     if(res.strErrCode!="0") {
       throw ApiException(Code: res.strErrCode, Message: 'Error ${res.strErrCode}');
     }
-
-
     return res.objResult;
   }
 
@@ -63,16 +60,14 @@ class EServiceSvDataSource extends BaseRemoteDataSrc {
 
     final response = await doPostWithHeadersAndFile(
         path: path,
-        params: params, headers: getHeaders()!, filePath: filePath);
-
+        params: params,
+        filePath: filePath,
+    );
     final res = ClientGateModel.fromMap(response['Data'] as DataMap);
-
     if(res.strErrCode!="0")
     {
       throw ApiException(Code: res.strErrCode, Message: 'Error ${res.strErrCode}');
     }
-
-
     return res.objResult;
   }
 }

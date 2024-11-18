@@ -165,7 +165,7 @@ class _RepairHistorySearchScreenState extends State<RepairHistorySearchScreen> {
                   children: [
                     Expanded(
                       child: Text(
-                        listWarranty[0].CreateDTimeUTC,
+                        listWarranty[0].InstallationDTimeUTC,
                         style: AppTextStyles.textStyleInterW400S16Black,
                         overflow: TextOverflow.ellipsis,
                       ),

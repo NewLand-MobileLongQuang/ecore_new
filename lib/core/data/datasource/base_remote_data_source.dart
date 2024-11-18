@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
@@ -17,10 +18,16 @@ class BaseRemoteDataSrc {
     return null;
   }
 
-  Future<dynamic> doPostWithHeaders(
-      {required String path,
-      required Map<String, String> headers,
-      DataMap? params}) async {
+  Future<dynamic> doPost({required String path, DataMap? params}) async {
+    final  headers = getHeaders() ?? {};
+    return await doPostWithHeaders(path: path, headers: headers, params: params);
+  }
+
+  Future<dynamic> doPostWithHeaders({
+    required String path,
+    required Map<String, String> headers,
+    DataMap? params,
+  }) async {
     try {
       if (params != null) {
         if (headers?['Content-Type'] == null) {
@@ -28,18 +35,18 @@ class BaseRemoteDataSrc {
         }
       }
 
-      //final uri = Uri.https(baseUrl, path);
-      final uri = UriForm.convertUri(url: baseUrl, path: path);;
+      final uri = UriForm.convertUri(url: baseUrl, path: path);
+      print("LOG_CHECK_API: $path");
+      print("LOG_CHECK_API: $params");
+      print("LOG_CHECK_API: $headers");
+      print("LOG_CHECK_API: $uri");
+
       final response = await _client.post(uri,
           headers: headers,
-          //body: jsonEncode({'email': email, 'password': password})
           body: params != null ? jsonEncode(params) : null,
-
       );
-
       if (response.statusCode == 200 || response.statusCode == 201) {
-        // throw ApiException(
-        //     Message:response.body, Code: 'res.ErrorCode');
+        print("LOG_CHECK_API: ${response.body}");
         return jsonDecode(response.body);
       } else {
         throw ApiException(
@@ -52,20 +59,12 @@ class BaseRemoteDataSrc {
     }
   }
 
-  Future<dynamic> doPost({required String path, DataMap? params}) async {
-    final  headers = getHeaders() ?? {};
-    print("LOG_CHECK_API: $path");
-    print("LOG_CHECK_API: $params");
-    print("LOG_CHECK_API: $headers");
-    return await doPostWithHeaders(path: path, headers: headers, params: params);
-  }
-
   Future<dynamic> doPostWithHeadersAndFile(
       {required String path,
-      required Map<String, String> headers,
       required String filePath,
       DataMap? params}) async {
     try {
+      final  headers = getHeaders() ?? {};
       final uri = UriForm.convertUri(url: baseUrl, path: path);
       final request = http.MultipartRequest(
         'POST',
@@ -77,20 +76,15 @@ class BaseRemoteDataSrc {
           'file',
           filePath,
         ),
-
       );
-
-      if(params!=null)
-        {
-         params.forEach((key, value) {
-           request.fields[key]= value.toString();
-         });
-        }
-
-
-
       final response = await request.send();
       final responseStr = await response.stream.bytesToString();
+
+      print("LOG_CHECK_API: $uri");
+      print("LOG_CHECK_API: $path");
+      print("LOG_CHECK_API: $params");
+      print("LOG_CHECK_API: $headers");
+
       if (response.statusCode == 200 || response.statusCode == 201) {
         print("LOG_CHECK_API: $responseStr");
         return jsonDecode(responseStr);

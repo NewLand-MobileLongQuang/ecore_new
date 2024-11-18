@@ -34,7 +34,6 @@ class _SelectNetworkScreenState extends State<SelectNetworkScreen> {
             CoreUtils.showSnackBar(context, 'No networks');
           }
         } else if (state is AuthNetworkSelected) {
-          CoreUtils.showSnackBar(context, 'Network selected ${state.network.Name}.');
           Navigator.pushReplacementNamed(context, '/');
         }
       }, builder: (context, state) {

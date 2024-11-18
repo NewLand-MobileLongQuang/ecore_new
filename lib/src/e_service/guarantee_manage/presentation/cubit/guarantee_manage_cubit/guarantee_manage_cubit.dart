@@ -58,9 +58,10 @@ class GuaranteeManageCubit extends Cubit<GuaranteeManageState> {
       return;
     }
     final listSearch = listDetail?.where((element) {
-      return element.SerialNo.contains(query)
-             || element.ProductCode.contains(query)
-             || element.CustomerName.contains(query);
+      return element.SerialNo.toLowerCase().contains(query.toLowerCase())
+             || element.ProductCode.toLowerCase().contains(query.toLowerCase())
+             || element.CustomerName.toLowerCase().contains(query.toLowerCase())
+             || element.CustomerPhoneNo.toLowerCase().contains(query.toLowerCase());
     }).toList();
     emit(GuaranteeManageLoaded(list: listSearch ?? []));
   }

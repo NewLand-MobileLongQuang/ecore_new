@@ -10,6 +10,7 @@ class IExpansionTile extends StatefulWidget {
     required this.trailingExpansionTrue,
     required this.trailingExpansionFalse,
     this.isCheck,
+    this.initiallyExpanded,
     super.key,
   });
 
@@ -18,6 +19,7 @@ class IExpansionTile extends StatefulWidget {
   final List<Widget> children;
   final Widget trailingExpansionTrue;
   final Widget trailingExpansionFalse;
+  bool? initiallyExpanded;
 
   @override
   State<IExpansionTile> createState() => _IExpansionTileState();
@@ -27,7 +29,7 @@ class _IExpansionTileState extends State<IExpansionTile> {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
-      initiallyExpanded: true,
+      initiallyExpanded: widget.initiallyExpanded ?? true,
       tilePadding: const EdgeInsets.symmetric(horizontal:8),
       visualDensity: const VisualDensity(vertical: -4),
       shape: const Border(),

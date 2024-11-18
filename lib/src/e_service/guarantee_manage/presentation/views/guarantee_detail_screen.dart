@@ -1,19 +1,16 @@
 import 'package:ecore/core/utils/localization_helper.dart';
+import 'package:ecore/core/utils/string_generate.dart';
 import 'package:ecore/src/e_service/common/solution_context_extensions.dart';
 import 'package:ecore/src/e_service/guarantee_manage/presentation/views/guarantee_edit_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:ecore/core/common/widgets/inputs/i_dialog.dart';
 import 'package:ecore/core/common/widgets/inputs/i_expansion_tile.dart';
-
 import 'package:ecore/core/common/widgets/inputs/i_text_field.dart';
 import 'package:ecore/core/res/colors.dart';
 import 'package:ecore/core/res/media_res.dart';
 import 'package:ecore/core/res/strings.dart';
-
-import 'package:ecore/core/utils/string_generate.dart';
 import 'package:ecore/src/e_service/guarantee_manage/data/models/es_warranty_delete_model.dart';
 import 'package:ecore/src/e_service/guarantee_manage/domain/entities/es_warranty_attach_file.dart';
 import 'package:ecore/src/e_service/guarantee_manage/domain/entities/es_warranty_detail.dart';
@@ -184,7 +181,7 @@ class _GuaranteeDetailScreenState extends State<GuaranteeDetailScreen> {
         trailingExpansionTrue: SvgPicture.asset(AppMediaRes.iconExpandUp),
         trailingExpansionFalse: SvgPicture.asset(AppMediaRes.iconExpandDown),
       children: [
-        _item(title: l(AppStrings.customerIdTitle), value: eS_WarrantyDetail.CustomerCodeSys),
+        _item(title: l(AppStrings.customerIdTitle), value: eS_WarrantyDetail.CustomerCode),
         _item(title: l(AppStrings.customerNameTitle), value: eS_WarrantyDetail.CustomerName),
         _item(title: l(AppStrings.customerPhoneTitle), value: eS_WarrantyDetail.CustomerPhoneNo),
         _item(title: l(AppStrings.customerAddressTitle), value: eS_WarrantyDetail.CustomerAddress),
@@ -199,8 +196,8 @@ class _GuaranteeDetailScreenState extends State<GuaranteeDetailScreen> {
       trailingExpansionTrue: SvgPicture.asset(AppMediaRes.iconExpandUp),
       trailingExpansionFalse: SvgPicture.asset(AppMediaRes.iconExpandDown),
       children: [
-        _item(title: l(AppStrings.installNameTitle), value: eS_WarrantyDetail.AgentCode),
-        _item(title: l(AppStrings.installDateTitle), value: eS_WarrantyDetail.InstallationDTimeUTC),
+        _item(title: l(AppStrings.installNameTitle), value: eS_WarrantyDetail.AgentName),
+        _item(title: l(AppStrings.installDateTitle), value: StringGenerate.convertTimeUTC(eS_WarrantyDetail.InstallationDTimeUTC)),
         _item(title: l(AppStrings.installTimeTitle), value: eS_WarrantyDetail.WarrantyDTimeUTC),
         _item(title: l(AppStrings.expiredDateTitle), value: eS_WarrantyDetail.WarrantyExpDTimeUTC),
         _item(title: l(AppStrings.noteTitle), value: eS_WarrantyDetail.Remark, maxLine: 4),

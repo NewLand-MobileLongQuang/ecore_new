@@ -13,7 +13,7 @@ class ES_WarrantyAttachFileModel extends ES_WarrantyAttachFile {
     );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'Idx': Idx,
       'FileName': FileName,

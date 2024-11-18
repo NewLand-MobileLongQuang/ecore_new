@@ -56,21 +56,4 @@ class SkyCsSvDataSource extends BaseRemoteDataSrc {
 
     return res.objResult;
   }
-
-  Future<dynamic> postUpload({required String path, DataMap? params, required String filePath}) async {
-    final ss = SessionInfo.current();
-
-    final response = await doPostWithHeadersAndFile(
-        path: path,
-        params: params, headers: getHeaders()!, filePath: filePath);
-
-    final res = ClientGateModel.fromMap(response['Data'] as DataMap);
-
-    if(res.strErrCode!="0")
-    {
-      throw ApiException(Code: res.strErrCode, Message: 'Error ${res.strErrCode}');
-    }
-
-    return res.objResult;
-  }
 }

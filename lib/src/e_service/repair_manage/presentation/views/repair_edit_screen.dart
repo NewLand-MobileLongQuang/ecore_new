@@ -43,6 +43,7 @@ class RepairEditScreen extends StatefulWidget {
 
 class _RepairEditScreenState extends State<RepairEditScreen> {
   final TextEditingController _meetTimeController = TextEditingController();
+  final TextEditingController _finishTimeController = TextEditingController();
   final TextEditingController _serialController = TextEditingController();
   final TextEditingController _productController = TextEditingController();
   final TextEditingController _errorTypeController = TextEditingController();
@@ -72,6 +73,7 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
   void saveLocalInformation() {
     eS_RODetail
       ..AppointmentDTimeUTC = _meetTimeController.text
+      ..FinishDTimeUser = _finishTimeController.text
       ..SerialNo = eS_RODetail.SerialNo
       ..ProductCode = _productController.text
       ..ErrorTypeCode = _errorTypeController.text
@@ -126,13 +128,14 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
           _listSysController.text = state.Lst_ES_ROComponent.map((e) => '${e.ComponentCode} - ${e.ComponentName}').join('\n');
 
           _meetTimeController.text = state.eS_RODetail.AppointmentDTimeUTC;
+          _finishTimeController.text = state.eS_RODetail.FinishDTimeUser;
           _noteController.text = state.eS_RODetail.Remark;
 
           Lst_ES_ROAttachFileBefore = state.Lst_ES_ROAttachFile.where((element) => element.ROAttachFileType == '0').toList();
           Lst_ES_ROAttachFileAfter = state.Lst_ES_ROAttachFile.where((element) => element.ROAttachFileType == '1').toList();
         }
         if (state is RepairEditSuccess) {
-          context.pushReplacementNamed(RepairManageScreen.routeName);
+          Navigator.of(context).maybePop(true);
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text('Sửa thành công!'),
@@ -140,7 +143,7 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
           );
         }
         if (state is RepairFinishSuccess) {
-          Navigator.of(context).pushReplacementNamed('/repair-manage');
+          context.pushReplacementNamed(RepairManageScreen.routeName);
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text('Kết thúc sửa chữa!'),
@@ -247,7 +250,10 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
                     splashColor: AppColors.transparent,
                     highlightColor: AppColors.transparent,
                     onTap: () {
-                      final currentTime = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+                      var currentTime = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+                      if(_finishTimeController.text != '') {
+                        currentTime = _finishTimeController.text;
+                      }
                       IDialog.showConfirmFinishDialog(
                         context,
                         AppStrings.confirmFinishTitle,
@@ -307,6 +313,7 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
         title: l(AppStrings.requestInformation),
         trailingExpansionTrue: SvgPicture.asset(AppMediaRes.iconExpandUp),
         trailingExpansionFalse: SvgPicture.asset(AppMediaRes.iconExpandDown),
+        initiallyExpanded: false,
         children: [
           _item(title: '${l(AppStrings.requestTimeTitle)} (*)', value: eS_RODetail.ReceptionDTimeUTC),
           Row(
@@ -372,18 +379,21 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
   }
 
   Widget _titleResponseInformation(LocalizationHelper l) {
+    final listComponent = Lst_ES_ROComponent.map((e) => '${e.ComponentName} - ${e.ComponentCode}').join('\n');
     return IExpansionTile(
         title: l(AppStrings.requestActivityInformation),
         trailingExpansionTrue: SvgPicture.asset(AppMediaRes.iconExpandUp),
         trailingExpansionFalse: SvgPicture.asset(AppMediaRes.iconExpandDown),
-        children: [
+        children: eS_RODetail.ROStatus != 'FINISH'
+        ?[
           _itemTime(controller: _meetTimeController, title: l(AppStrings.requestMeetTimeTitle),),
-          _item(title: '${l(AppStrings.requestExpiredDateTitle)} (*)', value: eS_RODetail.FinishDTimeUser),
+          _itemTime(controller: _finishTimeController, title: '${l(AppStrings.requestExpiredDateTitle)} (*)'),
           _itemTextField(
               controller: _serialController,
               title: l(AppStrings.serialTitle),
               icon: FontAwesomeIcons.qrcode,
               onTap: () {
+                saveLocalInformation();
                 context.pushNamed(
                   EServiceUtils.getFullRouteName(QrCodeView.routeName),
                 ).then((value) {
@@ -398,6 +408,15 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
           _itemListTextField(controller: _errorTypeController, title: l(AppStrings.errorType), list: listErrorType),
           _itemMultiListTextField(controller: _listSysController, title: l(AppStrings.listComponents), list: listErrorComponent),
           _itemTextField(controller: _noteController, title: l(AppStrings.noteTitle), maxLine: 5, maxLength: 500),
+        ]
+        : [
+          _item(title: l(AppStrings.requestTimeTitle), value: eS_RODetail.AppointmentDTimeUTC),
+          _item(title: '${l(AppStrings.requestExpiredDateTitle)} (*)', value: eS_RODetail.FinishDTimeUser),
+          _item(title: l(AppStrings.serialTitle), value: eS_RODetail.SerialNo),
+          _item(title: l(AppStrings.productName), value: '${eS_RODetail.ProductName} - ${eS_RODetail.ProductCodeUser}'),
+          _item(title: l(AppStrings.errorType), value: '${eS_RODetail.ErrorTypeName} - ${eS_RODetail.ErrorTypeCode}'),
+          _item(title: l(AppStrings.listComponents), value: listComponent, maxLine: null),
+          _item(title: l(AppStrings.noteTitle), value: eS_RODetail.Remark),
         ]
     );
   }

@@ -8,6 +8,7 @@ import 'package:ecore/src/e_service/customer_manage/domain/repos/es_upload_file_
 
 class UploadFileParams extends Equatable {
   const UploadFileParams({required this.file});
+
   final File file;
 
   @override
