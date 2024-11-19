@@ -61,7 +61,7 @@ class GuaranteeActivateCubit extends Cubit<GuaranteeActivateState> {
       final install = ES_WarrantyInstall(
         name: ss.Name??'',
         installDate: DateTime.now().toString(),
-        installTime: '',
+        installTime: DateTime.now().toString(),
         expiredDate: '',
         note: '',
       );

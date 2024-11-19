@@ -39,6 +39,8 @@ class IScrollImage extends StatefulWidget {
 
 class _IScrollImageState extends State<IScrollImage> {
   final ScrollController _scrollController = ScrollController();
+  final PageController _pageController = PageController();
+  var _currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -146,24 +148,23 @@ class _IScrollImageState extends State<IScrollImage> {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              InkWell(
-                splashColor: AppColors.transparent,
-                highlightColor: AppColors.transparent,
-                onTap: () {
-                  setState(() {
-                    _scrollController.animateTo(
-                      _scrollController.offset - 100,
-                      duration: const Duration(milliseconds: 500),
-                      curve: Curves.easeInOut,
-                    );
-                  });
-                },
-                child: const Icon(
-                  Icons.chevron_left,
-                  color: AppColors.textBlackColor,
-                  size: 48,
+              if(_currentPage != 0)...[
+                InkWell(
+                  splashColor: AppColors.transparent,
+                  highlightColor: AppColors.transparent,
+                  onTap: () {
+                    setState(() {
+                      _currentPage--;
+                      _pageController.previousPage(duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
+                    });
+                  },
+                  child: const Icon(
+                    Icons.chevron_left,
+                    color: AppColors.textBlackColor,
+                    size: 48,
+                  ),
                 ),
-              ),
+              ],
               Expanded(
                 child: Container(
                   height: 300,
@@ -171,91 +172,86 @@ class _IScrollImageState extends State<IScrollImage> {
                     borderRadius: BorderRadius.circular(5),
                   ),
                   child: Center(
-                    child: ListView.builder(
+                    child: PageView.builder(
                       scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      controller: _scrollController,
+                      controller: _pageController,
+                      onPageChanged: (int page) {
+                        setState(() {
+                          _currentPage = page;
+                        });
+                      },
                       itemCount: (widget.listFile?.length ?? 0)
                           + (widget.listWarrantyAttachFile?.length ?? 0)
                           + (widget.listROAttachFile?.length ?? 0),
                       itemBuilder: (BuildContext context, int index) {
-                        return Row(
-                          children: [
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            InkWell(
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return ImagePageView(
-                                      Lst_ES_WarrantyAttachFile: widget.listWarrantyAttachFile ?? const [],
-                                      Lst_ES_ROAttachFile: widget.listROAttachFile ?? const [],
-                                      listFile: widget.listFile ?? const [],
-                                      flagDelete: widget.flagDelete ?? false,
-                                      index: index,
-                                    );
-                                  },
-                                ).then((value) {
-                                  if (value == true) {
-                                    setState(() {
-                                      if(widget.listWarrantyAttachFile != null){
-                                        if(index < (widget.listWarrantyAttachFile!.length)){
-                                          widget.listWarrantyAttachFile!.removeAt(index);
-                                        }
-                                        else {
-                                          widget.listFile!.removeAt(index - (widget.listWarrantyAttachFile!.length));
-                                        }
-                                      }
-                                      else {
-                                        if(index < (widget.listROAttachFile!.length)){
-                                          widget.listROAttachFile!.removeAt(index);
-                                        }
-                                        else {
-                                          widget.listFile!.removeAt(index - (widget.listROAttachFile!.length));
-                                        }
-                                      }
-                                    });
+                        return InkWell(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return ImagePageView(
+                                  Lst_ES_WarrantyAttachFile: widget.listWarrantyAttachFile ?? const [],
+                                  Lst_ES_ROAttachFile: widget.listROAttachFile ?? const [],
+                                  listFile: widget.listFile ?? const [],
+                                  flagDelete: widget.flagDelete ?? false,
+                                  index: index,
+                                );
+                              },
+                            ).then((value) {
+                              if (value == true) {
+                                setState(() {
+                                  if(widget.listWarrantyAttachFile != null){
+                                    if(index < (widget.listWarrantyAttachFile!.length)){
+                                      widget.listWarrantyAttachFile!.removeAt(index);
+                                    }
+                                    else {
+                                      widget.listFile!.removeAt(index - (widget.listWarrantyAttachFile!.length));
+                                    }
+                                  }
+                                  else {
+                                    if(index < (widget.listROAttachFile!.length)){
+                                      widget.listROAttachFile!.removeAt(index);
+                                    }
+                                    else {
+                                      widget.listFile!.removeAt(index - (widget.listROAttachFile!.length));
+                                    }
                                   }
                                 });
-                              },
-                              child: widget.listWarrantyAttachFile != null
-                                  ? index < widget.listWarrantyAttachFile!.length
-                                  ? Image.network(widget.listWarrantyAttachFile?[index].FilePath ?? '')
-                                  : Image.file(widget.listFile?[index - widget.listWarrantyAttachFile!.length] ?? File(''))
-                                  : index < widget.listROAttachFile!.length
-                                  ? Image.network(widget.listROAttachFile?[index].FilePath ?? '')
-                                  : Image.file(widget.listFile?[index - widget.listROAttachFile!.length] ?? File('')),
-                            ),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                          ],
+                              }
+                            });
+                          },
+                          child: widget.listWarrantyAttachFile != null
+                              ? index < widget.listWarrantyAttachFile!.length
+                              ? Image.network(widget.listWarrantyAttachFile?[index].FilePath ?? '')
+                              : Image.file(widget.listFile?[index - widget.listWarrantyAttachFile!.length] ?? File(''))
+                              : index < widget.listROAttachFile!.length
+                              ? Image.network(widget.listROAttachFile?[index].FilePath ?? '')
+                              : Image.file(widget.listFile?[index - widget.listROAttachFile!.length] ?? File('')),
                         );
                       },
                     ),
                   ),
                 ),
               ),
-              InkWell(
-                splashColor: AppColors.transparent,
-                highlightColor: AppColors.transparent,
-                onTap: () {
-                  setState(() {
-                    _scrollController.animateTo(
-                      _scrollController.offset + 100,
-                      duration: const Duration(milliseconds: 500),
-                      curve: Curves.easeInOut,
-                    );
-                  });
-                },
-                child: const Icon(
-                  Icons.chevron_right,
-                  color: AppColors.textBlackColor,
-                  size: 48,
+              if(_currentPage != (widget.listFile?.length ?? 0)
+                  + (widget.listWarrantyAttachFile?.length ?? 0)
+                  + (widget.listROAttachFile?.length ?? 0) - 1)...[
+                InkWell(
+                  splashColor: AppColors.transparent,
+                  highlightColor: AppColors.transparent,
+                  onTap: () {
+                    setState(() {
+                      _currentPage++;
+                      _pageController.nextPage(duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
+                    });
+                  },
+                  child: const Icon(
+                    Icons.chevron_right,
+                    color: AppColors.textBlackColor,
+                    size: 48,
+                  ),
                 ),
-              ),
+              ],
             ],
           ),
         ],

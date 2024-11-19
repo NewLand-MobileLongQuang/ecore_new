@@ -285,7 +285,7 @@ class _GuaranteeManageScreenState extends State<GuaranteeManageScreen> {
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        StringGenerate.convertTimeUTC(eS_WarrantyDetail.InstallationDTimeUTC),
+                        eS_WarrantyDetail.WarrantyDTimeUTC,
                         style: AppTextStyles.textStyleInterW400S14Grey,
                         textAlign: TextAlign.end,
                         overflow: TextOverflow.ellipsis,

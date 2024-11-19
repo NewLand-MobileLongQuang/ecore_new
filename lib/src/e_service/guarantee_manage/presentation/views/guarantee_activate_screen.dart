@@ -141,7 +141,7 @@ class _GuaranteeActivateScreenState extends State<GuaranteeActivateScreen> {
                 else {
                   _serialNoController.text = StringGenerate.extractQRCode(state.rT_ES_WarrrantyActivateByQR.SerialNo);
                 }
-                _installTimeController.text = state.eS_WarrantyInstall.installTime;
+                _installTimeController.text = Utils().strDateTime(state.eS_WarrantyInstall.installTime);
                 _noteController.text = state.eS_WarrantyInstall.note;
 
                 rT_ES_WarrrantyActivateByQR = state.rT_ES_WarrrantyActivateByQR;
@@ -248,7 +248,7 @@ class _GuaranteeActivateScreenState extends State<GuaranteeActivateScreen> {
       trailingExpansionFalse: SvgPicture.asset(AppMediaRes.iconExpandDown),
       children: [
         _itemText(title: l(AppStrings.serialTitle), value: _serialNoController.text),
-        _itemText(title: l(AppStrings.typeProductTitle), value: rT_ES_WarrrantyActivateByQR.ProductCodeUser),
+        _itemText(title: l(AppStrings.typeProductTitle), value: '${rT_ES_WarrrantyActivateByQR.ProductName} - ${rT_ES_WarrrantyActivateByQR.ProductCodeUser}'),
         _itemText(title: l(AppStrings.manufactureDateTitle), value: rT_ES_WarrrantyActivateByQR.ProductionDTimeUTC),
         _itemText(title: l(AppStrings.workshopTitle), value: rT_ES_WarrrantyActivateByQR.FactoryCode),
         _itemText(title: l(AppStrings.kcsTitle), value: rT_ES_WarrrantyActivateByQR.KCS),

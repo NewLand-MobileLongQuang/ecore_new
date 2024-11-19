@@ -66,7 +66,12 @@ class _RepairDetailScreenState extends State<RepairDetailScreen> {
       },
       builder: (context, state) {
         if (state is RepairDetailLoading) {
-          return const LoadingView();
+          return Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: AppColors.textWhiteColor,
+            child: const LoadingView(),
+          );
         }
         if (state is RepairDetailLoaded){
           return Scaffold(
@@ -177,7 +182,7 @@ class _RepairDetailScreenState extends State<RepairDetailScreen> {
         title: l(AppStrings.requestInformation),
         trailingExpansionTrue: SvgPicture.asset(AppMediaRes.iconExpandUp),
         trailingExpansionFalse: SvgPicture.asset(AppMediaRes.iconExpandDown),
-        initiallyExpanded: false,
+        initiallyExpanded: true,
         children: [
           _item(title: l(AppStrings.requestTimeTitle), value: eS_RODetail.ReceptionDTimeUTC),
           _item(title: l(AppStrings.customerNameTitle), value: eS_RODetail.CustomerNameReal),

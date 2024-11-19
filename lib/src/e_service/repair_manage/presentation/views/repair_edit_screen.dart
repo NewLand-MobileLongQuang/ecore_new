@@ -129,6 +129,9 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
 
           _meetTimeController.text = state.eS_RODetail.AppointmentDTimeUTC;
           _finishTimeController.text = state.eS_RODetail.FinishDTimeUser;
+          if(_finishTimeController.text == '') {
+            _finishTimeController.text = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+          }
           _noteController.text = state.eS_RODetail.Remark;
 
           Lst_ES_ROAttachFileBefore = state.Lst_ES_ROAttachFile.where((element) => element.ROAttachFileType == '0').toList();

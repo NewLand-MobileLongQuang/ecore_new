@@ -4,11 +4,8 @@ import 'dart:ui';
 
 import 'package:ecore/core/services/app_background_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:sip_ua/sip_ua.dart';
-
-
 import 'core/common/widgets/restart_widget.dart';
 import 'core/providers/call_provider.dart';
 import 'core/providers/session_provider.dart';

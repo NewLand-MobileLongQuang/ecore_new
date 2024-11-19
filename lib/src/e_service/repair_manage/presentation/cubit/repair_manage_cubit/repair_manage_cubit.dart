@@ -62,7 +62,7 @@ class RepairManageCubit extends Cubit<RepairManageState> {
       final listSearch = listDetail?.where((element) {
         return element.CustomerNameReal.toLowerCase().contains(query.toLowerCase())
             || element.CustomerPhoneNo.toLowerCase().contains(query.toLowerCase())
-            || element.CustomerAddress.toLowerCase().contains(query.toLowerCase())
+            // || element.CustomerAddress.toLowerCase().contains(query.toLowerCase())
             || element.RONo.toLowerCase().contains(query.toLowerCase());
       }).toList();
       emit(RepairManageLoaded(list: listSearch ?? []));

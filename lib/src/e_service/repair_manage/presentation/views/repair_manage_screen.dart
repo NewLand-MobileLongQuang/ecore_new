@@ -126,14 +126,26 @@ class _RepairManageScreenState extends State<RepairManageScreen> {
   Widget _itemRepair(BuildContext context, ES_RODetail eS_RODetail) {
     return InkWell(
       onTap: () {
-        context.pushNamed(
-          EServiceUtils.getFullRouteName(RepairEditScreen.routeName),
-          arguments: eS_RODetail.RONo,
-        ).then((value) {
-          if (value != null && value == true) {
-            context.read<RepairManageCubit>().init();
-          }
-        });
+        if(eS_RODetail.ROStatus != 'FINISH') {
+          context.pushNamed(
+            EServiceUtils.getFullRouteName(RepairEditScreen.routeName),
+            arguments: eS_RODetail.RONo,
+          ).then((value) {
+            if (value != null && value == true) {
+              context.read<RepairManageCubit>().init();
+            }
+          });
+        }
+        else {
+          context.pushNamed(
+            EServiceUtils.getFullRouteName(RepairDetailScreen.routeName),
+            arguments: eS_RODetail.RONo,
+          ).then((value) {
+            if (value != null && value == true) {
+              context.read<RepairManageCubit>().init();
+            }
+          });
+        }
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -170,31 +182,33 @@ class _RepairManageScreenState extends State<RepairManageScreen> {
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        InkWell(
-                          onTap: () {
-                            context.pushNamed(
-                              EServiceUtils.getFullRouteName(RepairEditScreen.routeName),
-                              arguments: eS_RODetail.RONo,
-                            ).then((value) {
-                              if (value != null && value == true) {
-                                context.read<RepairManageCubit>().init();
-                              }
-                            });
-                          },
-                          child: Container(
-                            height: 36,
-                            width: 36,
-                            decoration: const BoxDecoration(
-                              color: AppColors.primaryColor,
-                              borderRadius: BorderRadius.all(Radius.circular(5)),
-                            ),
-                            child: const Icon(
-                              FontAwesomeIcons.pencil,
-                              size: 16,
-                              color: AppColors.textWhiteColor,
+                        if(eS_RODetail.ROStatus != 'FINISH')...[
+                          InkWell(
+                            onTap: () {
+                              context.pushNamed(
+                                EServiceUtils.getFullRouteName(RepairEditScreen.routeName),
+                                arguments: eS_RODetail.RONo,
+                              ).then((value) {
+                                if (value != null && value == true) {
+                                  context.read<RepairManageCubit>().init();
+                                }
+                              });
+                            },
+                            child: Container(
+                              height: 36,
+                              width: 36,
+                              decoration: const BoxDecoration(
+                                color: AppColors.primaryColor,
+                                borderRadius: BorderRadius.all(Radius.circular(5)),
+                              ),
+                              child: const Icon(
+                                FontAwesomeIcons.pencil,
+                                size: 16,
+                                color: AppColors.textWhiteColor,
+                              ),
                             ),
                           ),
-                        ),
+                        ],
                         const SizedBox(width: 4),
                         InkWell(
                           onTap: () {
@@ -301,12 +315,12 @@ class _RepairManageScreenState extends State<RepairManageScreen> {
                       const SizedBox(height: 4),
                       Row(
                         children: [
-                          Expanded(child:
-                          Text(
-                            eS_RODetail.RODesc,
-                            style: AppTextStyles.textStyleInterW400S14Grey,
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                          Expanded(
+                            child: Text(
+                              eS_RODetail.RODesc,
+                              style: AppTextStyles.textStyleInterW400S14Grey,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                           if(eS_RODetail.AgentAvatar != '')...[
                             CircleAvatar(

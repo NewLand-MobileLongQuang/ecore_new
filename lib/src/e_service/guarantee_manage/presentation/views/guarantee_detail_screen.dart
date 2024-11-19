@@ -167,7 +167,7 @@ class _GuaranteeDetailScreenState extends State<GuaranteeDetailScreen> {
       trailingExpansionFalse: SvgPicture.asset(AppMediaRes.iconExpandDown),
       children: [
         _item(title: l(AppStrings.serialTitle), value: eS_WarrantyDetail.SerialNo),
-        _item(title: l(AppStrings.typeProductTitle), value: eS_WarrantyDetail.ProductCodeUser),
+        _item(title: l(AppStrings.typeProductTitle), value: '${eS_WarrantyDetail.ProductName} - ${eS_WarrantyDetail.ProductCodeUser}'),
         _item(title: l(AppStrings.manufactureDateTitle), value: eS_WarrantyDetail.ProductionDTimeUTC),
         _item(title: l(AppStrings.workshopTitle), value: eS_WarrantyDetail.FactoryCode),
         _item(title: l(AppStrings.kcsTitle), value: eS_WarrantyDetail.KCS),
@@ -197,7 +197,7 @@ class _GuaranteeDetailScreenState extends State<GuaranteeDetailScreen> {
       trailingExpansionFalse: SvgPicture.asset(AppMediaRes.iconExpandDown),
       children: [
         _item(title: l(AppStrings.installNameTitle), value: eS_WarrantyDetail.AgentName),
-        _item(title: l(AppStrings.installDateTitle), value: StringGenerate.convertTimeUTC(eS_WarrantyDetail.InstallationDTimeUTC)),
+        _item(title: l(AppStrings.installDateTitle), value: eS_WarrantyDetail.InstallationDTimeUTC),
         _item(title: l(AppStrings.installTimeTitle), value: eS_WarrantyDetail.WarrantyDTimeUTC),
         _item(title: l(AppStrings.expiredDateTitle), value: eS_WarrantyDetail.WarrantyExpDTimeUTC),
         _item(title: l(AppStrings.noteTitle), value: eS_WarrantyDetail.Remark, maxLine: 4),
