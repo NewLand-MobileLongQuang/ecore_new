@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
@@ -36,17 +37,17 @@ class BaseRemoteDataSrc {
       }
 
       final uri = UriForm.convertUri(url: baseUrl, path: path);
-      print("LOG_CHECK_API: $path");
-      print("LOG_CHECK_API: $params");
-      print("LOG_CHECK_API: $headers");
-      print("LOG_CHECK_API: $uri");
+      log("LOG_CHECK_API: $path");
+      log("LOG_CHECK_API: $params");
+      log("LOG_CHECK_API: $headers");
+      log("LOG_CHECK_API: $uri");
 
       final response = await _client.post(uri,
           headers: headers,
           body: params != null ? jsonEncode(params) : null,
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
-        print("LOG_CHECK_API: ${response.body}");
+        log("LOG_CHECK_API: ${response.body}");
         return jsonDecode(response.body);
       } else {
         throw ApiException(
@@ -80,13 +81,14 @@ class BaseRemoteDataSrc {
       final response = await request.send();
       final responseStr = await response.stream.bytesToString();
 
-      print("LOG_CHECK_API: $uri");
-      print("LOG_CHECK_API: $path");
-      print("LOG_CHECK_API: $params");
-      print("LOG_CHECK_API: $headers");
+      log("LOG_CHECK_API: $uri");
+      log("LOG_CHECK_API: $path");
+      log("LOG_CHECK_API: $params");
+      log("LOG_CHECK_API: $headers");
+
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        print("LOG_CHECK_API: $responseStr");
+        log("LOG_CHECK_API: $responseStr");
         return jsonDecode(responseStr);
       } else {
         throw ApiException(
