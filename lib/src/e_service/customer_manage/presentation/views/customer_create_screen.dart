@@ -1,3 +1,4 @@
+import 'package:ecore/core/common/widgets/inputs/i_dialog.dart';
 import 'package:ecore/core/utils/localization_helper.dart';
 import 'package:ecore/src/e_service/common/solution_context_extensions.dart';
 import 'package:flutter/material.dart';
@@ -89,6 +90,9 @@ class _CustomerCreateScreenState extends State<CustomerCreateScreen> {
               }
               if(state is CustomerCreateSuccess){
                 Navigator.of(context).maybePop(state.customer);
+              }
+              if(state is CustomerCreateError) {
+               IDialog.showNotificationDialog(context, state.error);
               }
             },
             builder: (context, state) {

@@ -43,9 +43,9 @@ class _ISelectFieldState extends State<ISelectField> {
           contentPadding: const EdgeInsets.symmetric(horizontal: 16),
           label: Text(
             widget.hintText,
-            style: AppTextStyles.textStyleInterW400S16Black,
+            style: AppTextStyles.textStyleInterW400S14Black,
           ),
-          labelStyle: AppTextStyles.textStyleInterW400S16Black,
+          labelStyle: AppTextStyles.textStyleInterW400S14Black,
         ),
         hint: Text(
           widget.hintText,
@@ -56,7 +56,7 @@ class _ISelectFieldState extends State<ISelectField> {
                   value: item,
                   child: Text(
                     item,
-                    style: AppTextStyles.textStyleInterW400S16Black,
+                    style: AppTextStyles.textStyleInterW400S14Black,
                   ),
                 ))
             .toList(),

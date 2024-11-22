@@ -216,7 +216,7 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
                         FactoryCode: eS_RODetail.FactoryCode ?? '',
                         ErrorTypeCode: ErrorTypeCode,
                         ROStatus: eS_RODetail.ROStatus ?? '',
-                        AppointmentDTimeUTC: _meetTimeController.text,
+                        AppointmentDTimeUTC: _meetTimeController.text != '' ? _meetTimeController.text : null,
                         Remark: _noteController.text,
                       );
 

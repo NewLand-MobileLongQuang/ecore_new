@@ -36,7 +36,6 @@ Future<void> main() async {
   await init(AppEnviroments.development);
   //await init(AppEnviroments.production);
 
-
   await _backgroundService.initializeService(_callHelper);
 
 

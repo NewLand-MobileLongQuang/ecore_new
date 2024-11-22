@@ -14,6 +14,7 @@ import 'package:ecore/src/e_service/guarantee_manage/domain/entities/rt_es_warra
 import 'package:ecore/src/e_service/guarantee_manage/domain/usecases/create.dart';
 import 'package:ecore/src/e_service/guarantee_manage/domain/usecases/get_input_by_serial_no.dart';
 import 'package:ecore/src/e_service/customer_manage/domain/usecases/upload_file.dart';
+import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../../../core/modules/auth/domain/entities/session_info.dart';
@@ -60,9 +61,9 @@ class GuaranteeActivateCubit extends Cubit<GuaranteeActivateState> {
       );
       final install = ES_WarrantyInstall(
         name: ss.Name??'',
-        installDate: DateTime.now().toString(),
-        installTime: DateTime.now().toString(),
-        expiredDate: '',
+        installDate: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+        installTime: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+        expiredDate: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
         note: '',
       );
 
@@ -89,6 +90,7 @@ class GuaranteeActivateCubit extends Cubit<GuaranteeActivateState> {
       final scannerFold = scanner.fold((l) => null, (r) => r)!;
       if(scannerFold[0].ProductExpiry != ''){
         productExpiry = int.parse(scannerFold[0].ProductExpiry);
+        eS_WarrantyInstall.expiredDate = StringGenerate.addMonths(eS_WarrantyInstall.installTime, productExpiry);
       }
       emit(
         GuaranteeActivateLoaded(

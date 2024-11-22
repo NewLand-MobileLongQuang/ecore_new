@@ -50,7 +50,7 @@ class EServiceSvDataSource extends BaseRemoteDataSrc {
         );
     final res = ClientGateModel.fromMap(response['Data'] as DataMap);
     if(res.strErrCode!="0") {
-      throw ApiException(Code: res.strErrCode, Message: 'Error ${res.strErrCode}');
+      throw ApiException(Code: res.strErrCode, Message: 'Error: ${res.strErrCode}');
     }
     return res.objResult;
   }
