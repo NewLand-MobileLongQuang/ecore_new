@@ -58,6 +58,7 @@ class _GuaranteeActivateScreenState extends State<GuaranteeActivateScreen> {
     eS_WarrantyInstall
       ..installTime = _installTimeController.text
       ..note = _noteController.text;
+
   }
 
   final ss = SessionInfo.current();
@@ -106,7 +107,7 @@ class _GuaranteeActivateScreenState extends State<GuaranteeActivateScreen> {
                     CustomerAddress: eS_Customer.CustomerAddress,
                     CustomerEmail: eS_Customer.CustomerEmail,
                     AgentCode: email,
-                    InstallationDTimeUTC: Utils().strDateTime(eS_WarrantyInstall.installDate),
+                    InstallationDTimeUTC: eS_WarrantyInstall.installDate,
                     WarrantyDTimeUTC: eS_WarrantyInstall.installTime,
                     WarrantyExpDTimeUTC: eS_WarrantyInstall.expiredDate,
                     Remark: _noteController.text,
@@ -141,7 +142,7 @@ class _GuaranteeActivateScreenState extends State<GuaranteeActivateScreen> {
                 else {
                   _serialNoController.text = StringGenerate.extractQRCode(state.rT_ES_WarrrantyActivateByQR.SerialNo);
                 }
-                _installTimeController.text = Utils().strDateTime(state.eS_WarrantyInstall.installTime);
+                _installTimeController.text = state.eS_WarrantyInstall.installTime;
                 _noteController.text = state.eS_WarrantyInstall.note;
 
                 rT_ES_WarrrantyActivateByQR = state.rT_ES_WarrrantyActivateByQR;
@@ -203,7 +204,14 @@ class _GuaranteeActivateScreenState extends State<GuaranteeActivateScreen> {
                 value,
                 eS_Customer,
                 eS_WarrantyInstall,
-              );
+              ).then((value) {
+                context.read<GuaranteeActivateCubit>().chooseDateAndTime(
+                  rT_ES_WarrrantyActivateByQR,
+                  eS_Customer,
+                  eS_WarrantyInstall,
+                  _installTimeController.text,
+                );
+              });
             },
           ),
         ),
@@ -278,7 +286,7 @@ class _GuaranteeActivateScreenState extends State<GuaranteeActivateScreen> {
         trailingExpansionFalse: SvgPicture.asset(AppMediaRes.iconExpandDown),
         children: [
           _itemText(title: l(AppStrings.installNameTitle), value: eS_WarrantyInstall.name),
-          _itemText(title: l(AppStrings.installDateTitle), value: Utils().strDateTime(eS_WarrantyInstall.installDate)),
+          _itemText(title: l(AppStrings.installDateTitle), value: eS_WarrantyInstall.installDate),
           _itemTime(
               controller: _installTimeController,
               title: l(AppStrings.installTimeTitle),
@@ -289,6 +297,7 @@ class _GuaranteeActivateScreenState extends State<GuaranteeActivateScreen> {
                   eS_WarrantyInstall,
                   _installTimeController.text,
                 );
+
               }
           ),
           _itemText(title: l(AppStrings.expiredDateTitle), value: eS_WarrantyInstall.expiredDate),

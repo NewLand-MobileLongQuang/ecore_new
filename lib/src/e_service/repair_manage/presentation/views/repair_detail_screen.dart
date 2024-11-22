@@ -10,6 +10,7 @@ import 'package:ecore/core/utils/localization_helper.dart';
 import 'package:ecore/src/e_service/common/solution_context_extensions.dart';
 import 'package:ecore/src/e_service/common/utils.dart';
 import 'package:ecore/src/e_service/common/widgets/i_scroll_image.dart';
+import 'package:ecore/src/e_service/customer_manage/presentation/views/customer_detail_screen.dart';
 import 'package:ecore/src/e_service/repair_manage/data/model/es_ro_delete_model.dart';
 import 'package:ecore/src/e_service/repair_manage/domain/entities/es_ro_attach_file.dart';
 import 'package:ecore/src/e_service/repair_manage/domain/entities/es_ro_component.dart';
@@ -185,7 +186,34 @@ class _RepairDetailScreenState extends State<RepairDetailScreen> {
         initiallyExpanded: true,
         children: [
           _item(title: l(AppStrings.requestTimeTitle), value: eS_RODetail.ReceptionDTimeUTC),
-          _item(title: l(AppStrings.customerNameTitle), value: eS_RODetail.CustomerNameReal),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Expanded(child: _item(title: l(AppStrings.customerNameTitle), value: eS_RODetail.CustomerNameReal)),
+              const SizedBox(width: 8),
+              InkWell(
+                onTap: () {
+                  context.pushNamed(
+                    EServiceUtils.getFullRouteName(CustomerDetailScreen.routeName),
+                    arguments: eS_RODetail.CustomerCodeSys,
+                  );
+                },
+                child: Container(
+                  height: 48,
+                  width: 48,
+                  decoration: const BoxDecoration(
+                    color: AppColors.primaryColor,
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                  ),
+                  child: const Icon(
+                    FontAwesomeIcons.info,
+                    size: 24,
+                    color: AppColors.textWhiteColor,
+                  ),
+                ),
+              ),
+            ],
+          ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [

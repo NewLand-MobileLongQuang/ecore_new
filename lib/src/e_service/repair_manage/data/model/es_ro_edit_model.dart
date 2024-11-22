@@ -22,7 +22,7 @@ class ES_ROEditModel extends ES_ROEdit {
       FactoryCode: json['FactoryCode'] as String? ?? '',
       ErrorTypeCode: json['ErrorTypeCode'] as String? ?? '',
       ROStatus: json['ROStatus'] as String? ?? '',
-      AppointmentDTimeUTC: json['AppointmentDTimeUTC'] as String? ?? '',
+      AppointmentDTimeUTC: json['AppointmentDTimeUTC'] as String?,
       Remark: json['Remark'] as String? ?? '',
     );
   }

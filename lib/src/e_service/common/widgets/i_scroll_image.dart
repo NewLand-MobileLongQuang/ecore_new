@@ -164,6 +164,9 @@ class _IScrollImageState extends State<IScrollImage> {
                     size: 48,
                   ),
                 ),
+              ]
+              else ...[
+                const SizedBox(width: 48),
               ],
               Expanded(
                 child: Container(
@@ -233,9 +236,9 @@ class _IScrollImageState extends State<IScrollImage> {
                   ),
                 ),
               ),
-              if(_currentPage != (widget.listFile?.length ?? 0)
+              if(_currentPage != ((widget.listFile?.length ?? 0)
                   + (widget.listWarrantyAttachFile?.length ?? 0)
-                  + (widget.listROAttachFile?.length ?? 0) - 1)...[
+                  + (widget.listROAttachFile?.length ?? 0) - 1))...[
                 InkWell(
                   splashColor: AppColors.transparent,
                   highlightColor: AppColors.transparent,
@@ -251,6 +254,9 @@ class _IScrollImageState extends State<IScrollImage> {
                     size: 48,
                   ),
                 ),
+              ]
+              else ...[
+                const SizedBox(width: 48),
               ],
             ],
           ),

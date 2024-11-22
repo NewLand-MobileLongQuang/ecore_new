@@ -89,7 +89,7 @@ class _RepairHistorySearchScreenState extends State<RepairHistorySearchScreen> {
         Expanded(
           child: ITextField(
             controller: _serialNoController,
-            hintText: AppStrings.scanProductCode,
+            hintText: 'Nhập số Serial',
             textInputAction: TextInputAction.search,
             onSubmitted: (value) {
               value = _serialNoController.text;

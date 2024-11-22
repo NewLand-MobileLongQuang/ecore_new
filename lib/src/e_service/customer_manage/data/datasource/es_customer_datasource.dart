@@ -57,7 +57,7 @@ class ES_CustomerRemoteDataSource extends EServiceSvDataSource implements ES_Cus
 
       return res;
     }
-    on ApiException {
+    on ApiException catch (ex) {
       rethrow;
     }
     on Exception catch (ex) {

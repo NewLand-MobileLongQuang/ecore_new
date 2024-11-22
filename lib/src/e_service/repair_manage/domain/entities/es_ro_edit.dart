@@ -18,7 +18,7 @@ class ES_ROEdit extends Equatable{
   final String FactoryCode;
   final String ErrorTypeCode;
   final String ROStatus;
-  final String AppointmentDTimeUTC;
+  final String? AppointmentDTimeUTC;
   final String Remark;
 
   @override

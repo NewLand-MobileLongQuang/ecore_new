@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
+import 'package:ecore/core/errors/exceptions.dart';
 import 'package:ecore/src/e_service/customer_manage/data/models/rq_es_customer_model.dart';
 import 'package:ecore/src/e_service/customer_manage/domain/entities/es_customer.dart';
 import 'package:ecore/src/e_service/customer_manage/domain/entities/rq_es_customer.dart';
@@ -34,15 +36,17 @@ class CustomerCreateCubit extends Cubit<CustomerCreateState> {
   }
 
   Future<void> create(RQ_ES_CustomerModel customer) async {
+    final currentState = state as CustomerCreateLoaded;
     emit(CustomerCreateLoading());
-    try {
-      final params = jsonEncode(customer.toJson());
-      final result = await _createCustomerUseCase.call(CreateCustomerParams(strJson: params));
-      final resultFold = result.fold((l) => null, (r) => r)!;
-      emit(CustomerCreateSuccess(customer: resultFold));
+    final params = jsonEncode(customer.toJson());
+    final result = await _createCustomerUseCase.call(CreateCustomerParams(strJson: params));
+    if(result.isLeft()) {
+      final resultFold = Left(result.fold((l) => l, (r) => null)).value;
+      emit(CustomerCreateError(resultFold?.Message ?? ''));
+      emit(currentState);
+      return;
     }
-    catch (e) {
-      emit(CustomerCreateError(e.toString()));
-    }
+    final resultFold = result.fold((l) => null, (r) => r)!;
+    emit(CustomerCreateSuccess(customer: resultFold));
   }
 }
