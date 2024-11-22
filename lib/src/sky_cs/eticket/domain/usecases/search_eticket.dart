@@ -72,6 +72,41 @@ class SearchETicketSkyCSParams extends Equatable {
 
   @override
   List<Object> get props => [FlagOutOfDate, FlagNotRespondingSLA, DepartmentCode, AgentCode, TicketStatus, TicketPriority, TicketDeadlineFrom, TicketDeadlineTo, TicketType, CustomerCodeSys, TicketDetail, TicketName, TicketID, CreateDTimeUTCFrom, CreateDTimeUTCTo, LUDTimeUTCFrom, LUDTimeUTCTo, TicketSource, OrgID, CustomerCompany, Follower, TicketCustomType, Description, CreateBy, FlagTicketDeadlineDTime, TicketPhoneNo, FlagGetOtherOrgID, FlagGetOtherDepartment, Ft_PageIndex, Ft_PageSize];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'FlagOutOfDate': FlagOutOfDate,
+      'FlagNotRespondingSLA': FlagNotRespondingSLA,
+      'DepartmentCode': DepartmentCode,
+      'AgentCode': AgentCode,
+      'TicketStatus': TicketStatus,
+      'TicketPriority': TicketPriority,
+      'TicketDeadlineFrom': TicketDeadlineFrom,
+      'TicketDeadlineTo': TicketDeadlineTo,
+      'TicketType': TicketType,
+      'CustomerCodeSys': CustomerCodeSys,
+      'TicketDetail': TicketDetail,
+      'TicketName': TicketName,
+      'TicketID': TicketID,
+      'CreateDTimeUTCFrom': CreateDTimeUTCFrom,
+      'CreateDTimeUTCTo': CreateDTimeUTCTo,
+      'LUDTimeUTCFrom': LUDTimeUTCFrom,
+      'LUDTimeUTCTo': LUDTimeUTCTo,
+      'TicketSource': TicketSource,
+      'OrgID': OrgID,
+      'CustomerCompany': CustomerCompany,
+      'Follower': Follower,
+      'TicketCustomType': TicketCustomType,
+      'Description': Description,
+      'CreateBy': CreateBy,
+      'FlagTicketDeadlineDTime': FlagTicketDeadlineDTime,
+      'TicketPhoneNo': TicketPhoneNo,
+      'FlagGetOtherOrgID': FlagGetOtherOrgID,
+      'FlagGetOtherDepartment': FlagGetOtherDepartment,
+      'Ft_PageIndex': Ft_PageIndex,
+      'Ft_PageSize': Ft_PageSize,
+    };
+  }
 }
 
 class SearchETicketSkyCSUseCase extends UsecaseWithParams<List<SKY_TicketInfo>, SearchETicketSkyCSParams> {

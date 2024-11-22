@@ -13,6 +13,7 @@ import '../../domain/usecases/merge_eticket.dart';
 import '../../domain/usecases/search_eticket.dart';
 import '../../domain/usecases/search_ticketID_group.dart';
 import '../../domain/usecases/split_eticket.dart';
+import '../datasource/sky_eTicket_datasource.dart';
 import '../models/sky_eticket_get_lst_agent_model.dart';
 import '../models/sky_eticket_get_lst_customtype_model.dart';
 import '../models/sky_eticket_get_lst_department_model.dart';
@@ -29,7 +30,7 @@ import '../models/sky_ticketID_model.dart';
 
 class SKY_EticketRepositoryImpl implements SKY_EticketRepository {
   SKY_EticketRepositoryImpl(this._dataSource);
-  final SKY_eTicketDataSource _dataSource;
+  final SKY_EticketDataSource _dataSource;
 
   @override
   ResultFuture<String> createETicketSkyCS({required CreateETicketSkyCSParams params}) async {

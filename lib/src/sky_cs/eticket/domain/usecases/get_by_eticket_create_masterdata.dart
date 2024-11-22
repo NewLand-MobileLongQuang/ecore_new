@@ -103,6 +103,13 @@ class GetAgentbydepartParams extends Equatable {
     DepartmentCode,
     OrgID,
   ];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'DepartmentCode': DepartmentCode,
+      'OrgID': OrgID,
+    };
+  }
 }
 
 class GetdepartmentParams extends Equatable {
@@ -116,6 +123,12 @@ class GetdepartmentParams extends Equatable {
   List<Object?> get props => [
     OrgID,
   ];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'OrgID': OrgID,
+    };
+  }
 }
 
 class GetLstDepartmentUseCase extends UsecaseWithParams<SKY_ETicket_Lst_Department_Model, GetdepartmentParams> {

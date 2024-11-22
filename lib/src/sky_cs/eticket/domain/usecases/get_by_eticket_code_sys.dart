@@ -13,6 +13,13 @@ class GetByEticketCodeSysParams extends Equatable {
 
   @override
   List<Object?> get props => [ETScrTplCodeSys, OrgID];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'ETScrTplCodeSys': ETScrTplCodeSys,
+      'OrgID': OrgID,
+    };
+  }
 }
 
 class GetByEticketCodeSysUseCase extends UsecaseWithParams<SKY_ETicketTplCodesysModel, GetByEticketCodeSysParams> {

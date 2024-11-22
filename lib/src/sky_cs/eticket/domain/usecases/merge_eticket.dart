@@ -12,6 +12,12 @@ class MergeETicketSkyCSParams extends Equatable {
 
   @override
   List<Object?> get props => [strJson];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'strJson': strJson,
+    };
+  }
 }
   class MergeETicketSkyCSUseCase extends UsecaseWithParams<String, MergeETicketSkyCSParams> {
     MergeETicketSkyCSUseCase(this._repository);

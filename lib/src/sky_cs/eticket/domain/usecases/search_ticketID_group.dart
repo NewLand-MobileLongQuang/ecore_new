@@ -15,6 +15,11 @@ class SearchTicketIDGroupParams extends Equatable {
   List<Object?> get props => [
     TicketID,
   ];
+  Map<String, dynamic> toMap() {
+    return {
+      'TicketID': TicketID,
+    };
+  }
 }
 
 class SearchTicketIDGroupUseCase extends UsecaseWithParams<SKY_GetTicketID, SearchTicketIDGroupParams> {

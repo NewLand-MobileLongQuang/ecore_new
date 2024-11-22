@@ -12,6 +12,11 @@ class SplitETicketSkyCSParams extends Equatable {
 
   @override
   List<Object?> get props => [strJson];
+  Map<String, dynamic> toMap() {
+    return {
+      'strJson': strJson,
+    };
+  }
 }
 class SplitETicketSkyCSUseCase extends UsecaseWithParams<String, SplitETicketSkyCSParams> {
   SplitETicketSkyCSUseCase(this._repository);

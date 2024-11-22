@@ -12,6 +12,12 @@ class CreateETicketSkyCSParams extends Equatable {
 
   @override
   List<Object?> get props => [strJson];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'strJson': strJson,
+    };
+  }
 }
 
 class CreateETicketSkyCSUseCase extends UsecaseWithParams<String, CreateETicketSkyCSParams> {
