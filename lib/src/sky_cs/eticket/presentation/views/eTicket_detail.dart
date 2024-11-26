@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:idnstd/core/common/widgets/inputs/i_select_field.dart';
-import 'package:idnstd/core/res/colors.dart';
-import 'package:idnstd/core/res/strings.dart';
-import 'package:idnstd/core/res/test_style.dart';
-import 'package:idnstd/src/sky_cs/eTicket/domain/entities/sky_eticket_getticketID.dart';
-import 'package:idnstd/src/sky_cs/eTicket/presentation/widgets/Filedoc_tab.dart';
-import 'package:idnstd/src/sky_cs/eTicket/presentation/widgets/detail_tab.dart';
-import 'package:idnstd/src/sky_cs/eTicket/presentation/widgets/interact_tab.dart';
+import '../../../../../core/common/widgets/inputs/i_select_field.dart';
+import '../../../../../core/res/colors.dart';
+import '../../../../../core/res/strings.dart';
+import '../../../../../core/res/text_styles.dart';
+import '../../domain/entities/sky_eticket_getticketID.dart';
 import '../cubit/eTicket_detail_cubit/eTicket_detail_cubit.dart';
+import '../widgets/Filedoc_tab.dart';
 import '../widgets/NNNCreate_tab.dart';
+import '../widgets/detail_tab.dart';
+import '../widgets/interact_tab.dart';
 
 class eTicketDetailScreen extends StatefulWidget {
   final String eTID;
@@ -137,7 +137,6 @@ class _eTicketDetailScreenState extends State<eTicketDetailScreen> {
                         children: [
                           Expanded(
                               child: ISelectField(
-                                getLabel: (String value) => value,
                                 options: ETinfo.Lst_ET_TicketCustomer[0].Lst_CustomerPhoneNo,
                                 hintText: 'Phone',
                                 value: phoneController.text,

@@ -171,7 +171,7 @@ class _eTicketCreateScreenState extends State<eTicketCreateScreen> {
                         case 'MASTERDATA':
                           {switch (col.ColCode){
                             case 'TicketType':
-                              inputWidget = ISelectField<String>(
+                              inputWidget = ISelectField(
                                 options: lstTicketType
                                     .where((option) => option.TicketType != null) // Ensure non-null options
                                     .map((option) => option.CustomerTicketTypeName) // Default for null values
@@ -183,11 +183,10 @@ class _eTicketCreateScreenState extends State<eTicketCreateScreen> {
                                     controller.text = value ?? '';
                                   }
                                 },
-                                getLabel: (value) => value,
                               );
                               break;
                             case 'DepartmentCode':
-                              inputWidget = ISelectField<String>(
+                              inputWidget = ISelectField(
                                 options: lstderpartment
                                     .where((option) => option.DepartmentCode != null)
                                     .map((option) => option.DepartmentName)
@@ -200,11 +199,10 @@ class _eTicketCreateScreenState extends State<eTicketCreateScreen> {
                                   }
                                   //cubit.getListAgentOption(value!);
                                 },
-                                getLabel: (value) => value,
                               );
                               break;
                             case 'OrgID':
-                              inputWidget = ISelectField<String>(
+                              inputWidget = ISelectField(
                                 options: lstOrg
                                     .where((option) => option.OrgID != null)
                                     .map((option) => option.mnnt_NNTFullName)
@@ -215,12 +213,11 @@ class _eTicketCreateScreenState extends State<eTicketCreateScreen> {
                                   if (controller != null) {
                                     controller.text = value ?? '';
                                   }
-                                },
-                                getLabel: (value) => value,
+                                }
                               );
                               break;
                             case 'TicketPriority':
-                              inputWidget = ISelectField<String>(
+                              inputWidget = ISelectField(
                                 options: lstPriority
                                     .where((option) => option.TicketPriority != null) // Ensure non-null options
                                     .map((option) => option.CustomerTicketPriorityName) // Default for null values
@@ -232,11 +229,10 @@ class _eTicketCreateScreenState extends State<eTicketCreateScreen> {
                                     controller.text = value ?? '';
                                   }
                                 },
-                                getLabel: (value) => value,
                               );
                               break;
                             case 'TicketStatus':
-                              inputWidget = ISelectField<String>(
+                              inputWidget = ISelectField(
                                 options: lstStatus
                                     .where((option) => option.TicketStatus != null) // Ensure non-null options
                                     .map((option) => option.CustomerTicketStatusName) // Default for null values
@@ -247,28 +243,27 @@ class _eTicketCreateScreenState extends State<eTicketCreateScreen> {
                                   if (controller != null) {
                                     controller.text = value ?? '';
                                   }
-                                },
-                                getLabel: (value) => value,
+                                }
                               );
                               break;
                             case 'ReceptionChannel':
-                              inputWidget = ISelectField<String>(
+                              inputWidget = ISelectField(
                                 options: lstReceptionChannel
-                                    .where((option) => option.ReceptionChannel != null) // Ensure non-null options
-                                    .map((option) => option.CustomerReceptionChannelName) // Default for null values
+                                    .where((option) => option.ReceptionChannel != null)
+                                    .map((option) => option.CustomerReceptionChannelName)
                                     .toList(),
                                 value: controller?.text ?? '',
                                 hintText: col.ColCaption ?? '',
                                 onChanged: (value) {
                                   if (controller != null) {
-                                    controller.text = value ?? '';
+                                    controller.text = value;
                                   }
                                 },
-                                getLabel: (value) => value,
                               );
+
                               break;
                             case 'Tags':
-                              inputWidget = ISelectField<String>(
+                              inputWidget = ISelectField(
                                 options: lsttags
                                     .where((option) => option.TagID != null) // Ensure non-null options
                                     .map((option) => option.TagDesc) // Default for null values
@@ -280,11 +275,10 @@ class _eTicketCreateScreenState extends State<eTicketCreateScreen> {
                                     controller.text = value ?? '';
                                   }
                                 },
-                                getLabel: (value) => value,
                               );
                               break;
                               case 'TicketCustomType':
-                              inputWidget = ISelectField<String>(
+                              inputWidget = ISelectField(
                                 options: lstCustomType
                                     .where((option) => option.TicketCustomType != null) // Ensure non-null options
                                     .map((option) => option.CustomerTicketCustomTypeName) // Default for null values
@@ -296,11 +290,10 @@ class _eTicketCreateScreenState extends State<eTicketCreateScreen> {
                                     controller.text = value ?? '';
                                   }
                                 },
-                                getLabel: (value) => value,
                               );
                               break;
                               case 'TicketSource':
-                              inputWidget = ISelectField<String>(
+                              inputWidget = ISelectField(
                                 options: lstSource
                                     .where((option) => option.TicketSource != null)
                                     .map((option) => option.CustomerTicketSourceName)
@@ -312,13 +305,12 @@ class _eTicketCreateScreenState extends State<eTicketCreateScreen> {
                                     controller.text = value ?? '';
                                   }
                                 },
-                                getLabel: (value) => value,
                               );
                             case 'CusCode':
                               inputWidget = Row(
                                 children: [
                                   Expanded(
-                                    child: ISelectField<String>(
+                                    child: ISelectField(
                                       options: lstcus
                                           .where((option) => option.CustomerCode != null)
                                           .map((option) => option.CustomerName)

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:idnstd/core/res/colors.dart';
-import 'package:idnstd/core/res/test_style.dart';
 
+import '../../../../../core/res/text_styles.dart';
 import '../../domain/entities/sky_eticket_getticketID.dart';
 
 class CreateDetail extends StatelessWidget {

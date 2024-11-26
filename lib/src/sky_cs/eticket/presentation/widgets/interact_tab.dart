@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:idnstd/core/res/colors.dart';
-import 'package:idnstd/core/res/test_style.dart';
 
+import '../../../../../core/res/colors.dart';
+import '../../../../../core/res/text_styles.dart';
 import '../../../../../core/utils/string_generate.dart';
 import '../../domain/entities/sky_eticket_getticketID.dart';
 

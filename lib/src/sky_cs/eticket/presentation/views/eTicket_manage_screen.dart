@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:idnstd/core/res/colors.dart';
-import 'package:idnstd/core/res/strings.dart';
-import 'package:idnstd/core/res/test_style.dart';
-import 'package:idnstd/core/utils/string_generate.dart';
 
+import '../../../../../core/res/colors.dart';
 import '../../../../../core/res/media_res.dart';
+import '../../../../../core/res/strings.dart';
+import '../../../../../core/res/text_styles.dart';
+import '../../../../../core/utils/string_generate.dart';
 import '../../domain/entities/sky_eticket_info.dart';
 import '../cubit/eTicket_manage_cubit/eTicket_manage_cubit.dart';
 
