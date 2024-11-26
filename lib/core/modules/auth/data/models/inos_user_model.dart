@@ -5,7 +5,7 @@ import '../../domain/entities/inos_user.dart';
 
 
 class UserModel extends InosUser {
-  const UserModel({
+  UserModel({
     required super.Id,
     required super.Email,
     required super.Name,

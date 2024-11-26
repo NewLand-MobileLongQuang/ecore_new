@@ -29,7 +29,7 @@ import '../../modules/auth/domain/repos/entry_center_gate_repo.dart';
 import '../../modules/auth/domain/repos/local_session_repo.dart';
 import '../../modules/auth/domain/usecases/get_by_networks.dart';
 import '../../modules/auth/domain/usecases/get_current_user.dart';
-import '../../modules/auth/domain/usecases/get_for_current_user.dart';
+import '../../../src/e_service/guarantee_manage/domain/usecases/get_for_current_user.dart';
 import '../../modules/auth/domain/usecases/get_my_networks.dart';
 import '../../modules/auth/domain/usecases/get_sso_data.dart';
 import '../../modules/auth/domain/usecases/load_session_info.dart';

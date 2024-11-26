@@ -22,14 +22,4 @@ class EntryCenterGateRepoImpl implements EntryCenterGateRepo {
       return Left(ApiFailure.fromException(e));
     }
   }
-
-  @override
-  ResultFuture<DataUser> getForCurrentUser() async {
-    try {
-      final result = await _dataSource.getForCurrentUser();
-      return Right(result);
-    } on ApiException catch (e) {
-      return Left(ApiFailure.fromException(e));
-    }
-  }
 }

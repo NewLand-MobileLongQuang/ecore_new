@@ -7,7 +7,6 @@ import '../../domain/entities/sys_user.dart';
 
 abstract class EntryCenterGateDataSource {
   Future<List<ObjectResult>> getByNetworks({required String solutionCode, required String networkId});
-  Future<DataUser> getForCurrentUser();
 }
 
 class EntryCenterGateRemoteDataSource extends EntryCenterGateSvDataSource implements EntryCenterGateDataSource{
@@ -23,22 +22,6 @@ class EntryCenterGateRemoteDataSource extends EntryCenterGateSvDataSource implem
       final response = await post(
           path: '/EntryCtMstNetwork/GetByNetwork',
           params: params,
-      );
-      return response.objResult!;
-    }
-    on ApiException {
-      rethrow;
-    }
-    on Exception catch (ex) {
-      throw ApiException(Message: ex.toString());
-    }
-  }
-
-  @override
-  Future<DataUser> getForCurrentUser() async {
-    try {
-      final response = await postUser(
-        path: '/api/GetForCurrentUser',
       );
       return response.objResult!;
     }

@@ -6,7 +6,7 @@ import '../../../../core/modules/auth/domain/entities/org.dart';
 import '../../../../core/modules/auth/domain/entities/session_info.dart';
 import '../../../../core/modules/auth/domain/usecases/get_by_networks.dart';
 import '../../../../core/modules/auth/domain/usecases/get_current_user.dart';
-import '../../../../core/modules/auth/domain/usecases/get_for_current_user.dart';
+import '../../../e_service/guarantee_manage/domain/usecases/get_for_current_user.dart';
 import '../../../../core/modules/auth/domain/usecases/get_my_networks.dart';
 import '../../../../core/modules/auth/domain/usecases/get_sso_data.dart';
 import '../../../../core/modules/auth/domain/usecases/login.dart';

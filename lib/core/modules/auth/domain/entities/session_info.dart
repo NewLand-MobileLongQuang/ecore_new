@@ -20,7 +20,7 @@ class SessionInfo extends Equatable {
   SessionInfo._empty()
       : auth =
             const AuthResult(AccessToken: '', RefreshToken: '', ExpiredIn: 0),
-        user = const InosUser(
+        user = InosUser(
             Id: 0, Email: '', Name: '', Phone: '', Language: '', Avatar: ''),
         org = null,
         cacheData = null,

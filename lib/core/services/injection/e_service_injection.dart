@@ -100,7 +100,8 @@ Future<void> eServiceManageInit() async {
     ..registerFactory(() => GuaranteeActivateCubit(
         getInputBySerialNoUseCase: sl(),
         createWarrantyUseCase: sl(),
-        uploadFileUseCase: sl()))
+        uploadFileUseCase: sl(),
+        getForCurrentUser: sl()))
 
   // Quan li sua chua
     ..registerFactory(() => RepairManageCubit(

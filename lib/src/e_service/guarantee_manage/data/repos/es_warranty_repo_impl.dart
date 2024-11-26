@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:ecore/core/errors/exceptions.dart';
 import 'package:ecore/core/errors/failure.dart';
+import 'package:ecore/core/modules/auth/data/models/data_user_model.dart';
 import 'package:ecore/core/utils/typedef.dart';
 import 'package:ecore/src/e_service/guarantee_manage/data/datasource/es_warranty_datasource.dart';
 import 'package:ecore/src/e_service/guarantee_manage/data/models/rt_es_warranty_activate_by_qr_model.dart';
@@ -75,6 +76,16 @@ class ES_WarrantyRepositoryImpl implements ES_WarrantyRepository {
   ResultFuture<RT_ES_WarrantyDetailModel> create({required CreateWarrantyParams params}) async {
     try {
       final result = await _dataSource.create(params: params);
+      return Right(result);
+    } on ApiException catch (e) {
+      return Left(ApiFailure.fromException(e));
+    }
+  }
+
+  @override
+  ResultFuture<SysUserModel> getForCurrentUser() async {
+    try {
+      final result = await _dataSource.getForCurrentUser();
       return Right(result);
     } on ApiException catch (e) {
       return Left(ApiFailure.fromException(e));

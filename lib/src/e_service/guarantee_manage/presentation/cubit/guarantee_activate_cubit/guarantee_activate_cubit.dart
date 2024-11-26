@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:ecore/src/e_service/guarantee_manage/domain/usecases/get_for_current_user.dart';
 
 import 'package:ecore/core/utils/string_generate.dart';
 import 'package:ecore/src/e_service/customer_manage/domain/entities/es_customer.dart';
@@ -25,15 +26,18 @@ class GuaranteeActivateCubit extends Cubit<GuaranteeActivateState> {
     required GetInputBySerialNoUseCase getInputBySerialNoUseCase,
     required CreateWarrantyUseCase createWarrantyUseCase,
     required UploadFileUseCase uploadFileUseCase,
+    required GetForCurrentUser getForCurrentUser,
   }): _getInputBySerialNoUseCase = getInputBySerialNoUseCase,
         _createWarrantyUseCase = createWarrantyUseCase,
         _uploadFileUseCase = uploadFileUseCase,
+        _getForCurrentUser = getForCurrentUser,
         super(GuaranteeActivateInitial());
 
   final GetInputBySerialNoUseCase _getInputBySerialNoUseCase;
   final CreateWarrantyUseCase _createWarrantyUseCase;
   final UploadFileUseCase _uploadFileUseCase;
   final ss = SessionInfo.current().user;
+  final GetForCurrentUser _getForCurrentUser;
   int productExpiry = 0;
 
   Future<void> init () async {
@@ -59,8 +63,12 @@ class GuaranteeActivateCubit extends Cubit<GuaranteeActivateState> {
           CustomerAddress: '',
           CustomerAvatarPath: '',
       );
+
+      final cUser = await _getForCurrentUser();
+      final cUserFold = cUser.fold((l) => null, (r) => r);
+
       final install = ES_WarrantyInstall(
-        name: ss.Name??'',
+        name: cUserFold?.UserName??'',
         installDate: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
         installTime: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
         expiredDate: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),

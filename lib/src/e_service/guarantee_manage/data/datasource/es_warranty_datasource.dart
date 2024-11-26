@@ -2,6 +2,8 @@
 import 'dart:convert';
 
 import 'package:ecore/core/errors/exceptions.dart';
+import 'package:ecore/core/modules/auth/data/models/data_user_model.dart';
+import 'package:ecore/core/modules/auth/domain/entities/sys_user.dart';
 import 'package:ecore/src/e_service/guarantee_manage/data/models/es_warranty_detail_model.dart';
 import 'package:ecore/src/e_service/guarantee_manage/data/models/rt_es_warranty_detail_model.dart';
 import 'package:ecore/src/e_service/guarantee_manage/domain/usecases/create.dart';
@@ -22,6 +24,7 @@ abstract class ES_WarrantyDataSource {
   Future<void> delete({required DeleteWarrantyParams params});
   Future<List<RT_ES_WarrrantyActivateByQRModel>> getInputBySerialNo({required GetInputBySerialNoParams params});
   Future<RT_ES_WarrantyDetailModel> create({required CreateWarrantyParams params});
+  Future<SysUserModel> getForCurrentUser();
 }
 
 class ES_WarrantyRemoteDataSource extends EServiceSvDataSource implements ES_WarrantyDataSource {
@@ -142,6 +145,24 @@ class ES_WarrantyRemoteDataSource extends EServiceSvDataSource implements ES_War
 
       RT_ES_WarrantyDetailModel res = RT_ES_WarrantyDetailModel.fromMap(data);
 
+      return res;
+    }
+    on ApiException {
+      rethrow;
+    }
+    on Exception catch (ex) {
+      throw ApiException(Message: ex.toString());
+    }
+  }
+
+  @override
+  Future<SysUserModel> getForCurrentUser() async {
+    try {
+      final response = await post(
+        path: 'api/GetForCurrentUser',
+      );
+      final data = response['Data']['Sys_User'] as dynamic;
+      SysUserModel res = SysUserModel.fromMap(data);
       return res;
     }
     on ApiException {

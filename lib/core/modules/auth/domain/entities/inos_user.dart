@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class InosUser extends Equatable {
 
-  const InosUser({
+  InosUser({
     required this.Id,
     required this.Email,
     required this.Name,
@@ -14,7 +14,7 @@ class InosUser extends Equatable {
 
   final int Id;
   final String? Email;
-  final String? Name;
+  String? Name;
   final String? Phone;
   final String? Language;
   final String? Avatar;

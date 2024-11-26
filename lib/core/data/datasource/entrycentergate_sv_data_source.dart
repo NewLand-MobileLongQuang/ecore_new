@@ -41,33 +41,4 @@ class EntryCenterGateSvDataSource extends BaseRemoteDataSrc {
       return res;
     }
   }
-
-  Future<ClientgateModel<DataUserModel>> postUser({required String path, DataMap? params}) async {
-    final ss = SessionInfo.current();
-    final response = await doPostWithHeaders(
-        path: path,
-        headers: {
-          'Authorization': 'Bearer ${ss.auth.AccessToken}',
-          'NetworkId': ss.org?.Id.toString() ?? '',
-          'OrgId': ss.org?.Id.toString() ?? '',
-          'GwUserCode': AppConfig.current().entryCenterGateGwUserCode,
-          'GwPassword': AppConfig.current().entryCenterGateGwPassword,
-          'UtcOffset': ss.user.TimeZone.toString(),
-          'AppAgent': AppConfig.current().appAgent,
-          'AppLanguageCode': ss.user.Language??'vi',
-          'AppVerCode': AppConfig.current().appVerCode,
-          'Tid': StringGenerate.getCurrentTime(),
-          'AppTId': StringGenerate.getCurrentTime(),
-        },
-        params: params);
-    if(response == null){
-      throw const ApiException(Message: 'No data');
-    } else {
-      final res = ClientgateModel.fromJsonClient(
-        response['Data'] as DataMap,
-        (data) => DataUserModel.fromMap(data as DataMap),
-      );
-      return res;
-    }
-  }
 }

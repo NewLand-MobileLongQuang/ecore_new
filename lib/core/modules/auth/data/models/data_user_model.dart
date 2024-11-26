@@ -1,3 +1,5 @@
+
+
 import '../../../../utils/typedef.dart';
 import '../../domain/entities/sys_user.dart';
 
@@ -7,19 +9,13 @@ class DataUserModel extends DataUser {
     required super.listAccess,
   });
 
-  factory DataUserModel.fromMap(DataMap map) {
+  factory DataUserModel.fromMap(Map<String, dynamic> json) {
     return DataUserModel(
-      sysUser: map['sysUser'] != null
-        ? map['sysUser'] as SysUserModel
-            : SysUserModel(
-        UserCode: '',NetworkID: '', UserName: '', UserPassword: '',
-        UserPasswordNew: '', PhoneNo: '', MST: '', OrganCode: '', DepartmentCode: '',
-        Position: '', VerificationCode: '', Avatar: '', UUID: '', FlagDLAdmin: '',
-        FlagSysAdmin: '', FlagNNTAdmin: '', OrgID: '', CustomerCodeSys: '', CustomerCode: '', CustomerName: '',
-        FlagActive: '', LogLUDTimeUTC: '', ACId: '', ACAvatar: '', ACEmail: '', ACLanguage: '', ACName: '',
-        ACPhone: '', ACTimeZone: '', AuthorizeDTimeStart: '', mo_OrganCode: '', mo_OrganName: '', mdept_DepartmentCode: '',
-        mdept_DepartmentName: '', mnnt_DealerType: '', ctitctg_CustomerGrpCode: '', DepartmentName: '', GroupName: '', UserType: ''),
-      listAccess: map['listAccess'] != null ? map['listAccess'] as List<SysAccessModel> : <SysAccessModel>[]);
+      sysUser: json['Sys_User'] as SysUserModel,
+      listAccess: json['Lst_Sys_Access'] != null
+          ? (json['Lst_Sys_Access'] as List).map((item) => SysAccessModel.fromMap(item as Map<String, dynamic>)).toList()
+          : <SysAccessModel>[]
+    );
   }
 }
 
@@ -67,47 +63,47 @@ class SysUserModel extends SysUser {
   });
 
 
-  factory SysUserModel.fromMap(DataMap map) {
+  factory SysUserModel.fromMap(Map<String, dynamic> json) {
     return SysUserModel(
-      UserCode: map['UserCode'] as String? ?? '',
-      NetworkID: map['NetworkID'] as String? ?? '',
-      UserName: map['UserName'] as String? ?? '',
-      UserPassword: map['UserPassword'] as String? ?? '',
-      UserPasswordNew: map['UserPasswordNew'] as String? ?? '',
-      PhoneNo: map['PhoneNo'] as String? ?? '',
-      MST: map['MST'] as String? ?? '',
-      OrganCode: map['OrganCode'] as String? ?? '',
-      DepartmentCode: map['DepartmentCode'] as String? ?? '',
-      Position: map['Position'] as String? ?? '',
-      VerificationCode: map['VerificationCode'] as String? ?? '',
-      Avatar: map['Avatar'] as String? ?? '',
-      UUID: map['UUID'] as String? ?? '',
-      FlagDLAdmin: map['FlagDLAdmin'] as String? ?? '',
-      FlagSysAdmin: map['FlagSysAdmin'] as String? ?? '',
-      FlagNNTAdmin: map['FlagNNTAdmin'] as String? ?? '',
-      OrgID: map['OrgID'] as String? ?? '',
-      CustomerCodeSys: map['CustomerCodeSys'] as String? ?? '',
-      CustomerCode: map['CustomerCode'] as String? ?? '',
-      CustomerName: map['CustomerName'] as String? ?? '',
-      FlagActive: map['FlagActive'] as String? ?? '',
-      LogLUDTimeUTC: map['LogLUDTimeUTC'] as String? ?? '',
-      ACId: map['ACId'] as String? ?? '',
-      ACAvatar: map['ACAvatar'] as String? ?? '',
-      ACEmail: map['ACEmail'] as String? ?? '',
-      ACLanguage: map['ACLanguage'] as String? ?? '',
-      ACName: map['ACName'] as String? ?? '',
-      ACPhone: map['ACPhone'] as String? ?? '',
-      ACTimeZone: map['ACTimeZone'] as String? ?? '',
-      AuthorizeDTimeStart: map['AuthorizeDTimeStart'] as String? ?? '',
-      mo_OrganCode: map['mo_OrganCode'] as String? ?? '',
-      mo_OrganName: map['mo_OrganName'] as String? ?? '',
-      mdept_DepartmentCode: map['mdept_DepartmentCode'] as String? ?? '',
-      mdept_DepartmentName: map['mdept_DepartmentName'] as String? ?? '',
-      mnnt_DealerType: map['mnnt_DealerType'] as String? ?? '',
-      ctitctg_CustomerGrpCode: map['ctitctg_CustomerGrpCode'] as String? ?? '',
-      DepartmentName: map['DepartmentName'] as String? ?? '',
-      GroupName: map['GroupName'] as String? ?? '',
-      UserType: map['UserType'] as String? ?? '',
+      UserCode: json['UserCode'] as String? ?? '',
+      NetworkID: json['NetworkID'] as String? ?? '',
+      UserName: json['UserName'] as String? ?? '',
+      UserPassword: json['UserPassword'] as String? ?? '',
+      UserPasswordNew: json['UserPasswordNew'] as String? ?? '',
+      PhoneNo: json['PhoneNo'] as String? ?? '',
+      MST: json['MST'] as String? ?? '',
+      OrganCode: json['OrganCode'] as String? ?? '',
+      DepartmentCode: json['DepartmentCode'] as String? ?? '',
+      Position: json['Position'] as String? ?? '',
+      VerificationCode: json['VerificationCode'] as String? ?? '',
+      Avatar: json['Avatar'] as String? ?? '',
+      UUID: json['UUID'] as String? ?? '',
+      FlagDLAdmin: json['FlagDLAdmin'] as String? ?? '',
+      FlagSysAdmin: json['FlagSysAdmin'] as String? ?? '',
+      FlagNNTAdmin: json['FlagNNTAdmin'] as String? ?? '',
+      OrgID: json['OrgID'] as String? ?? '',
+      CustomerCodeSys: json['CustomerCodeSys'] as String? ?? '',
+      CustomerCode: json['CustomerCode'] as String? ?? '',
+      CustomerName: json['CustomerName'] as String? ?? '',
+      FlagActive: json['FlagActive'] as String? ?? '',
+      LogLUDTimeUTC: json['LogLUDTimeUTC'] as String? ?? '',
+      ACId: json['ACId'] as String? ?? '',
+      ACAvatar: json['ACAvatar'] as String? ?? '',
+      ACEmail: json['ACEmail'] as String? ?? '',
+      ACLanguage: json['ACLanguage'] as String? ?? '',
+      ACName: json['ACName'] as String? ?? '',
+      ACPhone: json['ACPhone'] as String? ?? '',
+      ACTimeZone: json['ACTimeZone'] as String? ?? '',
+      AuthorizeDTimeStart: json['AuthorizeDTimeStart'] as String? ?? '',
+      mo_OrganCode: json['mo_OrganCode'] as String? ?? '',
+      mo_OrganName: json['mo_OrganName'] as String? ?? '',
+      mdept_DepartmentCode: json['mdept_DepartmentCode'] as String? ?? '',
+      mdept_DepartmentName: json['mdept_DepartmentName'] as String? ?? '',
+      mnnt_DealerType: json['mnnt_DealerType'] as String? ?? '',
+      ctitctg_CustomerGrpCode: json['ctitctg_CustomerGrpCode'] as String? ?? '',
+      DepartmentName: json['DepartmentName'] as String? ?? '',
+      GroupName: json['GroupName'] as String? ?? '',
+      UserType: json['UserType'] as String? ?? '',
     );
   }
 }
