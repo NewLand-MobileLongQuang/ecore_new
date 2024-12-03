@@ -151,15 +151,41 @@ class RepairEditCubit extends Cubit<RepairEditState> {
       );
       final params = jsonEncode(objRQ_ES_ROEditModel.toJson());
       final appointmentTime = DateTime.parse(es_ROEdit.ReceptionDTimeUTC ?? '');
-      final now = DateTime.now();
-      final day5Now = DateTime(now.year, now.month, 5);
-      if(appointmentTime.isBefore(day5Now) && (appointmentTime.year < now.year || appointmentTime.month < now.month)){
-        emit(RepairEditError(message: 'Qua thời gian sửa chữa'));
-        emit(currentState);
-      }
-      else {
-        await _updateROUseCase.call(UpdateROParams(strJson: params));
-        emit(RepairEditSuccess());
+
+      DateTime now = DateTime.now();
+      int currentMonth = now.month;
+      int currentYear = now.year;
+
+      // Tạo ngày mùng 5 tháng hiện tại
+      DateTime fifthOfCurrentMonth = DateTime(currentYear, currentMonth, 5);
+
+      // Kiểm tra nếu ngày hiện tại > mùng 5
+      if (now.isAfter(fifthOfCurrentMonth)) {
+        // Được phép sửa nếu A >= tháng B-1
+        if (appointmentTime.year == currentYear && appointmentTime.month >= currentMonth - 1 ||
+            appointmentTime.year == currentYear - 1 && appointmentTime.month == 12 && currentMonth == 1
+        ) {
+          emit(RepairEditError(message: 'Qua thời gian sửa chữa'));
+          emit(currentState);
+          print("Được phép sửa");
+        } else {
+          emit(RepairEditError(message: 'Qua thời gian sửa chữa'));
+          emit(currentState);
+          print("Không được phép");
+        }
+      } else {
+        // Được phép sửa nếu A >= tháng B-2
+        if (appointmentTime.year == currentYear && appointmentTime.month >= currentMonth - 2 ||
+            appointmentTime.year == currentYear - 1 && appointmentTime.month >= 12 - (2 - currentMonth)
+        ) {
+          emit(RepairEditError(message: 'Qua thời gian sửa chữa'));
+          emit(currentState);
+          print("Được phép sửa");
+        } else {
+          emit(RepairEditError(message: 'Qua thời gian sửa chữa'));
+          emit(currentState);
+          print("Không được phép");
+        }
       }
     } catch (e) {
       emit(RepairEditError(message: e.toString()));

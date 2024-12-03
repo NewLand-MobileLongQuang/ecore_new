@@ -151,6 +151,11 @@ class _GuaranteeActivateScreenState extends State<GuaranteeActivateScreen> {
               }
               if(state is GuaranteeActivateSuccess) {
                 Navigator.of(context).maybePop(true);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Tạo thành công!'),
+                  ),
+                );
               }
             },
             builder: (context, state) {

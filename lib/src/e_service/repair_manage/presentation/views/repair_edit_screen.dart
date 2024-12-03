@@ -125,7 +125,7 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
             }
           }
 
-          _listSysController.text = state.Lst_ES_ROComponent.map((e) => '${e.ComponentCode} - ${e.ComponentName}').join('\n');
+          _listSysController.text = state.Lst_ES_ROComponent.map((e) => '${e.ComponentName} - ${e.ComponentCode}').join('\n');
 
           _meetTimeController.text = state.eS_RODetail.AppointmentDTimeUTC;
           _finishTimeController.text = state.eS_RODetail.FinishDTimeUser;
@@ -552,12 +552,12 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
             Lst_ES_ROComponent.clear();
             for (var i = 0; i < listComponent.length; i++) {
               final component = listComponent[i].split(' - ');
-              if(component[1] != '') {
+              if(component[0] != '') {
                 Lst_ES_ROComponent.add(
                   ES_ROComponentModel(
                     ProductGrpCode: ProductGrpCode,
-                    ComponentCode: component[0],
-                    ComponentName: component[1],
+                    ComponentCode: component[1],
+                    ComponentName: component[0],
                   ),
                 );
               }
