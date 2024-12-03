@@ -5,14 +5,14 @@ class ES_ROEdit extends Equatable{
 
   final String OrgID;
   final String RONo;
-  final String ReceptionDTimeUTC;
+  final String? ReceptionDTimeUTC;
   final String CustomerCodeSys;
   final String CustomerName;
   final String CustomerPhoneNo;
   final String CustomerAddress;
   final String AgentCode;
   final String RODesc;
-  final String Deadline;
+  final String? Deadline;
   final String ProductCode;
   final String SerialNo;
   final String FactoryCode;

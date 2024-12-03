@@ -11,8 +11,6 @@ import 'package:ecore/src/e_service/repair_manage/domain/entities/es_ro_attach_f
 import '../../../../core/res/text_styles.dart';
 import '../../index/presentation/views/image_page_view.dart';
 
-
-
 class IScrollImage extends StatefulWidget {
   const IScrollImage({
     this.listFile,
@@ -38,9 +36,14 @@ class IScrollImage extends StatefulWidget {
 }
 
 class _IScrollImageState extends State<IScrollImage> {
-  final ScrollController _scrollController = ScrollController();
   final PageController _pageController = PageController();
-  var _currentPage = 0;
+  var _currentPage;
+
+  @override
+  void initState() {
+    _currentPage = 0;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,13 +57,10 @@ class _IScrollImageState extends State<IScrollImage> {
               style: AppTextStyles.textStyleInterW600S16Black,
             ),
             Expanded(child: Container()),
-            if(widget.flagGallery != null)...[
+            if (widget.flagGallery != null) ...[
               InkWell(
                 onTap: () async {
-                  if((widget.listWarrantyAttachFile?.length ?? 0)
-                      + (widget.listFile?.length ?? 0)
-                      + (widget.listROAttachFile?.length ?? 0) < 3
-                  ){
+                  if ((widget.listWarrantyAttachFile?.length ?? 0) + (widget.listFile?.length ?? 0) + (widget.listROAttachFile?.length ?? 0) < 3) {
                     final imageFromGallery = await ICamera.pickImageFromGallery();
                     setState(() {
                       widget.listFile?.add(imageFromGallery);
@@ -71,11 +71,7 @@ class _IScrollImageState extends State<IScrollImage> {
                   height: 36,
                   width: 48,
                   decoration: BoxDecoration(
-                    color: (widget.listWarrantyAttachFile?.length ?? 0)
-                        + (widget.listFile?.length ?? 0)
-                        + (widget.listROAttachFile?.length ?? 0) == 3
-                        ? AppColors.buttonGreyColor
-                        : AppColors.primaryColor,
+                    color: (widget.listWarrantyAttachFile?.length ?? 0) + (widget.listFile?.length ?? 0) + (widget.listROAttachFile?.length ?? 0) == 3 ? AppColors.buttonGreyColor : AppColors.primaryColor,
                     borderRadius: const BorderRadius.all(Radius.circular(5)),
                   ),
                   child: const Icon(
@@ -86,16 +82,13 @@ class _IScrollImageState extends State<IScrollImage> {
                 ),
               ),
             ],
-            if(widget.flagCamera != null && widget.flagCamera != null)...[
+            if (widget.flagCamera != null && widget.flagCamera != null) ...[
               const SizedBox(width: 4),
             ],
-            if(widget.flagCamera != null)...[
+            if (widget.flagCamera != null) ...[
               InkWell(
                 onTap: () async {
-                  if((widget.listWarrantyAttachFile?.length ?? 0)
-                      + (widget.listFile?.length ?? 0)
-                      + (widget.listROAttachFile?.length ?? 0) < 3
-                  ){
+                  if ((widget.listWarrantyAttachFile?.length ?? 0) + (widget.listFile?.length ?? 0) + (widget.listROAttachFile?.length ?? 0) < 3) {
                     final imageFromCamera = await ICamera.pickImageFromCamera();
                     setState(() {
                       widget.listFile?.add(imageFromCamera);
@@ -106,11 +99,7 @@ class _IScrollImageState extends State<IScrollImage> {
                   height: 36,
                   width: 48,
                   decoration: BoxDecoration(
-                    color: (widget.listFile?.length ?? 0)
-                        + (widget.listWarrantyAttachFile?.length ?? 0)
-                        + (widget.listROAttachFile?.length ?? 0) == 3
-                        ? AppColors.buttonGreyColor
-                        : AppColors.primaryColor,
+                    color: (widget.listFile?.length ?? 0) + (widget.listWarrantyAttachFile?.length ?? 0) + (widget.listROAttachFile?.length ?? 0) == 3 ? AppColors.buttonGreyColor : AppColors.primaryColor,
                     borderRadius: const BorderRadius.all(Radius.circular(5)),
                   ),
                   child: const Icon(
@@ -124,11 +113,7 @@ class _IScrollImageState extends State<IScrollImage> {
           ],
         ),
         const SizedBox(height: 16),
-        if(
-            (widget.listFile?.length ?? 0)
-              + (widget.listWarrantyAttachFile?.length ?? 0)
-              + (widget.listROAttachFile?.length ?? 0) == 0)
-        ...[
+        if ((widget.listFile?.length ?? 0) + (widget.listWarrantyAttachFile?.length ?? 0) + (widget.listROAttachFile?.length ?? 0) == 0) ...[
           Container(
             height: 200,
             decoration: BoxDecoration(
@@ -142,32 +127,11 @@ class _IScrollImageState extends State<IScrollImage> {
               ),
             ),
           ),
-        ]
-        else ...[
+        ] else ...[
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              if(_currentPage != 0)...[
-                InkWell(
-                  splashColor: AppColors.transparent,
-                  highlightColor: AppColors.transparent,
-                  onTap: () {
-                    setState(() {
-                      _currentPage--;
-                      _pageController.previousPage(duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
-                    });
-                  },
-                  child: const Icon(
-                    Icons.chevron_left,
-                    color: AppColors.textBlackColor,
-                    size: 48,
-                  ),
-                ),
-              ]
-              else ...[
-                const SizedBox(width: 48),
-              ],
               Expanded(
                 child: Container(
                   height: 300,
@@ -179,85 +143,108 @@ class _IScrollImageState extends State<IScrollImage> {
                       scrollDirection: Axis.horizontal,
                       controller: _pageController,
                       onPageChanged: (int page) {
-                        setState(() {
-                          _currentPage = page;
-                        });
+                        print('TrungLQ: $page');
+                        _currentPage = page;
+                        setState(() {});
                       },
-                      itemCount: (widget.listFile?.length ?? 0)
-                          + (widget.listWarrantyAttachFile?.length ?? 0)
-                          + (widget.listROAttachFile?.length ?? 0),
+                      itemCount: (widget.listFile?.length ?? 0) + (widget.listWarrantyAttachFile?.length ?? 0) + (widget.listROAttachFile?.length ?? 0),
                       itemBuilder: (BuildContext context, int index) {
-                        return InkWell(
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return ImagePageView(
-                                  Lst_ES_WarrantyAttachFile: widget.listWarrantyAttachFile ?? const [],
-                                  Lst_ES_ROAttachFile: widget.listROAttachFile ?? const [],
-                                  listFile: widget.listFile ?? const [],
-                                  flagDelete: widget.flagDelete ?? false,
-                                  index: index,
-                                );
-                              },
-                            ).then((value) {
-                              if (value == true) {
-                                setState(() {
-                                  if(widget.listWarrantyAttachFile != null){
-                                    if(index < (widget.listWarrantyAttachFile!.length)){
-                                      widget.listWarrantyAttachFile!.removeAt(index);
+                        return Row(
+                          children: [
+                            if (_currentPage > 0) ...[
+                              InkWell(
+                                splashColor: AppColors.transparent,
+                                highlightColor: AppColors.transparent,
+                                onTap: () {
+                                  _currentPage--;
+                                  print('TrungLQT: $_currentPage');
+                                  _pageController.previousPage(
+                                    duration: const Duration(milliseconds: 500),
+                                    curve: Curves.easeInOut,
+                                  );
+                                  setState(() {});
+                                },
+                                child: const Icon(
+                                  Icons.chevron_left,
+                                  color: AppColors.textBlackColor,
+                                  size: 48,
+                                ),
+                              ),
+                            ] else ...[
+                              const SizedBox(width: 48),
+                            ],
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return ImagePageView(
+                                        Lst_ES_WarrantyAttachFile: widget.listWarrantyAttachFile ?? const [],
+                                        Lst_ES_ROAttachFile: widget.listROAttachFile ?? const [],
+                                        listFile: widget.listFile ?? const [],
+                                        flagDelete: widget.flagDelete ?? false,
+                                        index: index,
+                                      );
+                                    },
+                                  ).then((value) {
+                                    if (value == true) {
+                                      setState(() {
+                                        if (widget.listWarrantyAttachFile != null) {
+                                          if (index < (widget.listWarrantyAttachFile!.length)) {
+                                            widget.listWarrantyAttachFile!.removeAt(index);
+                                          } else {
+                                            widget.listFile!.removeAt(index - (widget.listWarrantyAttachFile!.length));
+                                          }
+                                        } else {
+                                          if (index < (widget.listROAttachFile!.length)) {
+                                            widget.listROAttachFile!.removeAt(index);
+                                          } else {
+                                            widget.listFile!.removeAt(index - (widget.listROAttachFile!.length));
+                                          }
+                                        }
+                                      });
                                     }
-                                    else {
-                                      widget.listFile!.removeAt(index - (widget.listWarrantyAttachFile!.length));
-                                    }
-                                  }
-                                  else {
-                                    if(index < (widget.listROAttachFile!.length)){
-                                      widget.listROAttachFile!.removeAt(index);
-                                    }
-                                    else {
-                                      widget.listFile!.removeAt(index - (widget.listROAttachFile!.length));
-                                    }
-                                  }
-                                });
-                              }
-                            });
-                          },
-                          child: widget.listWarrantyAttachFile != null
-                              ? index < widget.listWarrantyAttachFile!.length
-                              ? Image.network(widget.listWarrantyAttachFile?[index].FilePath ?? '')
-                              : Image.file(widget.listFile?[index - widget.listWarrantyAttachFile!.length] ?? File(''))
-                              : index < widget.listROAttachFile!.length
-                              ? Image.network(widget.listROAttachFile?[index].FilePath ?? '')
-                              : Image.file(widget.listFile?[index - widget.listROAttachFile!.length] ?? File('')),
+                                  });
+                                },
+                                child: widget.listWarrantyAttachFile != null
+                                    ? index < widget.listWarrantyAttachFile!.length
+                                        ? Image.network(widget.listWarrantyAttachFile?[index].FilePath ?? '')
+                                        : Image.file(widget.listFile?[index - widget.listWarrantyAttachFile!.length] ?? File(''))
+                                    : index < widget.listROAttachFile!.length
+                                        ? Image.network(widget.listROAttachFile?[index].FilePath ?? '')
+                                        : Image.file(widget.listFile?[index - widget.listROAttachFile!.length] ?? File('')),
+                              ),
+                            ),
+                            if (_currentPage != ((widget.listFile?.length ?? 0) + (widget.listWarrantyAttachFile?.length ?? 0) + (widget.listROAttachFile?.length ?? 0) - 1)) ...[
+                              InkWell(
+                                splashColor: AppColors.transparent,
+                                highlightColor: AppColors.transparent,
+                                onTap: () {
+                                  _currentPage++;
+                                  print('TrungLQT: $_currentPage');
+                                  _pageController.nextPage(
+                                    duration: const Duration(milliseconds: 500),
+                                    curve: Curves.easeInOut,
+                                  );
+                                  setState(() {});
+                                },
+                                child: const Icon(
+                                  Icons.chevron_right,
+                                  color: AppColors.textBlackColor,
+                                  size: 48,
+                                ),
+                              ),
+                            ] else ...[
+                              const SizedBox(width: 48),
+                            ],
+                          ],
                         );
                       },
                     ),
                   ),
                 ),
               ),
-              if(_currentPage != ((widget.listFile?.length ?? 0)
-                  + (widget.listWarrantyAttachFile?.length ?? 0)
-                  + (widget.listROAttachFile?.length ?? 0) - 1))...[
-                InkWell(
-                  splashColor: AppColors.transparent,
-                  highlightColor: AppColors.transparent,
-                  onTap: () {
-                    setState(() {
-                      _currentPage++;
-                      _pageController.nextPage(duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
-                    });
-                  },
-                  child: const Icon(
-                    Icons.chevron_right,
-                    color: AppColors.textBlackColor,
-                    size: 48,
-                  ),
-                ),
-              ]
-              else ...[
-                const SizedBox(width: 48),
-              ],
             ],
           ),
         ],

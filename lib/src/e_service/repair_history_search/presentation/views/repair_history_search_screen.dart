@@ -153,8 +153,8 @@ class _RepairHistorySearchScreenState extends State<RepairHistorySearchScreen> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
-              color: AppColors.textBlueColor.withOpacity(0.1),
-              border: Border.all(color: AppColors.textBlueColor),
+              color: AppColors.textYellowColor.withOpacity(0.1),
+              border: Border.all(color: AppColors.textYellowColor),
               borderRadius: BorderRadius.circular(5),
             ),
             child: Column(
@@ -215,8 +215,8 @@ class _RepairHistorySearchScreenState extends State<RepairHistorySearchScreen> {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: AppColors.textYellowColor.withOpacity(0.1),
-        border: Border.all(color: AppColors.textYellowColor),
+        color: AppColors.textBlueColor.withOpacity(0.1),
+        border: Border.all(color: AppColors.textBlueColor),
         borderRadius: BorderRadius.circular(5),
       ),
       child: Column(
@@ -261,7 +261,7 @@ class _RepairHistorySearchScreenState extends State<RepairHistorySearchScreen> {
           ),
           const SizedBox(height: 8),
           Text(
-            'Cụm linh kiện lỗi: ${roDetail.ListComponentCode ?? ''}',
+            'Cụm linh kiện lỗi: ${roDetail.ListComponentCode?.split(' ').join(' ; ') ?? ''}',
             style: AppTextStyles.textStyleInterW400S14Grey,
             maxLines: 3,
           ),

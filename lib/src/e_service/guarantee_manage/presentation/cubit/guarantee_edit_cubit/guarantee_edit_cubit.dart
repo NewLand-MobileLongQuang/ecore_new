@@ -80,9 +80,7 @@ class GuaranteeEditCubit extends Cubit<GuaranteeEditState> {
           es_WarrantyEdit: es_WarrantyEdit,
           Lst_ES_WarrantyAttachFile: lst_ES_WarrantyAttachFile
       );
-      print("LOG_CHECK_API: $objRQ_ES_WarrantyEditModel");
       final params = jsonEncode(objRQ_ES_WarrantyEditModel.toJson());
-      print("LOG_CHECK_API: $params");
       await _updateWarrantyUseCase.call(UpdateWarrantyParams(strJson: params));
       emit(GuaranteeEditSuccess());
     } catch (e) {

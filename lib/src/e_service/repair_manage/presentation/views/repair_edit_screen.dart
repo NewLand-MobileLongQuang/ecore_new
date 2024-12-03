@@ -113,7 +113,7 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
           _serialController.text = eS_RODetail.SerialNo;
 
           for(var i = 0; i < listErrorType.length; i++) {
-            if(listErrorType[i].contains(eS_RODetail.ErrorTypeCode)) {
+            if(listErrorType[i].contains(eS_RODetail.ErrorTypeCode) && eS_RODetail.ErrorTypeCode.isNotEmpty) {
               _errorTypeController.text = listErrorType[i];
               break;
             }
@@ -203,14 +203,14 @@ class _RepairEditScreenState extends State<RepairEditScreen> {
                       final es_ROEdit = ES_ROEditModel(
                         OrgID: eS_RODetail.OrgID ?? '',
                         RONo: eS_RODetail.RONo ?? '',
-                        ReceptionDTimeUTC: eS_RODetail.ReceptionDTimeUTC ?? '',
+                        ReceptionDTimeUTC: eS_RODetail.ReceptionDTimeUTC.isNotEmpty ? eS_RODetail.ReceptionDTimeUTC : null,
                         CustomerCodeSys: eS_RODetail.CustomerCodeSys ?? '',
                         CustomerName: eS_RODetail.CustomerName ?? '',
                         CustomerPhoneNo: eS_RODetail.CustomerPhoneNo ?? '',
                         CustomerAddress: eS_RODetail.CustomerAddress ?? '',
                         AgentCode: eS_RODetail.AgentCode ?? '',
                         RODesc: eS_RODetail.RODesc ?? '',
-                        Deadline: eS_RODetail.Deadline ?? '',
+                        Deadline: eS_RODetail.Deadline.isNotEmpty ? eS_RODetail.Deadline : null,
                         ProductCode: ProductCode,
                         SerialNo: eS_RODetail.SerialNo,
                         FactoryCode: eS_RODetail.FactoryCode ?? '',

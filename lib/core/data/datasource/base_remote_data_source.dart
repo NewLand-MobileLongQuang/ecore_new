@@ -37,17 +37,17 @@ class BaseRemoteDataSrc {
       }
 
       final uri = UriForm.convertUri(url: baseUrl, path: path);
-      log("LOG_CHECK_API: $path");
-      log("LOG_CHECK_API: $params");
-      log("LOG_CHECK_API: $headers");
-      log("LOG_CHECK_API: $uri");
+      print("LOG_CHECK_API path: $path");
+      print("LOG_CHECK_API params: $params");
+      print("LOG_CHECK_API header: $headers");
+      print("LOG_CHECK_API uri: $uri");
 
       final response = await _client.post(uri,
           headers: headers,
           body: params != null ? jsonEncode(params) : null,
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
-        log("LOG_CHECK_API: ${response.body}");
+        print("LOG_CHECK_API: ${response.body}");
         return jsonDecode(response.body);
       } else {
         throw ApiException(
@@ -81,14 +81,13 @@ class BaseRemoteDataSrc {
       final response = await request.send();
       final responseStr = await response.stream.bytesToString();
 
-      log("LOG_CHECK_API: $uri");
-      log("LOG_CHECK_API: $path");
-      log("LOG_CHECK_API: $params");
-      log("LOG_CHECK_API: $headers");
+      print("LOG_CHECK_API uri: $uri");
+      print("LOG_CHECK_API path: $path");
+      print("LOG_CHECK_API params: $params");
+      print("LOG_CHECK_API header: $headers");
 
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        log("LOG_CHECK_API: $responseStr");
         return jsonDecode(responseStr);
       } else {
         throw ApiException(

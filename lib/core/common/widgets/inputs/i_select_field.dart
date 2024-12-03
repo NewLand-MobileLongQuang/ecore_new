@@ -27,6 +27,7 @@ class _ISelectFieldState extends State<ISelectField> {
 
   @override
   Widget build(BuildContext context) {
+    print('TrungLQ: ${widget.value}');
     return DropdownButtonHideUnderline(
       child: DropdownButtonFormField2<String>(
         isExpanded: true,
@@ -49,7 +50,7 @@ class _ISelectFieldState extends State<ISelectField> {
         ),
         hint: Text(
           widget.hintText,
-          style: AppTextStyles.textStyleInterW400S16Grey,
+          style: AppTextStyles.textStyleInterW400S14Grey,
         ),
         items: widget.options
             .map((item) => DropdownMenuItem(
@@ -60,7 +61,7 @@ class _ISelectFieldState extends State<ISelectField> {
                   ),
                 ))
             .toList(),
-        value: widget.value,
+        value: widget.value.isNotEmpty ? widget.value : null,
         onChanged: (value) {
           widget.onChanged(value!);
         },
@@ -116,67 +117,3 @@ class _ISelectFieldState extends State<ISelectField> {
     );
   }
 }
-
-// class ISelectField<T> extends StatelessWidget {
-//   const ISelectField({
-//     this.hintText = '',
-//     required this.options,
-//     required this.getLabel,
-//     required this.value,
-//     required this.onChanged,
-//     super.key,
-//   });
-//
-//   final String hintText;
-//   final List<T> options;
-//   final T value;
-//   final String Function(T) getLabel;
-//   final void Function(T?) onChanged;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     final uniqueOptions = options.toSet().toList();
-//
-//     return FormField<T>(
-//       builder: (FormFieldState<T> state) {
-//         return DropdownButtonFormField<T>(
-//
-//           alignment: Alignment.bottomCenter,
-//           items: uniqueOptions.map((T option) {
-//             return DropdownMenuItem<T>(
-//               value: option,
-//               child: IntrinsicWidth(
-//                   child: Text(
-//                   getLabel(option),
-//                   style: AppTextStyles.textStyleInterW400S14Black,
-//                   overflow: TextOverflow.ellipsis,
-//                 ),
-//               ),
-//             );
-//           }).toList(),
-//           menuMaxHeight: 300,
-//           onChanged: onChanged,
-//           value: uniqueOptions.contains(value) ? value : options.first,
-//           decoration: InputDecoration(
-//             border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
-//             enabledBorder: OutlineInputBorder(
-//               borderRadius: BorderRadius.circular(5),
-//               borderSide: const BorderSide(color: Colors.grey),
-//             ),
-//             focusedBorder: OutlineInputBorder(
-//               borderRadius: BorderRadius.circular(5),
-//               borderSide: const BorderSide(color: AppColors.primaryColor),
-//             ),
-//             filled: false,
-//             contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-//             floatingLabelBehavior: FloatingLabelBehavior.always,
-//             labelText: hintText,
-//             hintText: hintText,
-//             labelStyle: AppTextStyles.textStyleInterW400S16Black,
-//             hintStyle: AppTextStyles.textStyleInterW400S16Black,
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }
