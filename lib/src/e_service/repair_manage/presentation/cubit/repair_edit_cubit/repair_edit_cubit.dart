@@ -165,8 +165,8 @@ class RepairEditCubit extends Cubit<RepairEditState> {
         if (appointmentTime.year == currentYear && appointmentTime.month >= currentMonth - 1 ||
             appointmentTime.year == currentYear - 1 && appointmentTime.month == 12 && currentMonth == 1
         ) {
-          emit(RepairEditError(message: 'Qua thời gian sửa chữa'));
-          emit(currentState);
+          await _updateROUseCase.call(UpdateROParams(strJson: params));
+          emit(RepairEditSuccess());
           print("Được phép sửa");
         } else {
           emit(RepairEditError(message: 'Qua thời gian sửa chữa'));
@@ -178,8 +178,8 @@ class RepairEditCubit extends Cubit<RepairEditState> {
         if (appointmentTime.year == currentYear && appointmentTime.month >= currentMonth - 2 ||
             appointmentTime.year == currentYear - 1 && appointmentTime.month >= 12 - (2 - currentMonth)
         ) {
-          emit(RepairEditError(message: 'Qua thời gian sửa chữa'));
-          emit(currentState);
+          await _updateROUseCase.call(UpdateROParams(strJson: params));
+          emit(RepairEditSuccess());
           print("Được phép sửa");
         } else {
           emit(RepairEditError(message: 'Qua thời gian sửa chữa'));

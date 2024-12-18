@@ -209,14 +209,7 @@ class _GuaranteeActivateScreenState extends State<GuaranteeActivateScreen> {
                 value,
                 eS_Customer,
                 eS_WarrantyInstall,
-              ).then((value) {
-                context.read<GuaranteeActivateCubit>().chooseDateAndTime(
-                  rT_ES_WarrrantyActivateByQR,
-                  eS_Customer,
-                  eS_WarrantyInstall,
-                  _installTimeController.text,
-                );
-              });
+              );
             },
           ),
         ),
@@ -296,6 +289,7 @@ class _GuaranteeActivateScreenState extends State<GuaranteeActivateScreen> {
               controller: _installTimeController,
               title: l(AppStrings.installTimeTitle),
               onTap: () {
+                saveLocalInformation();
                 context.read<GuaranteeActivateCubit>().chooseDateAndTime(
                   rT_ES_WarrrantyActivateByQR,
                   eS_Customer,

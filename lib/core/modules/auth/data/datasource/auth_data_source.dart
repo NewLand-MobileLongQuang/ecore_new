@@ -101,12 +101,6 @@ class AuthRemoteDataSrc extends MobileSvDataSrc implements AuthDataSrc {
   Future<List<Org>> getMyNetworks() async {
 
 
-    // final list= [
-    //   Org(Id: 3183313000, ParentId: 0, Name: 'Idocnet', ShortName: 'idocNet'),
-    //   Org(Id: 7206207001, ParentId: 0, Name: 'Cty CP Quốc tế Long Quang', ShortName: 'Cty CP Quốc tế Long Quang'),
-    // ];
-    // return list;
-
     try {
       final response =
       await post(path: 'accountapi/getMyNetworks', params: null);

@@ -47,7 +47,7 @@ class BaseRemoteDataSrc {
           body: params != null ? jsonEncode(params) : null,
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
-        print("LOG_CHECK_API: ${response.body}");
+        print("LOG_CHECK_API response: ${response.body}");
         return jsonDecode(response.body);
       } else {
         throw ApiException(
@@ -80,11 +80,6 @@ class BaseRemoteDataSrc {
       );
       final response = await request.send();
       final responseStr = await response.stream.bytesToString();
-
-      print("LOG_CHECK_API uri: $uri");
-      print("LOG_CHECK_API path: $path");
-      print("LOG_CHECK_API params: $params");
-      print("LOG_CHECK_API header: $headers");
 
 
       if (response.statusCode == 200 || response.statusCode == 201) {
