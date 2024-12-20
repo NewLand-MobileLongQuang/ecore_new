@@ -1,33 +1,57 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../../../../../core/common/widgets/loading_view.dart';
 import '../../../../../core/res/colors.dart';
 import '../../../../../core/res/media_res.dart';
 import '../../../../../core/res/strings.dart';
 import '../../../../../core/res/text_styles.dart';
+import '../../../../../core/services/injection/injection_container.dart';
+import '../../../../../core/utils/localization_helper.dart';
 import '../../../../../core/utils/string_generate.dart';
 import '../../domain/entities/sky_eticket_info.dart';
 import '../cubit/eTicket_manage_cubit/eTicket_manage_cubit.dart';
 
-class eTicketManageScreen extends StatefulWidget {
-  const eTicketManageScreen({super.key});
+class ETicketManageScreen extends StatelessWidget {
+  const ETicketManageScreen({super.key});
 
-  static const routeName = '/eTicket';
+  static const routeName = 'eTicket';
 
   @override
-  State<eTicketManageScreen> createState() => _eTicketManageScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => eTicketManageCubit(searchEticketSkyCSUseCase: sl(), mergeEticketSkyCSUseCase: sl())..init(),
+      child: const ETicketSkyCSManageUIScreen(),
+    );
+  }
 }
 
-class _eTicketManageScreenState extends State<eTicketManageScreen> {
+class ETicketSkyCSManageUIScreen extends StatefulWidget {
+  const ETicketSkyCSManageUIScreen({super.key});
+
+  @override
+  State<ETicketSkyCSManageUIScreen> createState() => _ETicketManageScreenState();
+}
+
+class _ETicketManageScreenState extends State<ETicketSkyCSManageUIScreen> {
   final TextEditingController _searchController = TextEditingController();
   bool isEmptyData = true;
   final List<String> _selectedItems = []; // Track selected item IDs
   bool _isSelectionMode = false; // Flag to indicate selection mode
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
-    context.read<eTicketManageCubit>().init();
+    log("CHJECK DSFSDFDSFSDFSDF");
+    _scrollController.addListener(() {
+      print("CHECK ETICKET MANAGe2213131");
+      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent) {
+        context.read<eTicketManageCubit>().loadMore();
+      }
+    });
+    //context.read<eTicketManageCubit>().init();
     super.initState();
   }
 
@@ -73,6 +97,25 @@ class _eTicketManageScreenState extends State<eTicketManageScreen> {
             _buttonAdd(),
           ],
         ),
+      ),
+    );
+  }
+
+  AppBar _buildAppBar(LocalizationHelper l) {
+    return AppBar(
+      backgroundColor: AppColors.primaryColor,
+      leading: IconButton(
+        icon: const Icon(
+          FontAwesomeIcons.chevronLeft,
+          color: AppColors.textWhiteColor,
+          size: 20,
+        ),
+        onPressed: () => Navigator.of(context).maybePop(),
+      ),
+      title: Text(
+        l(AppStrings.manageCustomer),
+        style: AppTextStyles.textStyleInterW500S18White,
+        maxLines: 2,
       ),
     );
   }
@@ -150,10 +193,27 @@ class _eTicketManageScreenState extends State<eTicketManageScreen> {
   Widget _listGuarantee(BuildContext context) {
     return Expanded(
       child: BlocConsumer<eTicketManageCubit, eTicketManageState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is eTicketCreateStateSuccess) {
+            context.read<eTicketManageCubit>().init();
+          }
+          if (state is eTicketManageError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: AppColors.textRedColor,
+              ),
+            );
+          }
+        },
         builder: (context, state) {
           if (state is eTicketManageLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              color: AppColors.textWhiteColor,
+              child: const LoadingView(),
+            );
           }
           if (state is eTicketManageLoaded) {
             return ListView.separated(
@@ -165,7 +225,9 @@ class _eTicketManageScreenState extends State<eTicketManageScreen> {
               },
             );
           }
-          return const SizedBox();
+          return const Center(
+            child: Text('No ETickets found'),
+          );
         },
       ),
     );

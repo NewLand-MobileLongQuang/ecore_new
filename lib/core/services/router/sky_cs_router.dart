@@ -12,6 +12,8 @@ import 'package:ecore/src/sky_cs/index/presentation/view/sky_cs_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../src/sky_cs/eticket/presentation/views/eTicket_manage_screen.dart';
+
 PageRouteBuilder? handleCaseSkyCS(RouteSettings settings) {
   if (!settings.name!.startsWith(SkyCsUtils.kSolutionCode)) return null;
 
@@ -39,6 +41,8 @@ PageRouteBuilder? handleCaseSkyCS(RouteSettings settings) {
         ),
         settings: settings,
       );
+    case ETicketManageScreen.routeName:
+      return pageBuilder((p0) => const ETicketManageScreen(), settings: settings);
     default:
       return null;
   }

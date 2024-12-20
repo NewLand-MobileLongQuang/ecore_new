@@ -37,11 +37,11 @@ class SignalRService
     if (_hubConnection == null) {
 
       String url='https://${AppConfig.current().realtimeServiceBaseUrl}/hub/global/?networkId=4053894000&orgId=4053894000&userId=3276623000&userEmail=tuyenba@idocnet.com';
-      final httpConnectionOptions = new HttpConnectionOptions(
+      final httpConnectionOptions = HttpConnectionOptions(
           httpClient: WebSupportingHttpClient(null,
               httpClientCreateCallback: _httpClientCreateCallback),
         accessTokenFactory: () async =>
-        await getAccessToken()
+        getAccessToken()
 
           );
 

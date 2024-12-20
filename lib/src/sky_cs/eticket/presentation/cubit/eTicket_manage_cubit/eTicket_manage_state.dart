@@ -15,6 +15,10 @@ eTicketManageLoaded({
 });
 }
 
+final class ETicketSkyCSManageLoadingMore extends eTicketManageLoaded {
+  ETicketSkyCSManageLoadingMore({required super.listeticket});
+}
+
 final class eTicketManageError extends eTicketManageState {
 final String message;
 eTicketManageError(this.message);

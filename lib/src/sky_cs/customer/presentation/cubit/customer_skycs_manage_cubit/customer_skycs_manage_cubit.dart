@@ -26,6 +26,7 @@ class CustomerSkyCSManageCubit extends Cubit<CustomerSkyCSManageState> {
   static const int pageSize = 10;
 
   Future<void> init() async {
+    print("CHEKCKDSC");
     emit(CustomerSkyCSManageLoading());
     try {
       final listCustomer = await _searchCustomerSkyCSUseCase(

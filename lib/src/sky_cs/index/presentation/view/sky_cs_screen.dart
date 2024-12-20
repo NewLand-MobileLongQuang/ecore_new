@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../eticket/presentation/views/eTicket_manage_screen.dart';
+
 class SkyCsScreen extends StatefulWidget {
   const SkyCsScreen({super.key});
 
@@ -65,6 +67,12 @@ class _SkyCsScreenState extends State<SkyCsScreen> {
                         if (index == 4) {
                           context.pushNamed(SkyCsUtils.getFullRouteName(CustomerSkyCSManageScreen.routeName));
                         }
+                        else
+                          {
+                            if(index == 2){
+                              context.pushNamed(SkyCsUtils.getFullRouteName(ETicketManageScreen.routeName));
+                            }
+                          }
                       },
                       child: Card(
                         color: AppColors.textWhiteColor,

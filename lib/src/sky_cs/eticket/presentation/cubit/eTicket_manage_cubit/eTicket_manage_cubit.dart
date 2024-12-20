@@ -22,9 +22,15 @@ class eTicketManageCubit extends Cubit<eTicketManageState> {
   final SearchETicketSkyCSUseCase _searchEticketSkyCSUseCase;
   final MergeETicketSkyCSUseCase _mergeEticketSkyCSUseCase;
 
+  int pageIndex = 0;
+  bool loadingMore = true;
+  static const int pageSize = 10;
+
   Future<void> init() async {
+    print("CHECK ETICKET MANAGe");
     emit(eTicketManageLoading());
     try {
+      print("CHECK ETICKET MANAGe");
       final listeticket = await _searchEticketSkyCSUseCase(
         SearchETicketSkyCSParams(
          FlagOutOfDate:'',
@@ -68,6 +74,57 @@ class eTicketManageCubit extends Cubit<eTicketManageState> {
     } catch (e) {
       emit(eTicketManageError(e.toString()));
 
+    }
+  }
+
+  Future<void> loadMore() async {
+    try{
+      if(state is eTicketManageLoaded && state is! ETicketSkyCSManageLoadingMore && loadingMore) {
+        emit(ETicketSkyCSManageLoadingMore(listeticket: (state as eTicketManageLoaded).listeticket));
+        final listLoadMore = await _searchEticketSkyCSUseCase(
+          SearchETicketSkyCSParams(
+            FlagOutOfDate:'',
+            FlagNotRespondingSLA:'',
+            DepartmentCode:'',
+            AgentCode:'',
+            TicketStatus:'',
+            TicketPriority:'',
+            TicketDeadlineFrom:'',
+            TicketDeadlineTo:'',
+            TicketType:'',
+            TicketDetail:'',
+            TicketName:'',
+            TicketID:'',
+            CreateDTimeUTCFrom:'',
+            CreateDTimeUTCTo:'',
+            LUDTimeUTCFrom:'',
+            LUDTimeUTCTo:'',
+            TicketSource:'',
+            OrgID:'',
+            CustomerCompany:'',
+            Follower:'',
+            TicketCustomType:'',
+            Description:'',
+            CreateBy:'',
+            FlagTicketDeadlineDTime:'',
+            TicketPhoneNo:'',
+            FlagGetOtherOrgID:'1',
+            FlagGetOtherDepartment:'1',
+            Ft_PageIndex: '0',
+            Ft_PageSize: '200',
+            CustomerCodeSys: '',
+          ),
+        );
+        final listLoadMoreFold = listLoadMore.fold((l) => l, (r) => r) as List<SKY_TicketInfo>;
+        emit(eTicketManageLoaded(
+          listeticket: (state as eTicketManageLoaded).listeticket + listLoadMoreFold,
+        ));
+        loadingMore = (listLoadMore.fold((l) => null, (r) => r)?.length ?? 0) == pageSize;
+        ++pageIndex;
+      }
+    }
+    catch(e) {
+      emit(eTicketManageError(e.toString()));
     }
   }
 
