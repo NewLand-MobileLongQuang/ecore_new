@@ -99,6 +99,8 @@ class eTicketCreateCubit extends Cubit<eTicketCreateState> {
 
   Map<String, TextEditingController> get controllers => _controllers;
   List<bool> isCheckNull = [];
+  int pageIndex = 0;
+  static const int pageSize = 10;
 
   Future<void> init() async {
     emit(eTicketCreateLoading());
@@ -154,16 +156,16 @@ class eTicketCreateCubit extends Cubit<eTicketCreateState> {
       final resultETDepartmentFold = getdepartment.fold((l) => null, (r) => r)!;
       ticketdepartment = resultETDepartmentFold.Lst_Mst_Department[0].DepartmentCode;
 
-      final listcustomer = await _searchCustomerSkyCSUseCase(
+      final listCustomer = await _searchCustomerSkyCSUseCase(
         SearchCustomerSkyCSParams(
-          ScrTplCodeSys: '',
+          ScrTplCodeSys: 'SCRTPLCODESYS.2023',
           KeyWord: '',
           FlagActive: '1',
-          Ft_PageIndex: '0',
-          Ft_PageSize: '1000',
+          Ft_PageIndex: pageIndex.toString(),
+          Ft_PageSize: pageSize.toString(),
         ),
       );
-      final listcusFold = listcustomer.fold((l) => l, (r) => r) as List<SKY_CustomerInfo>;
+      final listcusFold = listCustomer.fold((l) => l, (r) => r) as List<SKY_CustomerInfo>;
       customerCode = listcusFold[0].CustomerCode;
 
       gettemtpl.Lst_ET_MetaColGroupSpec.add(
