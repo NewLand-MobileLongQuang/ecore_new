@@ -1,17 +1,13 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:bloc/bloc.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 import '../../../../customer/domain/entities/sky_customer_info.dart';
 import '../../../../customer/domain/usecases/search_customer.dart';
 import '../../../data/models/rq_sky_eticket_follower_model.dart';
 import '../../../data/models/rq_sky_eticket_lst_model.dart';
 import '../../../data/models/rq_sky_eticket_model.dart';
 import '../../../data/models/sky_eticket_column_model.dart';
-import '../../../data/models/sky_eticket_get_agent_model.dart';
-import '../../../data/models/sky_eticket_get_lst_agent_model.dart';
 import '../../../data/models/sky_eticket_get_lst_customtype_model.dart';
 import '../../../data/models/sky_eticket_get_lst_department_model.dart';
 import '../../../data/models/sky_eticket_get_lst_mst_Org_model.dart';

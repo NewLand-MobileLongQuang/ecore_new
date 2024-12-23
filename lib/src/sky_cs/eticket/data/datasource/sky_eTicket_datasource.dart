@@ -54,7 +54,10 @@ class SKY_eTicketRemoteDataSource extends SkyCsSvDataSource implements SKY_Etick
         path: '/ETMetaScreenTemplate/GetByETScrTplCodeSys',
         params: paramsInit,
       );
-      return response.objResult!;
+      final data = response['Data'] as dynamic;
+      SKY_ETicketTplCodesysModel res = SKY_ETicketTplCodesysModel.fromJson(data);
+
+      return res;
     }
     on ApiException {
       rethrow;
@@ -70,7 +73,11 @@ class SKY_eTicketRemoteDataSource extends SkyCsSvDataSource implements SKY_Etick
       final response = await post(
         path: '/ETMetaScreenTemplate/GetAllActive',
       );
-      return response.objResult!;
+      final dataList = response['Data'] as dynamic;
+      List<SKY_EticketGroupModel> res =
+      dataList.map<SKY_EticketGroupModel>((i) => SKY_EticketGroupModel.fromJson(i)).toList();
+
+      return res;
     }
     on ApiException {
       rethrow;
@@ -89,7 +96,10 @@ class SKY_eTicketRemoteDataSource extends SkyCsSvDataSource implements SKY_Etick
         path: 'ETTicket/GetByTicketID',
         params: paramsInit,
       );
-      return response.objResult!;
+      final data = response['Data'] as dynamic;
+      SKY_ETicketGetIDModel res = SKY_ETicketGetIDModel.fromJson(data);
+
+      return res;
     }
     on ApiException {
       rethrow;
@@ -127,6 +137,7 @@ class SKY_eTicketRemoteDataSource extends SkyCsSvDataSource implements SKY_Etick
         path: 'ETTicket/Search',
         params: paramsInit,
       );
+
       final dataList = response['DataList'] as List;
       List<SKY_ETicketInfo_Model> res =
       dataList.map<SKY_ETicketInfo_Model>((i) => SKY_ETicketInfo_Model.fromJson(i)).toList();
@@ -147,7 +158,9 @@ class SKY_eTicketRemoteDataSource extends SkyCsSvDataSource implements SKY_Etick
       final response = await post(
         path: '/MstTag/GetAllActive',
       );
-      return response.objResult!;
+      final data = response['Data'] as dynamic;
+      SKY_ETicketMstTagsModel res = SKY_ETicketMstTagsModel.fromJson(data);
+      return res;
     }
     on ApiException {
       rethrow;
@@ -163,7 +176,9 @@ class SKY_eTicketRemoteDataSource extends SkyCsSvDataSource implements SKY_Etick
       final response = await post(
         path: '/MstOrg/GetAllActive',
       );
-      return response.objResult!;
+      final data = response['Data'] as dynamic;
+      SKY_ETicket_Lst_Mst_Orgs_Model res = SKY_ETicket_Lst_Mst_Orgs_Model.fromJson(data);
+      return res;
     }
     on ApiException {
       rethrow;
@@ -179,7 +194,9 @@ class SKY_eTicketRemoteDataSource extends SkyCsSvDataSource implements SKY_Etick
       final response = await post(
         path: '/MstTicketCustomType/GetAllActive',
       );
-      return response.objResult!;
+      final data = response['Data'] as dynamic;
+      SKY_ETicket_Lst_CustomType_Model res = SKY_ETicket_Lst_CustomType_Model.fromJson(data);
+      return res;
     }
     on ApiException {
       rethrow;
@@ -195,7 +212,9 @@ class SKY_eTicketRemoteDataSource extends SkyCsSvDataSource implements SKY_Etick
       final response = await post(
         path: '/MstTicketPriority/GetAllActive',
       );
-      return response.objResult!;
+      final data = response['Data'] as dynamic;
+      SKY_ETicket_Lst_Priority_Model res = SKY_ETicket_Lst_Priority_Model.fromJson(data);
+      return res;
     }
     on ApiException {
       rethrow;
@@ -211,7 +230,9 @@ class SKY_eTicketRemoteDataSource extends SkyCsSvDataSource implements SKY_Etick
       final response = await post(
         path: '/MstTicketSource/GetAllActive',
       );
-      return response.objResult!;
+      final data = response['Data'] as dynamic;
+      SKY_ETicket_Lst_TicketSource_Model res = SKY_ETicket_Lst_TicketSource_Model.fromJson(data);
+      return res;
     }
     on ApiException {
       rethrow;
@@ -227,7 +248,9 @@ class SKY_eTicketRemoteDataSource extends SkyCsSvDataSource implements SKY_Etick
       final response = await post(
         path: '/MstTicketStatus/GetAllActive',
       );
-      return response.objResult!;
+      final data = response['Data'] as dynamic;
+      SKY_ETicket_Lst_Status_Model res = SKY_ETicket_Lst_Status_Model.fromJson(data);
+      return res;
     }
     on ApiException {
       rethrow;
@@ -243,7 +266,9 @@ class SKY_eTicketRemoteDataSource extends SkyCsSvDataSource implements SKY_Etick
       final response = await post(
         path: '/MstReceptionChannel/GetAllActive',
       );
-      return response.objResult!;
+      final data = response['Data'] as dynamic;
+      SKY_ETicket_Lst_ReceptionChannel_Model res = SKY_ETicket_Lst_ReceptionChannel_Model.fromJson(data);
+      return res;
     }
     on ApiException {
       rethrow;
@@ -259,7 +284,9 @@ class SKY_eTicketRemoteDataSource extends SkyCsSvDataSource implements SKY_Etick
       final response = await post(
         path: '/MstTicketType/GetAllActive',
       );
-      return response.objResult!;
+      final data = response['Data'] as dynamic;
+      SKY_ETicket_Lst_Type_Model res = SKY_ETicket_Lst_Type_Model.fromJson(data);
+      return res;
     }
     on ApiException {
       rethrow;
@@ -278,7 +305,9 @@ class SKY_eTicketRemoteDataSource extends SkyCsSvDataSource implements SKY_Etick
         path: '/MstDepartment/GetByOrgID',
         params: paramsInit,
       );
-      return response.objResult!;
+      final data = response['Data'] as dynamic;
+      SKY_ETicket_Lst_Department_Model res = SKY_ETicket_Lst_Department_Model.fromJson(data);
+      return res;
     }
     on ApiException {
       rethrow;
@@ -297,8 +326,9 @@ class SKY_eTicketRemoteDataSource extends SkyCsSvDataSource implements SKY_Etick
         path: '/MstDepartment/GetAgentByDepartmentCode',
         params: paramsInit,
       );
-
-      return response.objResult!;
+      final data = response['Data'] as dynamic;
+      SKY_ETicket_Lst_Agent_Model res = SKY_ETicket_Lst_Agent_Model.fromJson(data);
+      return res;
     }
     on ApiException {
       rethrow;

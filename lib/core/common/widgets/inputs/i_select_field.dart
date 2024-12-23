@@ -27,7 +27,6 @@ class _ISelectFieldState extends State<ISelectField> {
 
   @override
   Widget build(BuildContext context) {
-    print('TrungLQ: ${widget.value}');
     return DropdownButtonHideUnderline(
       child: DropdownButtonFormField2<String>(
         isExpanded: true,

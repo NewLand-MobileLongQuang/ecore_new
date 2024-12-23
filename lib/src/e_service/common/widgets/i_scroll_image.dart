@@ -143,7 +143,6 @@ class _IScrollImageState extends State<IScrollImage> {
                       scrollDirection: Axis.horizontal,
                       controller: _pageController,
                       onPageChanged: (int page) {
-                        print('TrungLQ: $page');
                         _currentPage = page;
                         setState(() {});
                       },

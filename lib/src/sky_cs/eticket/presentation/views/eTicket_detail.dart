@@ -26,15 +26,15 @@ class ETicketDetailScreen extends StatefulWidget {
 
 class _eTicketDetailScreenState extends State<ETicketDetailScreen> {
   TextEditingController phoneController = TextEditingController();
-  final List<String> listPhone = ['0123456789', '0123456788', '0123456787', '0123456786'];
+  //final List<String> listPhone = ['0123456789', '0123456788', '0123456787', '0123456786'];
   late String eTID;
   bool hasSelectedItems = false;
   List<int> selectedItems = [];
 
   @override
   void initState() {
-    print("CHECKFSFSDFSDFSDF}");
-    phoneController.text = listPhone.first;
+    print("TrungLQ: AÂNSBAbnsbab");
+    //phoneController.text = listPhone.first;
     eTID= widget.eTID;
     super.initState();
     context.read<eTicketDetailCubit>().init(eTID);
@@ -339,8 +339,6 @@ class _ListViewCustomerDetailFileState extends State<ListViewCustomerDetailFile>
       itemCount: 10,
     );
   }
-
-
 }
 
 

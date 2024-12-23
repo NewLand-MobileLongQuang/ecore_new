@@ -1,5 +1,5 @@
 import 'dart:developer';
-import 'package:ecore/src/e_service/common/solution_context_extensions.dart';
+import 'package:ecore/src/sky_cs/common/sky_cs_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -223,7 +223,7 @@ class _ETicketManageScreenState extends State<ETicketSkyCSManageUIScreen> {
               separatorBuilder: (context, index) =>
                   Container(height: 1, color: AppColors.divideColor),
               itemBuilder: (context, index) {
-                return _itemeTicket(context, state.listeticket[index]);
+                return _itemeTicket(state.listeticket[index]);
               },
             );
           }
@@ -235,7 +235,7 @@ class _ETicketManageScreenState extends State<ETicketSkyCSManageUIScreen> {
     );
   }
 
-  Widget _itemeTicket(BuildContext context, SKY_TicketInfo eticket) {
+  Widget _itemeTicket( SKY_TicketInfo eticket) {
     final isSelected = _selectedItems.contains(eticket.TicketID);
 
     return GestureDetector(
@@ -258,26 +258,12 @@ class _ETicketManageScreenState extends State<ETicketSkyCSManageUIScreen> {
             }
           });
         } else {
-          // context.pushNamed(
-          //   ETicketDetailScreen.routeName,
-          //   arguments: {
-          //     'ETID': eticket.TicketID,
-          //   },
-          // );
           context.pushNamed(
             ETicketDetailScreen.routeName,
             arguments: {
               'ETID': eticket.TicketID,
             },
           );
-          // context.pushNamed(
-          //   ETicketDetailScreen.routeName,
-          //   arguments: eticket.TicketID,
-          // ).then((value) {
-          //   if (value != null && value == true) {
-          //     context.read<eTicketManageCubit>().init();
-          //   }
-          // });
         }
       },
       child: Container(

@@ -34,7 +34,7 @@ class eTicketDetailCubit extends Cubit<eTicketDetailState> {
       );
       listcusFold = ETinfo.fold((l) => l, (r) => r) as SKY_GetTicketID;
 
-      print("DETAIL: =========> ${listcusFold}");
+      print("DETAIL: =========> ${listcusFold.Lst_ET_Ticket}");
       emit(eTicketDetailStateLoaded(
           ETID: listcusFold
       ));

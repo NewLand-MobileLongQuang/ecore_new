@@ -43,7 +43,7 @@ class SkyCsSvDataSource extends BaseRemoteDataSrc {
   }
 
   Future<dynamic> post({required String path, DataMap? params}) async {
-    final ss = SessionInfo.current();
+    //final ss = SessionInfo.current();
     final response = await doPost(
         path: path,
         params: params,

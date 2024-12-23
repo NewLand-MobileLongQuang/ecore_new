@@ -67,12 +67,9 @@ class _SkyCsScreenState extends State<SkyCsScreen> {
                         if (index == 4) {
                           context.pushNamed(SkyCsUtils.getFullRouteName(CustomerSkyCSManageScreen.routeName));
                         }
-                        else
-                          {
-                            if(index == 2){
-                              context.pushNamed(SkyCsUtils.getFullRouteName(ETicketManageScreen.routeName));
-                            }
-                          }
+                        else if (index == 2) {
+                          context.pushNamed(SkyCsUtils.getFullRouteName(ETicketManageScreen.routeName));
+                        }
                       },
                       child: Card(
                         color: AppColors.textWhiteColor,

@@ -55,12 +55,6 @@ PageRouteBuilder? handleCaseSkyCS(RouteSettings settings) {
               child: ETicketDetailScreen(eTID: ETID,)),
           settings: settings);
 
-
-    // case ETicketDetailScreen.routeName:
-    //   final id = settings.arguments as String;
-    //   return pageBuilder((p0) => BlocProvider(create: (_) =>
-    //       sl<eTicketDetailCubit>(), child: ETicketDetailScreen(eTID: id)), settings: settings);
-
     case ETicketCreateScreen.routeName:
       return pageBuilder((p0) => BlocProvider(
           create: (_) => sl<eTicketCreateCubit>(),
