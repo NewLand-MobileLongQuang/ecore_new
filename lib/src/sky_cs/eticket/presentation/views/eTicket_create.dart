@@ -10,15 +10,15 @@ import '../../../../../core/res/media_res.dart';
 import '../../../../../core/res/strings.dart';
 import '../cubit/eTicket_create_cubit/eTicket_create_cubit.dart';
 
-class eTicketCreateScreen extends StatefulWidget {
-  const eTicketCreateScreen({super.key});
-  static const routeName = '/eTicket_create';
+class ETicketCreateScreen extends StatefulWidget {
+  const ETicketCreateScreen({super.key});
+  static const routeName = 'eTicket-create';
 
   @override
-  State<eTicketCreateScreen> createState() => _eTicketCreateScreenState();
+  State<ETicketCreateScreen> createState() => _eTicketCreateScreenState();
 }
 
-class _eTicketCreateScreenState extends State<eTicketCreateScreen> {
+class _eTicketCreateScreenState extends State<ETicketCreateScreen> {
   @override
   void initState() {
     super.initState();
@@ -328,7 +328,7 @@ class _eTicketCreateScreenState extends State<eTicketCreateScreen> {
                                   const SizedBox(width: 8),
                                   InkWell(
                                     onTap: () {
-                                      Navigator.pushNamed(context, '/customer-skycs-create');
+                                      Navigator.pushNamed(context, 'customer-skycs-create');
                                     },
                                     borderRadius: BorderRadius.circular(50),
                                     child: Container(

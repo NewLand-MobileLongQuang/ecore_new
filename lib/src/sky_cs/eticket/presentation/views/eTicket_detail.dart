@@ -14,17 +14,17 @@ import '../widgets/NNNCreate_tab.dart';
 import '../widgets/detail_tab.dart';
 import '../widgets/interact_tab.dart';
 
-class eTicketDetailScreen extends StatefulWidget {
+class ETicketDetailScreen extends StatefulWidget {
   final String eTID;
-  const eTicketDetailScreen({super.key, required this.eTID });
+  const ETicketDetailScreen({super.key, required this.eTID });
 
-  static const routeName = '/eTicket_detail';
+  static const routeName = 'eTicket-detail';
 
   @override
-  State<eTicketDetailScreen> createState() => _eTicketDetailScreenState();
+  State<ETicketDetailScreen> createState() => _eTicketDetailScreenState();
 }
 
-class _eTicketDetailScreenState extends State<eTicketDetailScreen> {
+class _eTicketDetailScreenState extends State<ETicketDetailScreen> {
   TextEditingController phoneController = TextEditingController();
   final List<String> listPhone = ['0123456789', '0123456788', '0123456787', '0123456786'];
   late String eTID;
@@ -33,6 +33,7 @@ class _eTicketDetailScreenState extends State<eTicketDetailScreen> {
 
   @override
   void initState() {
+    print("CHECKFSFSDFSDFSDF}");
     phoneController.text = listPhone.first;
     eTID= widget.eTID;
     super.initState();

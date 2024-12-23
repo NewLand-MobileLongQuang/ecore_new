@@ -27,10 +27,8 @@ class eTicketManageCubit extends Cubit<eTicketManageState> {
   static const int pageSize = 10;
 
   Future<void> init() async {
-    print("CHECK ETICKET MANAGe");
     emit(eTicketManageLoading());
     try {
-      print("CHECK ETICKET MANAGe");
       final listeticket = await _searchEticketSkyCSUseCase(
         SearchETicketSkyCSParams(
          FlagOutOfDate:'',
@@ -65,9 +63,9 @@ class eTicketManageCubit extends Cubit<eTicketManageState> {
           CustomerCodeSys: '',
         ),
       );
-
+      print("LIST ETicket ======> ${listeticket}");
       final listeticketFold = listeticket.fold((l) => l, (r) => r) as List<SKY_TicketInfo>;
-      //print("CHECK LISSSS ======> ${listeticketFold}");
+
       emit(eTicketManageLoaded(
         listeticket: listeticketFold,
       ));

@@ -85,7 +85,7 @@ class _CustomerSkyCSDetailScreenState extends State<CustomerSkyCSDetailScreen> {
                 actions: [
                   InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, '/customer-skycs-create');
+                      Navigator.pushNamed(context, 'customer-skycs-create');
                     },
                     child: const Icon(
                       size: 20,

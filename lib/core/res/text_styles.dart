@@ -26,6 +26,7 @@ class AppTextStyles {
   static TextStyle textStyleInterW500S16 = textStyleInterW500.copyWith(fontSize: 16);
   static TextStyle textStyleInterW500S18 = textStyleInterW500.copyWith(fontSize: 18);
   static TextStyle textStyleInterW500S32 = textStyleInterW400.copyWith(fontSize: 32);
+  static TextStyle textStyleInterW500S32White= textStyleInterW500S32.copyWith(color: AppColors.textWhiteColor);
 
   static TextStyle textStyleInterW600S16 = textStyleInterW600.copyWith(fontSize: 16);
 

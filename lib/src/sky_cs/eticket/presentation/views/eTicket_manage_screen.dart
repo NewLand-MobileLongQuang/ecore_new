@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:ecore/src/e_service/common/solution_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,6 +14,8 @@ import '../../../../../core/utils/localization_helper.dart';
 import '../../../../../core/utils/string_generate.dart';
 import '../../domain/entities/sky_eticket_info.dart';
 import '../cubit/eTicket_manage_cubit/eTicket_manage_cubit.dart';
+import 'eTicket_create.dart';
+import 'eTicket_detail.dart';
 
 class ETicketManageScreen extends StatelessWidget {
   const ETicketManageScreen({super.key});
@@ -44,7 +47,6 @@ class _ETicketManageScreenState extends State<ETicketSkyCSManageUIScreen> {
 
   @override
   void initState() {
-    log("CHJECK DSFSDFDSFSDFSDF");
     _scrollController.addListener(() {
       print("CHECK ETICKET MANAGe2213131");
       if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent) {
@@ -165,7 +167,7 @@ class _ETicketManageScreenState extends State<ETicketSkyCSManageUIScreen> {
                   PopupMenuItem(
                     child: const Text('Tìm kiếm nâng cao'),
                     onTap: () {
-                      Navigator.pushNamed(context, '/advanced-search');
+                      Navigator.pushNamed(context, 'advanced-search');
                     },
                   ),
                 ],
@@ -256,9 +258,26 @@ class _ETicketManageScreenState extends State<ETicketSkyCSManageUIScreen> {
             }
           });
         } else {
-          Navigator.pushNamed(context, '/eTicket_detail', arguments: {
-            'ETID': eticket.TicketID,
-          });
+          // context.pushNamed(
+          //   ETicketDetailScreen.routeName,
+          //   arguments: {
+          //     'ETID': eticket.TicketID,
+          //   },
+          // );
+          context.pushNamed(
+            ETicketDetailScreen.routeName,
+            arguments: {
+              'ETID': eticket.TicketID,
+            },
+          );
+          // context.pushNamed(
+          //   ETicketDetailScreen.routeName,
+          //   arguments: eticket.TicketID,
+          // ).then((value) {
+          //   if (value != null && value == true) {
+          //     context.read<eTicketManageCubit>().init();
+          //   }
+          // });
         }
       },
       child: Container(
@@ -365,7 +384,14 @@ class _ETicketManageScreenState extends State<ETicketSkyCSManageUIScreen> {
         Expanded(child: Container()),
         ElevatedButton(
           onPressed: (){
-            Navigator.pushNamed(context, '/eTicket_create');
+            context.pushNamed(
+              ETicketCreateScreen.routeName,
+            ).then((value) {
+              if (value != null && value == true) {
+                context.read<eTicketManageCubit>().init();
+              }
+            });
+            //Navigator.pushNamed(context, 'eTicket_create');
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.primaryColor,

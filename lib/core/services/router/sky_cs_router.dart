@@ -3,7 +3,6 @@ import 'package:ecore/core/services/router/router.dart';
 import 'package:ecore/src/sky_cs/common/utils.dart';
 import 'package:ecore/src/sky_cs/customer/presentation/cubit/customer_skycs_create_cubit/customer_skycs_create_cubit.dart';
 import 'package:ecore/src/sky_cs/customer/presentation/cubit/customer_skycs_detail_cubit/customer_skycs_detail_cubit.dart';
-import 'package:ecore/src/sky_cs/customer/presentation/cubit/customer_skycs_manage_cubit/customer_skycs_manage_cubit.dart';
 import 'package:ecore/src/sky_cs/customer/presentation/views/customer_skycs_create_screen.dart';
 import 'package:ecore/src/sky_cs/customer/presentation/views/customer_skycs_detail_screen.dart';
 import 'package:ecore/src/sky_cs/customer/presentation/views/customer_skycs_manage_screen.dart';
@@ -11,7 +10,10 @@ import 'package:ecore/src/sky_cs/index/presentation/cubit/sky_cs_cubit.dart';
 import 'package:ecore/src/sky_cs/index/presentation/view/sky_cs_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import '../../../src/sky_cs/eticket/presentation/cubit/eTicket_create_cubit/eTicket_create_cubit.dart';
+import '../../../src/sky_cs/eticket/presentation/cubit/eTicket_detail_cubit/eTicket_detail_cubit.dart';
+import '../../../src/sky_cs/eticket/presentation/views/eTicket_create.dart';
+import '../../../src/sky_cs/eticket/presentation/views/eTicket_detail.dart';
 import '../../../src/sky_cs/eticket/presentation/views/eTicket_manage_screen.dart';
 
 PageRouteBuilder? handleCaseSkyCS(RouteSettings settings) {
@@ -43,7 +45,29 @@ PageRouteBuilder? handleCaseSkyCS(RouteSettings settings) {
       );
     case ETicketManageScreen.routeName:
       return pageBuilder((p0) => const ETicketManageScreen(), settings: settings);
-    default:
+
+    case ETicketDetailScreen.routeName:
+      final args = settings.arguments as Map<String, dynamic>?;
+      final ETID = args?['ETID'] as String;
+      return pageBuilder(
+              (p0) => BlocProvider(
+              create: (_) => sl<eTicketDetailCubit>(),
+              child: ETicketDetailScreen(eTID: ETID,)),
+          settings: settings);
+
+
+    // case ETicketDetailScreen.routeName:
+    //   final id = settings.arguments as String;
+    //   return pageBuilder((p0) => BlocProvider(create: (_) =>
+    //       sl<eTicketDetailCubit>(), child: ETicketDetailScreen(eTID: id)), settings: settings);
+
+    case ETicketCreateScreen.routeName:
+      return pageBuilder((p0) => BlocProvider(
+          create: (_) => sl<eTicketCreateCubit>(),
+          child: const ETicketCreateScreen()),
+          settings: settings);
+
+      default:
       return null;
   }
 }

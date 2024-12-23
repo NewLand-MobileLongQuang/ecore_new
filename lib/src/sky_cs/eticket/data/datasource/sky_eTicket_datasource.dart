@@ -127,7 +127,11 @@ class SKY_eTicketRemoteDataSource extends SkyCsSvDataSource implements SKY_Etick
         path: 'ETTicket/Search',
         params: paramsInit,
       );
-      return response.objResult!;
+      final dataList = response['DataList'] as List;
+      List<SKY_ETicketInfo_Model> res =
+      dataList.map<SKY_ETicketInfo_Model>((i) => SKY_ETicketInfo_Model.fromJson(i)).toList();
+
+      return res;
     }
     on ApiException {
       rethrow;
